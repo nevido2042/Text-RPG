@@ -16,7 +16,7 @@
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(156); 번호로 누수 위치 확인 가능
+	//_CrtSetBreakAlloc(206); //번호로 누수 위치 확인 가능
 
 	Run_TextRPG();
 	return 0;

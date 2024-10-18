@@ -101,3 +101,18 @@ void tagINFO::ResetStat()
 	curStat.iLUK = stat.iLUK;
 	curStat.iINT = stat.iINT;
 }
+
+void tagInventory::PrintAll()
+{
+	cout << "[¼ÒÁöÇ°]" << endl;
+	for (int i = 0; i < MAX_INVEN; ++i)
+	{
+		cout << i << '.';
+		inven[i].PrintItem();
+	}
+}
+
+void tagItem::PrintItem()
+{
+	cout << szName << endl;
+}

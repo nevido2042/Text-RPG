@@ -76,7 +76,7 @@ void SelectTask(INFO* _pPlayer)
 		cout << "Day-" << _pPlayer->iDay << endl;
 		cout << "현재위치: 은신처" << endl;
 		cout << "<행동 결정>" << endl;
-		cout << " 1.휴식 2.모험 3.메인메뉴 4.저장하기" << endl;
+		cout << " 1.휴식 2.모험 3.소지품 4.저장&종료" << endl;
 
 		if (GetInput(&iInput) == INPUT_ERROR)
 		{
@@ -101,14 +101,19 @@ void SelectTask(INFO* _pPlayer)
 			SelectDungeon(_pPlayer);
 
 			break;
-		case 3:
-			delete _pPlayer;
-			_pPlayer = nullptr;
 
-			return;
-		case 4:
-			SaveCharacter(_pPlayer);
+		case 3:
+			//소지품
+			system("cls");
+			_pPlayer->ResetStat();
+			_pPlayer->inven.PrintAll();
+			system("pause");
 			break;
+		case 4:
+			//저장&종료
+			SaveCharacter(_pPlayer);
+			SAFE_DELETE(_pPlayer);
+			return;
 		default:
 			break;
 		}
@@ -242,8 +247,7 @@ void FaceMonster(INFO* _pPlayer)
 	{
 		return;
 	}*/
-	delete pMonster;
-	pMonster = nullptr;
+	SAFE_DELETE(pMonster);
 
 	return;
 }
@@ -422,9 +426,10 @@ void Run_TextRPG()
 
 	while (true)
 	{
-		cin.clear();
-
 		system("cls");
+		cout << "<TEXT RPG>" << endl;
+		cout << endl;
+
 		cout << "[메인 메뉴]" << endl;
 		cout << endl;
 
@@ -441,6 +446,7 @@ void Run_TextRPG()
 			SelectTask(pPlayer);
 			break;
 		case 2:
+			//SAFE_DELETE(pPlayer);
 			return;
 
 		case 3:

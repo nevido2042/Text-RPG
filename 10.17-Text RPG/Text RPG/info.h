@@ -1,6 +1,21 @@
 #pragma once
 
-#define NAME_LEN 8
+#define NAME_LEN 32
+#define MAX_INVEN 10
+
+typedef struct tagItem
+{
+	char szName[NAME_LEN] = "";
+
+	void PrintItem();
+}ITEM;
+
+typedef struct tagInventory
+{
+	ITEM inven[MAX_INVEN] = {};
+
+	void PrintAll();
+}INVEN;
 
 typedef struct tagStat
 {
@@ -27,7 +42,8 @@ typedef struct tagINFO
 	int iDay = 1;
 	STAT stat;
 	STAT curStat;
-
+	INVEN inven;
+	
 	void PrintName();
 	void PrintInfo();
 	void ResetStat();
