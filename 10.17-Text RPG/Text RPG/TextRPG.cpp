@@ -73,10 +73,15 @@ void SelectTask(INFO* _pPlayer)
 	{
 		system("cls");
 		_pPlayer->PrintInfo();
+
+		SetPrintColor(YELLOW);
+		cout << _pPlayer->iGold << 'G' << endl;
+		SetPrintColor(GRAY);
+
 		cout << "Day-" << _pPlayer->iDay << endl;
 		cout << "현재위치: 은신처" << endl;
 		cout << "<행동 결정>" << endl;
-		cout << " 1.휴식 2.모험 3.소지품 4.저장&종료" << endl;
+		cout << " 1.휴식 2.모험 3.소지품 4.상점 5.저장&종료" << endl;
 
 		if (GetInput(&iInput) == INPUT_ERROR)
 		{
@@ -86,11 +91,13 @@ void SelectTask(INFO* _pPlayer)
 		switch (iInput)
 		{
 		case 1:
+			//휴식
 			_pPlayer->ResetStat();
 			_pPlayer->iDay++;
 			break;
 
 		case 2:
+			//모험
 			if (_pPlayer->curStat.iHP == 0)
 			{
 				cout << "휴식이 필요." << endl;
@@ -110,6 +117,10 @@ void SelectTask(INFO* _pPlayer)
 			system("pause");
 			break;
 		case 4:
+			//상점
+			OpenShop(_pPlayer);
+			break;
+		case 5:
 			//저장&종료
 			SaveCharacter(_pPlayer);
 			SAFE_DELETE(_pPlayer);
@@ -132,6 +143,130 @@ int GetInput(int* _pInput)
 	}
 
 	return 0;
+}
+
+void OpenShop(INFO* _pPlayer)
+{
+	int iInput(0);
+
+	INFO* merchant = new INFO; //상인 하루에 한번만 리셋되도록 바꿔야지
+
+	ITEM item;
+	item.iValue = 50;
+	strcpy_s(item.szName, "빨간 물약");
+	merchant->inven.AddItem(item);
+
+
+	while (true)
+	{
+		RenderShop(_pPlayer, merchant);
+
+		cout << "1.구매 2.판매 3.나가기" << endl;
+		if (GetInput(&iInput) == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		switch (iInput)
+		{
+		case 1:
+			BuyItem(_pPlayer, merchant);
+			break;
+		case 2:
+			SellItem(_pPlayer, merchant);
+			break;
+		case 3:
+			SAFE_DELETE(merchant);
+			return;
+		default:
+			break;
+		}
+	}
+}
+
+void RenderShop(INFO* _pPlayer, INFO* _pMerchant)
+{
+	system("cls");
+
+	SetPrintColor(YELLOW);
+	cout << _pPlayer->iGold<<"G" << endl;
+	SetPrintColor(GRAY);
+
+	cout << "플레이어의 ";
+	_pPlayer->inven.PrintAll();
+
+	cout << "===============================" << endl;
+
+	cout << "상인의";
+	_pMerchant->inven.PrintAll();
+
+	cout << endl;
+}
+
+void BuyItem(INFO* _pPlayer, INFO* _pMerchant)
+{
+	int iInput(0);
+	while (true)
+	{
+		RenderShop(_pPlayer, _pMerchant);
+
+		cout << "사고싶은 품목의 번호를 선택(취소=0)" << endl;
+		if (GetInput(&iInput) == INPUT_ERROR)
+		{
+			continue;
+		}
+		
+		if (iInput == 0)
+		{
+			break;
+		}
+
+		ITEM item = _pMerchant->inven.inven[iInput - 1];
+
+		int iItemValue = _pMerchant->inven.inven[iInput - 1].iValue;
+		if (_pPlayer->iGold >= iItemValue)
+		{
+			_pPlayer->iGold -= iItemValue;
+		}
+		else
+		{
+			cout << "소지금이 부족합니다." << endl;
+			system("pause");
+			continue;
+		}
+
+		if (_pMerchant->inven.RemoveItem(iInput - 1) == SUCCESS)
+		{
+			_pPlayer->inven.AddItem(item);
+		}
+	}
+}
+
+void SellItem(INFO* _pPlayer, INFO* _pMerchant)
+{
+	int iInput(0);
+	while (true)
+	{
+		RenderShop(_pPlayer, _pMerchant);
+
+		cout << "팔고싶은 품목의 번호를 선택(취소=0)" << endl;
+		if (GetInput(&iInput) == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		if (iInput == 0)
+		{
+			break;
+		}
+
+		ITEM item = _pPlayer->inven.inven[iInput - 1];
+		if (_pPlayer->inven.RemoveItem(iInput - 1) == SUCCESS)
+		{
+			_pPlayer->iGold += item.iValue;
+			_pMerchant->inven.AddItem(item);
+		}
+	}
 }
 
 void SelectDungeon(INFO* _pPlayer)
@@ -161,8 +296,10 @@ void SelectDungeon(INFO* _pPlayer)
 			Enter_Grassland(_pPlayer);
 			break;
 		case 2:
+			Enter_Mountain(_pPlayer);
 			break;
 		case 3:
+			Enter_Cave(_pPlayer);
 			break;
 		case 4:
 			return;
@@ -203,9 +340,10 @@ void Enter_Grassland(INFO* _pPlayer)
 		_pPlayer->PrintInfo();
 
 		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-		SetColor(GREEN);
+		SetPrintColor(GREEN);
 		cout << "현재 위치: 초원" << endl;
-		SetColor(GRAY);
+		SetPrintColor(GRAY);
+
 		cout << "[행동 선택]" << endl;
 		cout << "1.대기 2.탐색 3.복귀" << endl;
 		if (GetInput(&iInput) == INPUT_ERROR)
@@ -218,7 +356,7 @@ void Enter_Grassland(INFO* _pPlayer)
 			//_pPlayer->ResetStat();
 			break;
 		case 2:
-			FaceMonster(_pPlayer);
+			FaceMonster(_pPlayer, 1);
 			break;
 		case 3:
 			return;
@@ -228,11 +366,91 @@ void Enter_Grassland(INFO* _pPlayer)
 	}
 }
 
-void FaceMonster(INFO* _pPlayer)
+void Enter_Mountain(INFO* _pPlayer)
+{
+	int iInput(0);
+	while (true)
+	{
+		if (_pPlayer->curStat.iHP == 0)
+		{
+			return;
+		}
+
+		system("cls");
+		_pPlayer->PrintInfo();
+
+		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+		SetPrintColor(YELLOW);
+		cout << "현재 위치: 산" << endl;
+		SetPrintColor(GRAY);
+
+		cout << "[행동 선택]" << endl;
+		cout << "1.대기 2.탐색 3.복귀" << endl;
+		if (GetInput(&iInput) == INPUT_ERROR)
+		{
+			continue;
+		}
+		switch (iInput)
+		{
+		case 1:
+			//_pPlayer->ResetStat();
+			break;
+		case 2:
+			FaceMonster(_pPlayer, 2);
+			break;
+		case 3:
+			return;
+		default:
+			break;
+		}
+	}
+}
+
+void Enter_Cave(INFO* _pPlayer)
+{
+	int iInput(0);
+	while (true)
+	{
+		if (_pPlayer->curStat.iHP == 0)
+		{
+			return;
+		}
+
+		system("cls");
+		_pPlayer->PrintInfo();
+
+		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+		SetPrintColor(RED);
+		cout << "현재 위치: 동굴" << endl;
+		SetPrintColor(GRAY);
+
+		cout << "[행동 선택]" << endl;
+		cout << "1.대기 2.탐색 3.복귀" << endl;
+		if (GetInput(&iInput) == INPUT_ERROR)
+		{
+			continue;
+		}
+		switch (iInput)
+		{
+		case 1:
+			//_pPlayer->ResetStat();
+			break;
+		case 2:
+			FaceMonster(_pPlayer, 3);
+			break;
+		case 3:
+			return;
+		default:
+			break;
+		}
+	}
+}
+
+void FaceMonster(INFO* _pPlayer, int _iValue)
 {
 	INFO* pMonster = new INFO;
 	strcpy_s(pMonster->szName, "???");
-	pMonster->stat.SetStatRandom();
+	pMonster->stat.SetStatRandom(_iValue);
 	pMonster->ResetStat();
 
 	RenderBattleInfo(_pPlayer, pMonster);
@@ -308,6 +526,13 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 
 				cout << "몬스터 쓰러짐!" << endl;
 				cout << "전투 종료" << endl;
+				
+				ITEM item;
+				strcpy_s(item.szName, "Test Item");
+				item.iValue = 50;
+				cout << "아이템 획득:" << item.szName << endl;
+				_pPlayer->inven.AddItem(item);
+
 				system("pause");
 				return;
 			}

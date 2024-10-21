@@ -1,5 +1,9 @@
 #pragma once
-#include <Windows.h>
+//#include <Windows.h>
+
+#define INPUT_ERROR -1
+#define _ERROR -1
+#define SUCCESS 0
 
 //색상
 enum {
@@ -22,6 +26,4 @@ enum {
 };
 
 // 콘솔 텍스트 색상 변경해주는 함수
-void SetColor(unsigned short text) {
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), text);
-}
+void SetPrintColor(unsigned short text);

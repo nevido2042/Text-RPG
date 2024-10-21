@@ -1,16 +1,20 @@
 #pragma once
 #include "info.h"
 
-#define INPUT_ERROR -1
-
 void CreateCharacter(INFO** _ppPlayer);
 void SetSTAT(INFO* _pPlayer);
 void SelectTask(INFO* _pPlayer);
 int GetInput(int* _pInput);
+void OpenShop(INFO* _pPlayer);
+void RenderShop(INFO* _pPlayer, INFO* _pMerchant);
+void BuyItem(INFO* _pPlayer, INFO* _pMerchant);
+void SellItem(INFO* _pPlayer, INFO* _pMerchant);
 void SelectDungeon(INFO* _pPlayer);
 int InputCheck();
 void Enter_Grassland(INFO* _pPlayer);
-void FaceMonster(INFO* _pPlayer);
+void Enter_Mountain(INFO* _pPlayer);
+void Enter_Cave(INFO* _pPlayer);
+void FaceMonster(INFO* _pPlayer, int _iValue = 2);
 void StartBattle(INFO* _pPlayer, INFO* _pMonster);
 void RenderBattleInfo(INFO* _pPlayer, INFO* _pMonster);
 void LoadCharacter(INFO** _pPlayer);

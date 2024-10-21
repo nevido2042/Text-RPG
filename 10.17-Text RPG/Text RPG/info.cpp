@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "info.h"
+#include "misc.h"
 
 void tagStat::RenderStat()
 {
@@ -49,9 +50,9 @@ void tagStat::PrintDetailStat()
 	cout << "INT: " << iINT << endl;
 }
 
-void tagStat::SetStatRandom()
+void tagStat::SetStatRandom(int _iValue)
 {
-	const int iMaxPoint = iStatCount * 2;
+	const int iMaxPoint = iStatCount * _iValue;
 	int iRemainPoint = iTotalStat;
 
 	SetRandomPoint(&iHP, &iRemainPoint, &iMaxPoint);
@@ -102,17 +103,45 @@ void tagINFO::ResetStat()
 	curStat.iINT = stat.iINT;
 }
 
+void tagInventory::AddItem(ITEM _item)
+{
+	inven[iItemCount++] = _item;
+}
+
+int tagInventory::RemoveItem(int _iNum)
+{
+	if (_iNum >= iItemCount)
+	{
+		cout << "아이템 없음." << endl;
+		system("pause");
+		return _ERROR;
+	}
+
+	--iItemCount;
+	for (int i = _iNum; i < iItemCount - _iNum; ++i)
+	{
+		swap(inven[i], inven[i + 1]);
+	}
+
+	return SUCCESS;
+}
+
 void tagInventory::PrintAll()
 {
 	cout << "[소지품]" << endl;
-	for (int i = 0; i < MAX_INVEN; ++i)
+	for (int i = 0; i < iItemCount; ++i)
 	{
-		cout << i << '.';
+		cout << i + 1 << '.';
 		inven[i].PrintItem();
 	}
 }
 
 void tagItem::PrintItem()
 {
-	cout << szName << endl;
+	//cout << iValue << endl;
+	cout << szName;
+	SetPrintColor(YELLOW);
+	cout<<" (" << iValue << "G)" << endl;
+	SetPrintColor(GRAY);
+
 }

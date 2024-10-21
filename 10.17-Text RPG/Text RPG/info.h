@@ -6,14 +6,16 @@
 typedef struct tagItem
 {
 	char szName[NAME_LEN] = "";
-
+	int iValue = 0; // 가치(단위: 골드)
 	void PrintItem();
 }ITEM;
 
 typedef struct tagInventory
 {
 	ITEM inven[MAX_INVEN] = {};
-
+	int iItemCount = 0;
+	void AddItem(ITEM _item);
+	int RemoveItem(int _iNum);
 	void PrintAll();
 }INVEN;
 
@@ -32,7 +34,7 @@ typedef struct tagStat
 	void RenderStat();
 	void PrintALL();
 	void PrintDetailStat();
-	void SetStatRandom();
+	void SetStatRandom(int _iValue = 2);
 	void SetRandomPoint(int* _iStatPoint, int* _iRemainPoint, const int* _iMaxPoint);
 }STAT;
 
@@ -43,6 +45,7 @@ typedef struct tagINFO
 	STAT stat;
 	STAT curStat;
 	INVEN inven;
+	int iGold = 0;
 	
 	void PrintName();
 	void PrintInfo();
