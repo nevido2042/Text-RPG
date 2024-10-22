@@ -293,13 +293,16 @@ void SelectDungeon(INFO* _pPlayer)
 		switch (iInput)
 		{
 		case 1:
-			Enter_Grassland(_pPlayer);
+			//Enter_Grassland(_pPlayer);
+			Enter_Dungeon(_pPlayer, Grassland);
 			break;
 		case 2:
-			Enter_Mountain(_pPlayer);
+			//Enter_Mountain(_pPlayer);
+			Enter_Dungeon(_pPlayer, Mountain);
 			break;
 		case 3:
-			Enter_Cave(_pPlayer);
+			//Enter_Cave(_pPlayer);
+			Enter_Dungeon(_pPlayer, Cave);
 			break;
 		case 4:
 			return;
@@ -334,48 +337,7 @@ int RollDice(int iValue)
 	return rand() % iValue + 1;
 }
 
-void Enter_Grassland(INFO* _pPlayer)
-{
-	int iInput(0);
-	while (true)
-	{
-		if (_pPlayer->curStat.iHP == 0)
-		{
-			return;
-		}
-
-		system("cls");
-		_pPlayer->PrintInfo();
-
-		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-		SetPrintColor(GREEN);
-		cout << "현재 위치: 초원" << endl;
-		SetPrintColor(GRAY);
-
-		cout << "[행동 선택]" << endl;
-		cout << "1.대기 2.탐색 3.복귀" << endl;
-		if (GetInput(&iInput) == INPUT_ERROR)
-		{
-			continue;
-		}
-		switch (iInput)
-		{
-		case 1:
-			_pPlayer->curStat.iHP -= 1;
-			//_pPlayer->ResetStat();
-			break;
-		case 2:
-			FaceMonster(_pPlayer, 1);
-			break;
-		case 3:
-			return;
-		default:
-			break;
-		}
-	}
-}
-
-void Enter_Mountain(INFO* _pPlayer)
+void Enter_Dungeon(INFO* _pPlayer, int _iValue)
 {
 	int iInput(0);
 	while (true)
@@ -390,9 +352,24 @@ void Enter_Mountain(INFO* _pPlayer)
 		system("cls");
 		_pPlayer->PrintInfo();
 
-		SetPrintColor(YELLOW);
-		cout << "현재 위치: 산" << endl;
-		SetPrintColor(GRAY);
+		switch (_iValue)
+		{
+		case Grassland:
+			SetPrintColor(GREEN);
+			cout << "현재 위치: 초원" << endl;
+			SetPrintColor(GRAY);
+			break;
+		case Mountain:
+			SetPrintColor(YELLOW);
+			cout << "현재 위치: 산" << endl;
+			SetPrintColor(GRAY);
+			break;
+		case Cave:
+			SetPrintColor(RED);
+			cout << "현재 위치: 동굴" << endl;
+			SetPrintColor(GRAY);
+			break;
+		}
 
 		cout << "[행동 선택]" << endl;
 		cout << "1.대기 2.탐색 3.복귀" << endl;
@@ -411,7 +388,7 @@ void Enter_Mountain(INFO* _pPlayer)
 		case 2:
 			//탐색
 			//적 조우, 함정(DEX), 상자(INT)-미믹,보물,함정
-			TriggerRandomEvent(_pPlayer);
+			TriggerRandomEvent(_pPlayer, _iValue);
 			//FaceMonster(_pPlayer, 2);
 			break;
 		case 3:
@@ -420,52 +397,141 @@ void Enter_Mountain(INFO* _pPlayer)
 		default:
 			break;
 		}
+
 	}
 }
 
-void Enter_Cave(INFO* _pPlayer)
-{
-	int iInput(0);
-	while (true)
-	{
-		if (_pPlayer->curStat.iHP == 0)
-		{
-			return;
-		}
+//void Enter_Grassland(INFO* _pPlayer)
+//{
+//	int iInput(0);
+//	while (true)
+//	{
+//		if (_pPlayer->curStat.iHP == 0)
+//		{
+//			return;
+//		}
+//
+//		system("cls");
+//		_pPlayer->PrintInfo();
+//
+//		SetPrintColor(GREEN);
+//		cout << "현재 위치: 초원" << endl;
+//		SetPrintColor(GRAY);
+//
+//		cout << "[행동 선택]" << endl;
+//		cout << "1.대기 2.탐색 3.복귀" << endl;
+//		if (GetInput(&iInput) == INPUT_ERROR)
+//		{
+//			continue;
+//		}
+//		switch (iInput)
+//		{
+//		case 1:
+//			_pPlayer->curStat.iHP -= 1;
+//			//_pPlayer->ResetStat();
+//			break;
+//		case 2:
+//			FaceMonster(_pPlayer, 1);
+//			break;
+//		case 3:
+//			return;
+//		default:
+//			break;
+//		}
+//	}
+//}
+//
+//void Enter_Mountain(INFO* _pPlayer)
+//{
+//	int iInput(0);
+//	while (true)
+//	{
+//		if (_pPlayer->curStat.iHP == 0)
+//		{
+//			//cout << "플레이어 쓰러짐" << endl;
+//			//system("pause");
+//			return;
+//		}
+//
+//		system("cls");
+//		_pPlayer->PrintInfo();
+//
+//		SetPrintColor(YELLOW);
+//		cout << "현재 위치: 산" << endl;
+//		SetPrintColor(GRAY);
+//
+//		cout << "[행동 선택]" << endl;
+//		cout << "1.대기 2.탐색 3.복귀" << endl;
+//		if (GetInput(&iInput) == INPUT_ERROR)
+//		{
+//			continue;
+//		}
+//		switch (iInput)
+//		{
+//		case 1:
+//			//대기
+//			//_pPlayer->ResetStat();
+//			_pPlayer->curStat.iHP -= 1;
+//
+//			break;
+//		case 2:
+//			//탐색
+//			//적 조우, 함정(DEX), 상자(INT)-미믹,보물,함정
+//			TriggerRandomEvent(_pPlayer, 2);
+//			//FaceMonster(_pPlayer, 2);
+//			break;
+//		case 3:
+//			//복귀
+//			return;
+//		default:
+//			break;
+//		}
+//	}
+//}
+//
+//void Enter_Cave(INFO* _pPlayer)
+//{
+//	int iInput(0);
+//	while (true)
+//	{
+//		if (_pPlayer->curStat.iHP == 0)
+//		{
+//			return;
+//		}
+//
+//		system("cls");
+//		_pPlayer->PrintInfo();
+//
+//		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+//		SetPrintColor(RED);
+//		cout << "현재 위치: 동굴" << endl;
+//		SetPrintColor(GRAY);
+//
+//		cout << "[행동 선택]" << endl;
+//		cout << "1.대기 2.탐색 3.복귀" << endl;
+//		if (GetInput(&iInput) == INPUT_ERROR)
+//		{
+//			continue;
+//		}
+//		switch (iInput)
+//		{
+//		case 1:
+//			//_pPlayer->ResetStat();
+//			_pPlayer->curStat.iHP -= 1;
+//
+//			break;
+//		case 2:
+//			FaceMonster(_pPlayer, 3);
+//			break;
+//		case 3:
+//			return;
+//		default:
+//			break;
+//		}
+//	}
+//}
 
-		system("cls");
-		_pPlayer->PrintInfo();
-
-		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-		SetPrintColor(RED);
-		cout << "현재 위치: 동굴" << endl;
-		SetPrintColor(GRAY);
-
-		cout << "[행동 선택]" << endl;
-		cout << "1.대기 2.탐색 3.복귀" << endl;
-		if (GetInput(&iInput) == INPUT_ERROR)
-		{
-			continue;
-		}
-		switch (iInput)
-		{
-		case 1:
-			//_pPlayer->ResetStat();
-			_pPlayer->curStat.iHP -= 1;
-
-			break;
-		case 2:
-			FaceMonster(_pPlayer, 3);
-			break;
-		case 3:
-			return;
-		default:
-			break;
-		}
-	}
-}
-
-void TriggerRandomEvent(INFO* _pPlayer)
+void TriggerRandomEvent(INFO* _pPlayer, int _iValue)
 {
 	const int iEventCount = 3; 
 	int iRandNum = rand() % iEventCount + 1;
@@ -473,13 +539,13 @@ void TriggerRandomEvent(INFO* _pPlayer)
 	switch (iRandNum)
 	{
 	case 1:
-		FaceMonster(_pPlayer, 2);
+		FaceMonster(_pPlayer, _iValue);
 		return;
 	case 2:
-		TriggerTrap(_pPlayer, 3);
+		TriggerTrap(_pPlayer, _iValue);
 		return;
 	case 3:
-		FindMagicBox(_pPlayer, 3);
+		FindMagicBox(_pPlayer, _iValue);
 		return;
 	default:
 		cout << __FUNCTION__ << endl;
@@ -493,7 +559,7 @@ void TriggerTrap(INFO* _pPlayer, int _iValue)
 	system("cls");
 	_pPlayer->PrintInfo();
 
-	cout << "함정 발동!_" << _iValue << endl;
+	cout << "함정(" << _iValue << ")이 작동되었다!" << endl;
 	cout << "주사위 굴리기(DEX)" << endl;
 	system("pause");
 
@@ -510,7 +576,7 @@ void TriggerTrap(INFO* _pPlayer, int _iValue)
 		_pPlayer->curStat.iHP -= _iValue;
 
 		cout << "주사위 결과: " << iDice_DEX << endl;
-		cout << "함정에 걸려 들었다." << endl;
+		cout << "함정에 피해를 받았다." << endl;
 		system("pause");
 
 		system("cls");
@@ -529,7 +595,7 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 		system("cls");
 		_pPlayer->PrintInfo();
 
-		cout << "마법으로 잠긴 상자를 발견했다." << endl;
+		cout << "마법으로 잠긴 상자(" << _iValue << ")를 발견했다._" << endl;
 		cout << "1.마법 풀기(INT) 2.무시하기" << endl;
 
 		if (GetInput(&iInput) == INPUT_ERROR)
@@ -541,7 +607,31 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 		{
 		case 1:
 			//마법 풀기
-			break;
+		{
+			int iDice_INT = RollDice(_pPlayer->curStat.iINT);
+
+			if (iDice_INT > _iValue)
+			{
+				cout << "주사위 결과: " << iDice_INT << endl;
+				cout << "상자에 걸린 마법을 제거했다." << endl;
+				cout << "보물을 획득 했다." << endl;
+
+				ITEM item;
+				strcpy_s(item.szName, "보물");
+				item.iValue = 500;
+				
+				_pPlayer->inven.AddItem(item);
+
+				system("pause");
+			}
+			else
+			{
+				cout << "주사위 결과: " << iDice_INT << endl;
+				cout << "마법을 제거하지 못했다." << endl;
+				system("pause");
+			}
+			return;
+		}
 		case 2:
 			//무시 하기
 			return;
@@ -648,7 +738,14 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 			
 		case 2:
 			//아이템
-			break;
+			if (SelectItem(_pPlayer, _pMonster) == SUCCESS)
+			{
+				break;
+			}
+			else
+			{
+				continue;
+			}
 		case 3:
 			//도망
 		{
@@ -745,6 +842,36 @@ void TryAttack(INFO* _pAttacker, INFO* _pTarget)
 		cout << endl;
 		system("pause");
 	}
+}
+ 
+int SelectItem(INFO* _pPlayer, INFO* _pMonster)
+{
+	RenderBattleInfo(_pPlayer, _pMonster);
+
+	int iInput(0);
+
+	while ((true))
+	{
+		RenderBattleInfo(_pPlayer, _pMonster);
+		
+		_pPlayer->inven.PrintAll();
+		cout << "사용할 아이템 선택(취소=0): ";
+		if (GetInput(&iInput) == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		if (iInput == 0)
+		{
+			return _ERROR;
+		}
+
+		//_pPlayer->inven.itemArray[iInput - 1].Use();
+		cout << "아이템 사용 구현 예정" << endl;
+		system("pause");
+		return SUCCESS;
+	}
+
 }
 
 void LoadCharacter(INFO** _pPlayer)
