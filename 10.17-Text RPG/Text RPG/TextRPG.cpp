@@ -67,6 +67,10 @@ void SetSTAT(INFO* _pPlayer)
 
 void SelectTask(INFO* _pPlayer)
 {
+	INFO* pMerchant(nullptr);
+	pMerchant = new INFO;
+	pMerchant->inven.SetMerchantInven();
+
 	int iInput(0);
 
 	while (true)
@@ -94,6 +98,7 @@ void SelectTask(INFO* _pPlayer)
 			//휴식
 			_pPlayer->ResetStat();
 			_pPlayer->iDay++;
+			pMerchant->inven.SetMerchantInven();
 			break;
 
 		case 2:
@@ -108,7 +113,7 @@ void SelectTask(INFO* _pPlayer)
 			SelectDungeon(_pPlayer);
 
 			break;
-
+			
 		case 3:
 			//소지품
 			system("cls");
@@ -118,12 +123,13 @@ void SelectTask(INFO* _pPlayer)
 			break;
 		case 4:
 			//상점
-			OpenShop(_pPlayer);
+			OpenShop(_pPlayer, pMerchant);
 			break;
 		case 5:
 			//저장&종료
 			SaveCharacter(_pPlayer);
 			SAFE_DELETE(_pPlayer);
+			SAFE_DELETE(pMerchant);
 			return;
 		default:
 			break;
@@ -142,24 +148,18 @@ int GetInput(int* _pInput)
 		return INPUT_ERROR;
 	}
 
-	return 0;
+	return SUCCESS;
 }
 
-void OpenShop(INFO* _pPlayer)
+void OpenShop(INFO* _pPlayer, INFO* _pMerchant)
 {
 	int iInput(0);
 
-	INFO* merchant = new INFO; //상인 하루에 한번만 리셋되도록 바꿔야지
-
-	ITEM item;
-	item.iValue = 50;
-	strcpy_s(item.szName, "빨간 물약");
-	merchant->inven.AddItem(item);
-
+	//INFO* merchant = new INFO; //상인 하루에 한번만 리셋되도록 바꿔야지
 
 	while (true)
 	{
-		RenderShop(_pPlayer, merchant);
+		RenderShop(_pPlayer, _pMerchant);
 
 		cout << "1.구매 2.판매 3.나가기" << endl;
 		if (GetInput(&iInput) == INPUT_ERROR)
@@ -170,13 +170,13 @@ void OpenShop(INFO* _pPlayer)
 		switch (iInput)
 		{
 		case 1:
-			BuyItem(_pPlayer, merchant);
+			BuyItem(_pPlayer, _pMerchant);
 			break;
 		case 2:
-			SellItem(_pPlayer, merchant);
+			SellItem(_pPlayer, _pMerchant);
 			break;
 		case 3:
-			SAFE_DELETE(merchant);
+			//SAFE_DELETE(merchant);
 			return;
 		default:
 			break;
@@ -221,9 +221,9 @@ void BuyItem(INFO* _pPlayer, INFO* _pMerchant)
 			break;
 		}
 
-		ITEM item = _pMerchant->inven.inven[iInput - 1];
+		ITEM item = _pMerchant->inven.itemArray[iInput - 1];
 
-		int iItemValue = _pMerchant->inven.inven[iInput - 1].iValue;
+		int iItemValue = _pMerchant->inven.itemArray[iInput - 1].iValue;
 		if (_pPlayer->iGold >= iItemValue)
 		{
 			_pPlayer->iGold -= iItemValue;
@@ -260,7 +260,7 @@ void SellItem(INFO* _pPlayer, INFO* _pMerchant)
 			break;
 		}
 
-		ITEM item = _pPlayer->inven.inven[iInput - 1];
+		ITEM item = _pPlayer->inven.itemArray[iInput - 1];
 		if (_pPlayer->inven.RemoveItem(iInput - 1) == SUCCESS)
 		{
 			_pPlayer->iGold += item.iValue;
@@ -323,7 +323,15 @@ int InputCheck()
 		return INPUT_ERROR;
 	}
 
-	return 0;
+	return SUCCESS;
+}
+
+int RollDice(int iValue)
+{
+	if (iValue == 0)
+		return 0;
+
+	return rand() % iValue + 1;
 }
 
 void Enter_Grassland(INFO* _pPlayer)
@@ -353,6 +361,7 @@ void Enter_Grassland(INFO* _pPlayer)
 		switch (iInput)
 		{
 		case 1:
+			_pPlayer->curStat.iHP -= 1;
 			//_pPlayer->ResetStat();
 			break;
 		case 2:
@@ -373,13 +382,14 @@ void Enter_Mountain(INFO* _pPlayer)
 	{
 		if (_pPlayer->curStat.iHP == 0)
 		{
+			cout << "플레이어 쓰러짐" << endl;
+			system("pause");
 			return;
 		}
 
 		system("cls");
 		_pPlayer->PrintInfo();
 
-		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
 		SetPrintColor(YELLOW);
 		cout << "현재 위치: 산" << endl;
 		SetPrintColor(GRAY);
@@ -393,12 +403,18 @@ void Enter_Mountain(INFO* _pPlayer)
 		switch (iInput)
 		{
 		case 1:
+			//대기
 			//_pPlayer->ResetStat();
+			_pPlayer->curStat.iHP -= 1;
+
 			break;
 		case 2:
+			//탐색
+			//적 조우, 함정(DEX), 상자(INT)-미믹,보물,함정
 			FaceMonster(_pPlayer, 2);
 			break;
 		case 3:
+			//복귀
 			return;
 		default:
 			break;
@@ -434,6 +450,8 @@ void Enter_Cave(INFO* _pPlayer)
 		{
 		case 1:
 			//_pPlayer->ResetStat();
+			_pPlayer->curStat.iHP -= 1;
+
 			break;
 		case 2:
 			FaceMonster(_pPlayer, 3);
@@ -461,10 +479,6 @@ void FaceMonster(INFO* _pPlayer, int _iValue)
 
 	StartBattle(_pPlayer, pMonster);
 
-	/*if (_pPlayer->curStat.iHP == 0)
-	{
-		return;
-	}*/
 	SAFE_DELETE(pMonster);
 
 	return;
@@ -473,16 +487,19 @@ void FaceMonster(INFO* _pPlayer, int _iValue)
 void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 {
 	int iInput(0);
+	RenderBattleInfo(_pPlayer, _pMonster);
 
 	if (_pMonster->curStat.iDEX > _pPlayer->curStat.iDEX)
 	{
-		RenderBattleInfo(_pPlayer, _pMonster);
-
-		_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
+		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
+		cout << "몬스터의 민첩이 더 높다." << endl;
 		cout << "몬스터의 선제 공격!" << endl;
 		cout << endl;
 		system("pause");
 
+		TryAttack(_pMonster, _pPlayer);
+		RenderBattleInfo(_pPlayer, _pMonster);
+		
 		if (_pPlayer->curStat.iHP <= 0)
 		{
 			RenderBattleInfo(_pPlayer, _pMonster);
@@ -503,7 +520,7 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 
 		//cout << "몬스터를 발견함." << endl;
 		cout << "[행동 선택]" << endl;
-		cout << "1.공격 2.도망" << endl;
+		cout << "1.공격 2.아이템 3.도망 " << endl;
 		if (GetInput(&iInput) == INPUT_ERROR)
 		{
 			continue;
@@ -512,12 +529,11 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 		switch (iInput)
 		{
 		case 1:
-			_pMonster->curStat.iHP -= _pPlayer->curStat.iSTR;
+		{
+			//공격
+			TryAttack(_pPlayer, _pMonster);
 
 			RenderBattleInfo(_pPlayer, _pMonster);
-			cout << endl;
-
-			cout << "플레이어의 공격 명중.";
 			cout << endl;
 
 			if (_pMonster->curStat.iHP <= 0)
@@ -526,7 +542,7 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 
 				cout << "몬스터 쓰러짐!" << endl;
 				cout << "전투 종료" << endl;
-				
+
 				ITEM item;
 				strcpy_s(item.szName, "Test Item");
 				item.iValue = 50;
@@ -540,25 +556,43 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 			system("pause");
 
 			break;
+		}
+			
 		case 2:
-			return;
+			//아이템
+			break;
+		case 3:
+			//도망
+		{
+			int iPlayerDice = RollDice(_pPlayer->curStat.iDEX);
+			int iMonsterDice = RollDice(_pMonster->curStat.iDEX);
+
+			if (iPlayerDice > iMonsterDice)
+			{
+				cout << "PlayerDice: " << iPlayerDice << endl;
+				cout << "MonsterDice: " << iMonsterDice << endl;
+
+				cout << "도망 성공" << endl;
+				system("pause");
+				return;
+
+			}
+			cout << "PlayerDice: " << iPlayerDice << endl;
+			cout << "MonsterDice: " << iMonsterDice << endl;
+
+			cout << "도망 실패" << endl;
+			system("pause");
+			break;
+		}
 		default:
 			continue;
 		}
 
 		RenderBattleInfo(_pPlayer, _pMonster);
 
-		cout << "몬스터의 공격!" << endl;
-		cout << endl;
-
-		system("pause");
-
-		_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
+		TryAttack(_pMonster, _pPlayer);
 
 		RenderBattleInfo(_pPlayer, _pMonster);
-
-		cout << "몬스터의 공격이 명중했다.";
-		cout << endl;
 
 		if (_pPlayer->curStat.iHP <= 0)
 		{
@@ -569,10 +603,6 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 			system("pause");
 			return;
 		}
-
-		system("pause");
-
-		//system("cls");
 	}
 
 }
@@ -585,6 +615,48 @@ void RenderBattleInfo(INFO* _pPlayer, INFO* _pMonster)
 	cout << "=        VS        =" << endl;
 	cout << "====================" << endl;
 	_pMonster->PrintInfo();
+}
+
+void TryAttack(INFO* _pAttacker, INFO* _pTarget)
+{
+	cout << _pAttacker->szName << "의 공격" << endl;
+
+	int AttackerDice = RollDice(_pAttacker->curStat.iDEX);
+	int TargetDice = RollDice(_pTarget->curStat.iDEX);
+
+	if (AttackerDice > TargetDice)
+	{
+		cout << _pAttacker->szName << " Dice_DEX: " << AttackerDice << endl;
+		cout << _pTarget->szName << " Dice_DEX: " << TargetDice << endl;
+
+		_pTarget->curStat.iHP -= _pAttacker->curStat.iSTR;
+		cout << _pAttacker->szName << "의 공격 명중." << endl;
+		cout << endl;
+
+		int AttackerDice_LUK = RollDice(_pAttacker->curStat.iLUK);
+		int TargetDice_LUK = RollDice(_pTarget->curStat.iLUK);
+
+		if (AttackerDice_LUK > TargetDice_LUK)
+		{
+			cout << _pAttacker->szName << " Dice_LUK: " << AttackerDice_LUK << endl;
+			cout << _pTarget->szName << " Dice_LUK: " << TargetDice_LUK << endl;
+
+			_pTarget->curStat.iHP -= _pAttacker->curStat.iSTR;
+			cout << _pAttacker->szName << "의 공격이 급소에 명중." << endl;
+			cout << endl;
+		}
+
+		system("pause");
+	}
+	else
+	{
+		cout << _pAttacker->szName << " Dice_DEX: " << AttackerDice << endl;
+		cout << _pTarget->szName << " Dice_DEX: " << TargetDice << endl;
+
+		cout << _pAttacker->szName << "의 공격 빗나감." << endl;
+		cout << endl;
+		system("pause");
+	}
 }
 
 void LoadCharacter(INFO** _pPlayer)

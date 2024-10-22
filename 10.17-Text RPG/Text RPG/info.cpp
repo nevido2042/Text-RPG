@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "info.h"
 #include "misc.h"
+#include "TextRPG.h"
 
 void tagStat::RenderStat()
 {
@@ -53,15 +54,23 @@ void tagStat::PrintDetailStat()
 void tagStat::SetStatRandom(int _iValue)
 {
 	const int iMaxPoint = iStatCount * _iValue;
-	int iRemainPoint = iTotalStat;
+	iHP = RollDice(iMaxPoint);
+	iMP = RollDice(iMaxPoint);
+	iSTR = RollDice(iMaxPoint);
+	iDEX = RollDice(iMaxPoint);
+	iLUK = RollDice(iMaxPoint);
+	iINT = RollDice(iMaxPoint);
 
-	SetRandomPoint(&iHP, &iRemainPoint, &iMaxPoint);
-	SetRandomPoint(&iMP, &iRemainPoint, &iMaxPoint);
-	SetRandomPoint(&iSTR, &iRemainPoint, &iMaxPoint);
-	SetRandomPoint(&iDEX, &iRemainPoint, &iMaxPoint);
-	SetRandomPoint(&iLUK, &iRemainPoint, &iMaxPoint);
-	//iINT = iRemainPoint;
-	SetRandomPoint(&iINT, &iRemainPoint, &iMaxPoint);
+	//const int iMaxPoint = iStatCount * _iValue;
+	//int iRemainPoint = iTotalStat;
+
+	//SetRandomPoint(&iHP, &iRemainPoint, &iMaxPoint);
+	//SetRandomPoint(&iMP, &iRemainPoint, &iMaxPoint);
+	//SetRandomPoint(&iSTR, &iRemainPoint, &iMaxPoint);
+	//SetRandomPoint(&iDEX, &iRemainPoint, &iMaxPoint);
+	//SetRandomPoint(&iLUK, &iRemainPoint, &iMaxPoint);
+	////iINT = iRemainPoint;
+	//SetRandomPoint(&iINT, &iRemainPoint, &iMaxPoint);
 }
 
 void tagStat::SetRandomPoint(int* _iStatPoint, int* _iRemainPoint, const int* _iMaxPoint)
@@ -105,7 +114,14 @@ void tagINFO::ResetStat()
 
 void tagInventory::AddItem(ITEM _item)
 {
-	inven[iItemCount++] = _item;
+	if (iItemCount == MAX_INVEN)
+	{
+		cout << "아이템을 더 가질 수 없습니다." << endl;
+		system("pause");
+		return;
+	}
+
+	itemArray[iItemCount++] = _item;
 }
 
 int tagInventory::RemoveItem(int _iNum)
@@ -120,7 +136,7 @@ int tagInventory::RemoveItem(int _iNum)
 	--iItemCount;
 	for (int i = _iNum; i < iItemCount - _iNum; ++i)
 	{
-		swap(inven[i], inven[i + 1]);
+		swap(itemArray[i], itemArray[i + 1]);
 	}
 
 	return SUCCESS;
@@ -132,8 +148,24 @@ void tagInventory::PrintAll()
 	for (int i = 0; i < iItemCount; ++i)
 	{
 		cout << i + 1 << '.';
-		inven[i].PrintItem();
+		itemArray[i].PrintItem();
 	}
+}
+
+void tagInventory::ClearInven()
+{
+	iItemCount = 0;
+}
+
+void tagInventory::SetMerchantInven()
+{
+	ClearInven();
+	
+	ITEM item;
+	item.iValue = 50;
+	strcpy_s(item.szName, "빨간 물약");
+	AddItem(item);
+
 }
 
 void tagItem::PrintItem()

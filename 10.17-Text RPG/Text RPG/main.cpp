@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TextRPG.h"
+#include <Windows.h>
 
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
@@ -17,6 +18,11 @@ int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(206); //번호로 누수 위치 확인 가능
+
+	//col = 가로, lines = 세로
+	system("mode con:cols=50 lines=40");
+
+	SetConsoleTitle(L"Text RPG");
 
 	Run_TextRPG();
 	return 0;
