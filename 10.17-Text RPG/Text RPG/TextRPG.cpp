@@ -382,8 +382,8 @@ void Enter_Mountain(INFO* _pPlayer)
 	{
 		if (_pPlayer->curStat.iHP == 0)
 		{
-			cout << "플레이어 쓰러짐" << endl;
-			system("pause");
+			//cout << "플레이어 쓰러짐" << endl;
+			//system("pause");
 			return;
 		}
 
@@ -411,7 +411,8 @@ void Enter_Mountain(INFO* _pPlayer)
 		case 2:
 			//탐색
 			//적 조우, 함정(DEX), 상자(INT)-미믹,보물,함정
-			FaceMonster(_pPlayer, 2);
+			TriggerRandomEvent(_pPlayer);
+			//FaceMonster(_pPlayer, 2);
 			break;
 		case 3:
 			//복귀
@@ -462,6 +463,93 @@ void Enter_Cave(INFO* _pPlayer)
 			break;
 		}
 	}
+}
+
+void TriggerRandomEvent(INFO* _pPlayer)
+{
+	const int iEventCount = 3; 
+	int iRandNum = rand() % iEventCount + 1;
+
+	switch (iRandNum)
+	{
+	case 1:
+		FaceMonster(_pPlayer, 2);
+		return;
+	case 2:
+		TriggerTrap(_pPlayer, 3);
+		return;
+	case 3:
+		FindMagicBox(_pPlayer, 3);
+		return;
+	default:
+		cout << __FUNCTION__ << endl;
+		system("pause");
+		break;
+	}
+}
+
+void TriggerTrap(INFO* _pPlayer, int _iValue)
+{
+	system("cls");
+	_pPlayer->PrintInfo();
+
+	cout << "함정 발동!_" << _iValue << endl;
+	cout << "주사위 굴리기(DEX)" << endl;
+	system("pause");
+
+	int iDice_DEX = RollDice(_pPlayer->curStat.iDEX);
+	if (iDice_DEX > _iValue)
+	{
+		cout << "주사위 결과: " << iDice_DEX << endl;
+		cout << "재빠른 몸놀림으로 함정을 피했다." << endl;
+		system("pause");
+		return;
+	}
+	else
+	{
+		_pPlayer->curStat.iHP -= _iValue;
+
+		cout << "주사위 결과: " << iDice_DEX << endl;
+		cout << "함정에 걸려 들었다." << endl;
+		system("pause");
+
+		system("cls");
+		_pPlayer->PrintInfo();
+
+		return;
+	}
+}
+
+void FindMagicBox(INFO* _pPlayer, int _iValue)
+{
+	int iInput(0);
+
+	while (true)
+	{
+		system("cls");
+		_pPlayer->PrintInfo();
+
+		cout << "마법으로 잠긴 상자를 발견했다." << endl;
+		cout << "1.마법 풀기(INT) 2.무시하기" << endl;
+
+		if (GetInput(&iInput) == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		switch (iInput)
+		{
+		case 1:
+			//마법 풀기
+			break;
+		case 2:
+			//무시 하기
+			return;
+		default:
+			break;
+		}
+	}
+	
 }
 
 void FaceMonster(INFO* _pPlayer, int _iValue)

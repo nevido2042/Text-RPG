@@ -16,6 +16,10 @@ int RollDice(int iValue);
 void Enter_Grassland(INFO* _pPlayer);
 void Enter_Mountain(INFO* _pPlayer);
 void Enter_Cave(INFO* _pPlayer);
+
+void TriggerRandomEvent(INFO* _pPlayer);
+void TriggerTrap(INFO* _pPlayer, int _iValue = 1);
+void FindMagicBox(INFO* _pPlayer, int _iValue = 1);
 void FaceMonster(INFO* _pPlayer, int _iValue = 2);
 void StartBattle(INFO* _pPlayer, INFO* _pMonster);
 void RenderBattleInfo(INFO* _pPlayer, INFO* _pMonster);
