@@ -14,7 +14,9 @@ void RecoveryHP(INFO* _pUser, INFO* _pTarget)
 		//과치유 방지
 		_pUser->curStat.iHP = _pUser->stat.iHP;
 	}
-
+	SetPrintColor(YELLOW);
 	cout << _pUser->szName << " 은(는) " << Amount << "만큼 회복 되었다." << endl;
+	SetPrintColor(GRAY);
+
 	system("pause");
 }

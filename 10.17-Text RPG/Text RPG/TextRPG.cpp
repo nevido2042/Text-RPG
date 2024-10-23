@@ -928,8 +928,15 @@ int SelectItem(INFO* _pPlayer, INFO* _pMonster)
 		{
 			return _ERROR;
 		}
+		
+		//게임중 얻는 아이템과
+		//불러오기로 들어온 아이템의
+		//함수 포인터 값이 달라서 터진다.
+		// 
+		//불러 오기 할때 다시 담아야하나?
+		ITEM selectedItem = _pPlayer->inven.itemArray[iInput - 1];
+		selectedItem.Use(_pPlayer, _pMonster);
 
-		_pPlayer->inven.itemArray[iInput - 1].Use(_pPlayer, _pMonster);
 		RenderBattleInfo(_pPlayer, _pMonster);
 		//system("pause");
 		return SUCCESS;
