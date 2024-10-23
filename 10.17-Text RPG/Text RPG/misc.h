@@ -5,6 +5,9 @@
 #define _ERROR -1
 #define SUCCESS 0
 
+#define NAME_LEN 32
+#define MAX_INVEN 5
+
 //»ö»ó
 enum {
 	BLACK,

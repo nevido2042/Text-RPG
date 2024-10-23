@@ -1,14 +1,11 @@
 #pragma once
+#include "item.h"
+#include "stat.h"
+//#include "inventory.h"
 
-#define NAME_LEN 32
-#define MAX_INVEN 5
+#include "misc.h"
 
-typedef struct tagItem
-{
-	char szName[NAME_LEN] = "";
-	int iValue = 0; // 가치(단위: 골드)
-	void PrintItem();
-}ITEM;
+//struct ITEM;
 
 typedef struct tagInventory
 {
@@ -21,26 +18,7 @@ typedef struct tagInventory
 	void SetMerchantInven();
 }INVEN;
 
-typedef struct tagStat
-{
-	const int iStatCount = 6;
-	const int iTotalStat = iStatCount * iStatCount;
-
-	int iHP = iStatCount;
-	int iMP = iStatCount;
-	int iSTR = iStatCount;
-	int iDEX = iStatCount;
-	int iLUK = iStatCount;
-	int iINT = iStatCount;
-
-	void RenderStat();
-	void PrintALL();
-	void PrintDetailStat();
-	void SetStatRandom(int _iValue = 2);
-	void SetRandomPoint(int* _iStatPoint, int* _iRemainPoint, const int* _iMaxPoint);
-}STAT;
-
-typedef struct tagINFO
+typedef struct tagInfo
 {
 	char szName[NAME_LEN * 2] = "";
 	int iDay = 1;

@@ -1,6 +1,11 @@
-#include "pch.h"
 #include "TextRPG.h"
+#include "pch.h"
 #include "misc.h"
+
+//#include "inventory.h"
+//typedef struct tagInventory INVEN;
+//extern void AddItem(ITEM _item);
+
 
 void CreateCharacter(INFO** _ppPlayer)
 {
