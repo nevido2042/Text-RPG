@@ -133,6 +133,7 @@
     <ClCompile Include="inventory.cpp" />
     <ClCompile Include="inventory.h" />
     <ClCompile Include="item.cpp" />
+    <ClCompile Include="item_RedPotion.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="misc.cpp" />
     <ClCompile Include="pch.cpp">
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="info.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="item_RedPotion.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="pch.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

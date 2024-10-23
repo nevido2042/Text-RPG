@@ -49,10 +49,12 @@ void tagInventory::ClearInven()
 
 void tagInventory::SetMerchantInven()
 {
+	extern ITEM redPotion;
+
 	ClearInven();
 
-	ITEM item;
+	/*ITEM item;
 	item.iValue = 50;
-	strcpy_s(item.szName, "說除 僭擒");
-	AddItem(item);
+	strcpy_s(item.szName, "說除 僭擒");*/
+	AddItem(redPotion);
 }

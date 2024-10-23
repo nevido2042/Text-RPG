@@ -871,8 +871,7 @@ int SelectItem(INFO* _pPlayer, INFO* _pMonster)
 			return _ERROR;
 		}
 
-		//_pPlayer->inven.itemArray[iInput - 1].Use();
-		cout << "아이템 사용 구현 예정" << endl;
+		_pPlayer->inven.itemArray[iInput - 1].Use(_pPlayer, _pMonster);
 		system("pause");
 		return SUCCESS;
 	}
