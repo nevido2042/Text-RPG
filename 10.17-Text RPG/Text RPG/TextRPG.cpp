@@ -90,7 +90,7 @@ void SelectTask(INFO* _pPlayer)
 		cout << "Day-" << _pPlayer->iDay << endl;
 		cout << "현재위치: 은신처" << endl;
 		cout << "<행동 결정>" << endl;
-		cout << " 1.휴식 2.모험 3.소지품 4.상점 5.저장&종료" << endl;
+		cout << " 1.휴식 2.모험 3.소지품 4.상점 5.저장&종료 999.치트" << endl;
 
 		if (GetInput(&iInput) == INPUT_ERROR)
 		{
@@ -136,6 +136,12 @@ void SelectTask(INFO* _pPlayer)
 			SAFE_DELETE(_pPlayer);
 			SAFE_DELETE(pMerchant);
 			return;
+		case 999:
+			//치트
+			_pPlayer->iGold += 999;
+			extern ITEM redPotion;
+			_pPlayer->inven.AddItem(redPotion);
+			break;
 		default:
 			break;
 		}
@@ -564,15 +570,22 @@ void TriggerTrap(INFO* _pPlayer, int _iValue)
 	system("cls");
 	_pPlayer->PrintInfo();
 
+	SetPrintColor(YELLOW);
 	cout << "함정(" << _iValue << ")이 작동되었다!" << endl;
+	SetPrintColor(GRAY);
+
 	cout << "주사위 굴리기(DEX)" << endl;
 	system("pause");
+	cout << endl;
 
 	int iDice_DEX = RollDice(_pPlayer->curStat.iDEX);
 	if (iDice_DEX > _iValue)
 	{
 		cout << "주사위 결과: " << iDice_DEX << endl;
+		SetPrintColor(YELLOW);
 		cout << "재빠른 몸놀림으로 함정을 피했다." << endl;
+		SetPrintColor(GRAY);
+
 		system("pause");
 		return;
 	}
@@ -581,7 +594,10 @@ void TriggerTrap(INFO* _pPlayer, int _iValue)
 		_pPlayer->curStat.iHP -= _iValue;
 
 		cout << "주사위 결과: " << iDice_DEX << endl;
+		SetPrintColor(RED);
 		cout << "함정에 피해를 받았다." << endl;
+		SetPrintColor(GRAY);
+
 		system("pause");
 
 		system("cls");
@@ -600,7 +616,10 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 		system("cls");
 		_pPlayer->PrintInfo();
 
+		SetPrintColor(YELLOW);
 		cout << "마법으로 잠긴 상자(" << _iValue << ")를 발견했다._" << endl;
+		SetPrintColor(GRAY);
+
 		cout << "1.마법 풀기(INT) 2.무시하기" << endl;
 
 		if (GetInput(&iInput) == INPUT_ERROR)
@@ -618,8 +637,10 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 			if (iDice_INT > _iValue)
 			{
 				cout << "주사위 결과: " << iDice_INT << endl;
+				SetPrintColor(YELLOW);
 				cout << "상자에 걸린 마법을 제거했다." << endl;
 				cout << "보물을 획득 했다." << endl;
+				SetPrintColor(GRAY);
 
 				ITEM item;
 				strcpy_s(item.szName, "보물");
@@ -632,7 +653,10 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 			else
 			{
 				cout << "주사위 결과: " << iDice_INT << endl;
+				SetPrintColor(YELLOW);
 				cout << "마법을 제거하지 못했다." << endl;
+				SetPrintColor(GRAY);
+
 				system("pause");
 			}
 			return;
@@ -656,7 +680,9 @@ void FaceMonster(INFO* _pPlayer, int _iValue)
 
 	RenderBattleInfo(_pPlayer, pMonster);
 
+	SetPrintColor(YELLOW);
 	cout << "몬스터와 마주했다." << endl;
+	SetPrintColor(GRAY);
 
 	system("pause");
 
@@ -676,7 +702,10 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 	{
 		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
 		cout << "몬스터의 민첩이 더 높다." << endl;
+		SetPrintColor(YELLOW);
 		cout << "몬스터의 선제 공격!" << endl;
+		SetPrintColor(GRAY);
+
 		cout << endl;
 		system("pause");
 
@@ -688,7 +717,10 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 			RenderBattleInfo(_pPlayer, _pMonster);
 
 			_pPlayer->curStat.iHP = 0;
+			SetPrintColor(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
+			SetPrintColor(GRAY);
+
 			cout << endl;
 
 			system("pause");
@@ -723,7 +755,10 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 			{
 				_pMonster->curStat.iHP = 0;
 
+				SetPrintColor(YELLOW);
 				cout << "몬스터 쓰러짐!" << endl;
+				SetPrintColor(GRAY);
+
 				cout << "전투 종료" << endl;
 
 				ITEM item;
@@ -736,7 +771,7 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 				return;
 			}
 
-			system("pause");
+			//system("pause");
 
 			break;
 		}
@@ -761,16 +796,21 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 			{
 				cout << "PlayerDice: " << iPlayerDice << endl;
 				cout << "MonsterDice: " << iMonsterDice << endl;
-
+				
+				SetPrintColor(YELLOW);
 				cout << "도망 성공" << endl;
+				SetPrintColor(GRAY);
+
 				system("pause");
 				return;
 
 			}
 			cout << "PlayerDice: " << iPlayerDice << endl;
 			cout << "MonsterDice: " << iMonsterDice << endl;
-
+			SetPrintColor(YELLOW);
 			cout << "도망 실패" << endl;
+			SetPrintColor(GRAY);
+
 			system("pause");
 			break;
 		}
@@ -778,6 +818,13 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 			continue;
 		}
 
+		SetPrintColor(YELLOW);
+		cout << "적의 턴" << endl;
+		SetPrintColor(GRAY);
+		cout << endl;
+
+		system("pause");
+		
 		RenderBattleInfo(_pPlayer, _pMonster);
 
 		TryAttack(_pMonster, _pPlayer);
@@ -788,7 +835,10 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 		{
 			_pPlayer->curStat.iHP = 0;
 
+			SetPrintColor(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
+			SetPrintColor(GRAY);
+
 			cout << "전투 종료" << endl;
 			system("pause");
 			return;
@@ -809,7 +859,9 @@ void RenderBattleInfo(INFO* _pPlayer, INFO* _pMonster)
 
 void TryAttack(INFO* _pAttacker, INFO* _pTarget)
 {
+	SetPrintColor(YELLOW);
 	cout << _pAttacker->szName << "의 공격" << endl;
+	SetPrintColor(GRAY);
 
 	int AttackerDice = RollDice(_pAttacker->curStat.iDEX);
 	int TargetDice = RollDice(_pTarget->curStat.iDEX);
@@ -820,7 +872,9 @@ void TryAttack(INFO* _pAttacker, INFO* _pTarget)
 		cout << _pTarget->szName << " Dice_DEX: " << TargetDice << endl;
 
 		_pTarget->curStat.iHP -= _pAttacker->curStat.iSTR;
+		SetPrintColor(RED);
 		cout << _pAttacker->szName << "의 공격 명중." << endl;
+		SetPrintColor(GRAY);
 		cout << endl;
 
 		int AttackerDice_LUK = RollDice(_pAttacker->curStat.iLUK);
@@ -832,7 +886,10 @@ void TryAttack(INFO* _pAttacker, INFO* _pTarget)
 			cout << _pTarget->szName << " Dice_LUK: " << TargetDice_LUK << endl;
 
 			_pTarget->curStat.iHP -= _pAttacker->curStat.iSTR;
+			SetPrintColor(RED);
 			cout << _pAttacker->szName << "의 공격이 급소에 명중." << endl;
+			SetPrintColor(GRAY);
+
 			cout << endl;
 		}
 
@@ -842,8 +899,9 @@ void TryAttack(INFO* _pAttacker, INFO* _pTarget)
 	{
 		cout << _pAttacker->szName << " Dice_DEX: " << AttackerDice << endl;
 		cout << _pTarget->szName << " Dice_DEX: " << TargetDice << endl;
-
+		SetPrintColor(YELLOW);
 		cout << _pAttacker->szName << "의 공격 빗나감." << endl;
+		SetPrintColor(GRAY);
 		cout << endl;
 		system("pause");
 	}
@@ -872,7 +930,8 @@ int SelectItem(INFO* _pPlayer, INFO* _pMonster)
 		}
 
 		_pPlayer->inven.itemArray[iInput - 1].Use(_pPlayer, _pMonster);
-		system("pause");
+		RenderBattleInfo(_pPlayer, _pMonster);
+		//system("pause");
 		return SUCCESS;
 	}
 

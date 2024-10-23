@@ -1,22 +1,10 @@
 #pragma once
-#include "item.h"
-#include "stat.h"
-//#include "inventory.h"
-
 #include "misc.h"
 
-//struct ITEM;
+#include "item.h"
+#include "stat.h"
+#include "inventory.h"
 
-typedef struct tagInventory
-{
-	ITEM itemArray[MAX_INVEN] = {};
-	int iItemCount = 0;
-	void AddItem(ITEM _item);
-	int RemoveItem(int _iNum);
-	void PrintAll();
-	void ClearInven();
-	void SetMerchantInven();
-}INVEN;
 
 typedef struct tagInfo
 {
@@ -27,6 +15,7 @@ typedef struct tagInfo
 	INVEN inven;
 	int iGold = 0;
 	
+	void RenderStat();
 	void PrintName();
 	void PrintInfo();
 	void ResetStat();

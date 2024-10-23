@@ -20,7 +20,7 @@ int main()
 	//_CrtSetBreakAlloc(206); //번호로 누수 위치 확인 가능
 
 	//col = 가로, lines = 세로
-	system("mode con:cols=50 lines=40");
+	system("mode con:cols=100 lines=40");
 
 	SetConsoleTitle(L"Text RPG");
 
