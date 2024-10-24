@@ -4,6 +4,19 @@
 
 #include "info.h"
 
+//tagItem::tagItem(const char* _szName, int _iValue, void(*_pUse)(INFO*, INFO*))
+//{
+//	strcpy_s(szName, _szName);
+//	iValue = _iValue;
+//	pUse = _pUse;
+//
+//	if (strcmp(szName, "»¡°£ ¹°¾à") == SUCCESS)
+//	{
+//		extern void RecoveryHP(INFO * _pUser, INFO * _pTarget);
+//		pUse = &RecoveryHP;
+//	}
+//}
+
 void tagItem::PrintItem()
 {
 	cout << szName;

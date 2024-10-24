@@ -5,6 +5,8 @@ typedef struct tagInfo INFO;
 
 typedef struct tagItem
 {
+	//tagItem(const char* _szName = nullptr, int _iValue = 0, void(*_pUse)(INFO*, INFO*) = nullptr);
+
 	char szName[NAME_LEN] = "";
 	int iValue = 0; // 가치(단위: 골드)
 	void PrintItem();
