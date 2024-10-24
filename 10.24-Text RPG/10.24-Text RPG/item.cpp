@@ -4,18 +4,27 @@
 
 #include "info.h"
 
-//tagItem::tagItem(const char* _szName, int _iValue, void(*_pUse)(INFO*, INFO*))
-//{
-//	strcpy_s(szName, _szName);
-//	iValue = _iValue;
-//	pUse = _pUse;
-//
-//	if (strcmp(szName, "빨간 물약") == SUCCESS)
-//	{
-//		extern void RecoveryHP(INFO * _pUser, INFO * _pTarget);
-//		pUse = &RecoveryHP;
-//	}
-//}
+tagItem::tagItem()//로드할 때 함수 포인터 초기화
+{
+	//cout << __FUNCTION__ << endl;
+
+	if (strcmp(szName, "빨간 물약") == SUCCESS)
+	{
+		extern void RecoveryHP(INFO * _pUser, INFO * _pTarget);
+		pUse = &RecoveryHP;
+	}
+}
+
+tagItem::tagItem(const char* _szName, int _iValue, void(*_pUse)(INFO*, INFO*))
+{//아이템 선언 시 사용
+	//cout << __FUNCTION__ << endl;
+
+	if (_szName == nullptr) return;
+
+	strcpy_s(szName, _szName);
+	iValue = _iValue;
+	pUse = _pUse;
+}
 
 void tagItem::PrintItem()
 {

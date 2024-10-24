@@ -7,6 +7,10 @@
 //{
 //}
 
+tagInfo::tagInfo()
+{
+}
+
 void tagInfo::RenderStat()
 {
 	cout << "Ã¼·Â: ";

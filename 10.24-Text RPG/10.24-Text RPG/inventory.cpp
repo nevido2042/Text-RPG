@@ -2,8 +2,6 @@
 #include "inventory.h"
 #include "misc.h"
 
-//typedef struct tagItem ITEM;
-
 void tagInventory::AddItem(ITEM _item)
 {
 	if (iItemCount == MAX_INVEN)

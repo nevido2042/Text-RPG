@@ -8,7 +8,7 @@
 
 typedef struct tagInfo
 {
-	//tagInfo();
+	tagInfo();
 
 	char szName[NAME_LEN * 2] = "";
 	int iDay = 1;
