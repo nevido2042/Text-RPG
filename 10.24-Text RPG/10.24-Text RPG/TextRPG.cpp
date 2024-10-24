@@ -1,5 +1,5 @@
-#include "TextRPG.h"
 #include "pch.h"
+#include "TextRPG.h"
 #include "misc.h"
 
 void CreateCharacter(INFO** _ppPlayer)

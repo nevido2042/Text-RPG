@@ -24,6 +24,7 @@ int main()
 	SetConsoleTitle(L"Text RPG");
 
 	Run_TextRPG();
+	
 	return 0;
 }
 

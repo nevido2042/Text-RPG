@@ -18,6 +18,12 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TextRPG.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="info.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -30,21 +36,18 @@
     <ClCompile Include="item_RedPotion.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="misc.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="stat.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="TextRPG.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="TextRPG.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="info.h">
@@ -63,9 +66,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="stat.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TextRPG.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

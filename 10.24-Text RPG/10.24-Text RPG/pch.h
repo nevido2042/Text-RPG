@@ -9,6 +9,14 @@
 
 // 여기에 미리 컴파일하려는 헤더 추가
 #include <iostream>
+using namespace std;
+
 #include <time.h>
 #include <Windows.h>
+
+//#include "inventory.h"
+//#include "item.h"
+//#include "stat.h"
+//#include "info.h"
+
 #endif //PCH_H

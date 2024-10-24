@@ -1,8 +1,6 @@
-#include "stat.h"
-#include "misc.h"
 #include "pch.h"
+#include "stat.h"
 
-//#include "TextRPG.h"
 extern int RollDice(int iMaxPoint);
 
 void tagStat::RenderStat()

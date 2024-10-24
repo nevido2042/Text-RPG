@@ -1,5 +1,4 @@
 #pragma once
-//#include "pch.h"
 #include "info.h"
 
 enum DUNGEON { Grassland = 1, Mountain, Cave };

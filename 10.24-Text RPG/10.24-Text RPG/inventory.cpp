@@ -1,6 +1,6 @@
+#include "pch.h"
 #include "inventory.h"
 #include "misc.h"
-#include "pch.h"
 
 //typedef struct tagItem ITEM;
 
