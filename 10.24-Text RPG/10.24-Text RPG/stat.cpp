@@ -15,7 +15,7 @@ int CStat::Get_MP()
 
 int CStat::Get_STR()
 {
-	return Get_STR();
+	return m_iSTR;
 }
 
 int CStat::Get_DEX()
@@ -86,7 +86,7 @@ void CStat::RenderStat()
 	cout << endl;
 
 	cout << "°ø°Ý·Â: ";
-	for (int i = 0; i < Get_STR(); ++i)
+	for (int i = 0; i < m_iSTR; ++i)
 	{
 		cout << "¢Ó";
 	}
@@ -100,7 +100,7 @@ void CStat::PrintALL()
 	//cout << "====================" << endl;
 	cout << "HP: " << m_iHP << endl;
 	cout << "MP: " << m_iMP << endl;
-	cout << "STR: " << Get_STR() << endl;
+	cout << "STR: " << m_iSTR << endl;
 	cout << "DEX: " << m_iDEX << endl;
 	cout << "LUK: " << m_iLUK << endl;
 	cout << "INT: " << m_iINT << endl;
@@ -110,7 +110,7 @@ void CStat::PrintALL()
 
 void CStat::PrintDetailStat()
 {
-	cout << "STR: " << Get_STR() << endl;
+	cout << "STR: " << m_iSTR << endl;
 	cout << "DEX: " << m_iDEX << endl;
 	cout << "LUK: " << m_iLUK << endl;
 	cout << "INT: " << m_iINT << endl;
