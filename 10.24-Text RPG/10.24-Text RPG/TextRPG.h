@@ -3,33 +3,33 @@
 
 enum DUNGEON { Grassland = 1, Mountain, Cave };
 
-void CreateCharacter(INFO** _ppPlayer);
-void SetSTAT(INFO* _pPlayer);
-void SelectTask(INFO* _pPlayer);
+void CreateCharacter(CInfo** _ppPlayer);
+void SetSTAT(CInfo* _pPlayer);
+void SelectTask(CInfo* _pPlayer);
 int GetInput(int* _pInput);
-void OpenShop(INFO* _pPlayer, INFO* _pMerchant);
-void RenderShop(INFO* _pPlayer, INFO* _pMerchant);
-void BuyItem(INFO* _pPlayer, INFO* _pMerchant);
-void SellItem(INFO* _pPlayer, INFO* _pMerchant);
-void SelectDungeon(INFO* _pPlayer);
+void OpenShop(CInfo* _pPlayer, CInfo* _pMerchant);
+void RenderShop(CInfo* _pPlayer, CInfo* _pMerchant);
+void BuyItem(CInfo* _pPlayer, CInfo* _pMerchant);
+void SellItem(CInfo* _pPlayer, CInfo* _pMerchant);
+void SelectDungeon(CInfo* _pPlayer);
 int InputCheck();
 int RollDice(int iValue);
 
-void Enter_Dungeon(INFO* _pPlayer, int _iValue = 2);
-//void Enter_Grassland(INFO* _pPlayer);
-//void Enter_Mountain(INFO* _pPlayer);
-//void Enter_Cave(INFO* _pPlayer);
+void Enter_Dungeon(CInfo* _pPlayer, int _iValue = 2);
+//void Enter_Grassland(CInfo* _pPlayer);
+//void Enter_Mountain(CInfo* _pPlayer);
+//void Enter_Cave(CInfo* _pPlayer);
 
-void TriggerRandomEvent(INFO* _pPlayer, int _iValue);
-void TriggerTrap(INFO* _pPlayer, int _iValue = 1);
-void FindMagicBox(INFO* _pPlayer, int _iValue = 1);
-void FaceMonster(INFO* _pPlayer, int _iValue = 2);
-void StartBattle(INFO* _pPlayer, INFO* _pMonster);
-void RenderBattleInfo(INFO* _pPlayer, INFO* _pMonster);
-void TryAttack(INFO* _pAttacker, INFO* _pTarget);
-int SelectItem(INFO* _pPlayer, INFO* _pMonster);
+void TriggerRandomEvent(CInfo* _pPlayer, int _iValue);
+void TriggerTrap(CInfo* _pPlayer, int _iValue = 1);
+void FindMagicBox(CInfo* _pPlayer, int _iValue = 1);
+void FaceMonster(CInfo* _pPlayer, int _iValue = 2);
+void StartBattle(CInfo* _pPlayer, CInfo* _pMonster);
+void RenderBattleInfo(CInfo* _pPlayer, CInfo* _pMonster);
+void TryAttack(CInfo* _pAttacker, CInfo* _pTarget);
+int SelectItem(CInfo* _pPlayer, CInfo* _pMonster);
 
 
-void LoadCharacter(INFO** _pPlayer);
-void SaveCharacter(INFO* _pPlayer);
+void LoadCharacter(CInfo** _pPlayer);
+void SaveCharacter(CInfo* _pPlayer);
 void Run_TextRPG();

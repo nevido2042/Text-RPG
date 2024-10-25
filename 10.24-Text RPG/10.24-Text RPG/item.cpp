@@ -10,12 +10,12 @@ CItem::CItem()//로드할 때 함수 포인터 초기화
 
 	if (strcmp(m_szName, "빨간 물약") == SUCCESS)
 	{
-		extern void RecoveryHP(INFO * _pUser, INFO * _pTarget);
+		extern void RecoveryHP(CInfo * _pUser, CInfo * _pTarget);
 		m_pUse = &RecoveryHP;
 	}
 }
 
-CItem::CItem(const char* _szName, int _iValue, void(*_pUse)(INFO*, INFO*))
+CItem::CItem(const char* _szName, int _iValue, void(*_pUse)(CInfo*, CInfo*))
 {//아이템 선언 시 사용
 	//cout << __FUNCTION__ << endl;
 
@@ -50,7 +50,7 @@ void CItem::Set_Value(int _iValue)
 	m_iValue = _iValue;
 }
 
-void CItem::Use(INFO* _pUser, INFO* _pTarget)
+void CItem::Use(CInfo* _pUser, CInfo* _pTarget)
 {
 	if (m_pUse == nullptr)
 	{

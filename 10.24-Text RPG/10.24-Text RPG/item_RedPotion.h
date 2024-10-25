@@ -1,7 +1,7 @@
 #pragma once
 #include "item.h"
 
-void RecoveryHP(INFO* _pUser, INFO* _pTarget);
+void RecoveryHP(CInfo* _pUser, CInfo* _pTarget);
 
 CItem redPotion("»¡°£ ¹°¾à", 50, RecoveryHP);
 //{

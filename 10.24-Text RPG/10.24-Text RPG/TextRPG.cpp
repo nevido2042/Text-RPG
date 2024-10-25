@@ -2,7 +2,7 @@
 #include "TextRPG.h"
 #include "misc.h"
 
-void CreateCharacter(INFO** _ppPlayer)
+void CreateCharacter(CInfo** _ppPlayer)
 {
 	while (true)
 	{
@@ -10,11 +10,11 @@ void CreateCharacter(INFO** _ppPlayer)
 		//cout << "====================" << endl;
 		cout << "<캐릭터 생성>" << endl;
 		cout << endl;
-		*_ppPlayer = new INFO;
+		*_ppPlayer = new CInfo;
 		cout << "이름" << '(' << NAME_LEN << "Byte" << ')' << ": ";
-		cin >> (*_ppPlayer)->szName; //위험한 짓인가? //그래서 저장공간 두배로 함 일단
+		cin >> (*_ppPlayer)->Get_Name(); //위험한 짓인가? //그래서 저장공간 두배로 함 일단
 
-		if (strlen((*_ppPlayer)->szName) >= NAME_LEN)
+		if (strlen((*_ppPlayer)->Get_Name()) >= NAME_LEN)
 		{
 			cout << "이름 길이 초과!" << endl;
 			//cout << sizeof((*_ppPlayer)->szName) << endl;
@@ -28,10 +28,10 @@ void CreateCharacter(INFO** _ppPlayer)
 	SetSTAT(*_ppPlayer);
 }
 
-void SetSTAT(INFO* _pPlayer)
+void SetSTAT(CInfo* _pPlayer)
 {
 	int iInput(0);
-	_pPlayer->stat.SetStatRandom();
+	_pPlayer->Get_Stat()->SetStatRandom();
 
 	while (true)
 	{
@@ -41,7 +41,7 @@ void SetSTAT(INFO* _pPlayer)
 		cout << endl;
 
 		_pPlayer->PrintName();
-		_pPlayer->stat.PrintALL();
+		_pPlayer->Get_Stat()->PrintALL();
 
 		cout << "====================" << endl;
 		cout << "1.주사위돌리기 2.결정" << endl;
@@ -54,7 +54,7 @@ void SetSTAT(INFO* _pPlayer)
 		switch (iInput)
 		{
 		case 1:
-			_pPlayer->stat.SetStatRandom();
+			_pPlayer->Get_Stat()->SetStatRandom();
 			continue;
 		case 2:
 			_pPlayer->ResetStat();
@@ -65,11 +65,11 @@ void SetSTAT(INFO* _pPlayer)
 	}
 }
 
-void SelectTask(INFO* _pPlayer)
+void SelectTask(CInfo* _pPlayer)
 {
-	INFO* pMerchant(nullptr);
-	pMerchant = new INFO;
-	pMerchant->inven.SetMerchantInven();
+	CInfo* pMerchant(nullptr);
+	pMerchant = new CInfo;
+	pMerchant->Get_Inven()->SetMerchantInven();
 
 	int iInput(0);
 
@@ -79,10 +79,10 @@ void SelectTask(INFO* _pPlayer)
 		_pPlayer->PrintInfo();
 
 		SetPrintColor(YELLOW);
-		cout << _pPlayer->iGold << 'G' << endl;
+		cout << _pPlayer->Get_Gold() << 'G' << endl;
 		SetPrintColor(GRAY);
 
-		cout << "Day-" << _pPlayer->iDay << endl;
+		cout << "Day-" << _pPlayer->Get_Day() << endl;
 		cout << "현재위치: 은신처" << endl;
 		cout << "<행동 결정>" << endl;
 		cout << " 1.휴식 2.모험 3.소지품 4.상점 5.저장&종료 999.치트" << endl;
@@ -97,13 +97,13 @@ void SelectTask(INFO* _pPlayer)
 		case 1:
 			//휴식
 			_pPlayer->ResetStat();
-			_pPlayer->iDay++;
-			pMerchant->inven.SetMerchantInven();
+			_pPlayer->IncreaseDay();
+			pMerchant->Get_Inven()->SetMerchantInven();
 			break;
 
 		case 2:
 			//모험
-			if (_pPlayer->curStat.iHP == 0)
+			if (_pPlayer->Get_CurStat()->iHP == 0)
 			{
 				cout << "휴식이 필요." << endl;
 				system("pause");
@@ -118,7 +118,7 @@ void SelectTask(INFO* _pPlayer)
 			//소지품
 			system("cls");
 			_pPlayer->ResetStat();
-			_pPlayer->inven.PrintAll();
+			_pPlayer->Get_Inven()->PrintAll();
 			system("pause");
 			break;
 		case 4:
@@ -133,9 +133,9 @@ void SelectTask(INFO* _pPlayer)
 			return;
 		case 999:
 			//치트
-			_pPlayer->iGold += 999;
+			_pPlayer->AddGold(999);
 			extern CItem redPotion;
-			_pPlayer->inven.AddItem(redPotion);
+			_pPlayer->Get_Inven()->AddItem(redPotion);
 			break;
 		default:
 			break;
@@ -157,11 +157,11 @@ int GetInput(int* _pInput)
 	return SUCCESS;
 }
 
-void OpenShop(INFO* _pPlayer, INFO* _pMerchant)
+void OpenShop(CInfo* _pPlayer, CInfo* _pMerchant)
 {
 	int iInput(0);
 
-	//INFO* merchant = new INFO; //상인 하루에 한번만 리셋되도록 바꿔야지
+	//CInfo* merchant = new CInfo; //상인 하루에 한번만 리셋되도록 바꿔야지
 
 	while (true)
 	{
@@ -190,26 +190,26 @@ void OpenShop(INFO* _pPlayer, INFO* _pMerchant)
 	}
 }
 
-void RenderShop(INFO* _pPlayer, INFO* _pMerchant)
+void RenderShop(CInfo* _pPlayer, CInfo* _pMerchant)
 {
 	system("cls");
 
 	SetPrintColor(YELLOW);
-	cout << _pPlayer->iGold<<"G" << endl;
+	cout << _pPlayer->Get_Gold()<<"G" << endl;
 	SetPrintColor(GRAY);
 
 	cout << "플레이어의 ";
-	_pPlayer->inven.PrintAll();
+	_pPlayer->Get_Inven()->PrintAll();
 
 	cout << "===============================" << endl;
 
 	cout << "상인의";
-	_pMerchant->inven.PrintAll();
+	_pMerchant->Get_Inven()->PrintAll();
 
 	cout << endl;
 }
 
-void BuyItem(INFO* _pPlayer, INFO* _pMerchant)
+void BuyItem(CInfo* _pPlayer, CInfo* _pMerchant)
 {
 	int iInput(0);
 	while (true)
@@ -227,12 +227,12 @@ void BuyItem(INFO* _pPlayer, INFO* _pMerchant)
 			break;
 		}
 
-		CItem item = _pMerchant->inven.Get_ItemArray()[iInput - 1];
+		CItem item = _pMerchant->Get_Inven()->Get_ItemArray()[iInput - 1];
 
-		int iItemValue = _pMerchant->inven.Get_ItemArray()[iInput - 1].Get_Value();
-		if (_pPlayer->iGold >= iItemValue)
+		int iItemValue = _pMerchant->Get_Inven()->Get_ItemArray()[iInput - 1].Get_Value();
+		if (_pPlayer->Get_Gold() >= iItemValue)
 		{
-			_pPlayer->iGold -= iItemValue;
+			_pPlayer->AddGold(-iItemValue);
 		}
 		else
 		{
@@ -241,14 +241,14 @@ void BuyItem(INFO* _pPlayer, INFO* _pMerchant)
 			continue;
 		}
 
-		if (_pMerchant->inven.RemoveItem(iInput - 1) == SUCCESS)
+		if (_pMerchant->Get_Inven()->RemoveItem(iInput - 1) == SUCCESS)
 		{
-			_pPlayer->inven.AddItem(item);
+			_pPlayer->Get_Inven()->AddItem(item);
 		}
 	}
 }
 
-void SellItem(INFO* _pPlayer, INFO* _pMerchant)
+void SellItem(CInfo* _pPlayer, CInfo* _pMerchant)
 {
 	int iInput(0);
 	while (true)
@@ -266,21 +266,21 @@ void SellItem(INFO* _pPlayer, INFO* _pMerchant)
 			break;
 		}
 
-		CItem item = _pPlayer->inven.Get_ItemArray()[iInput - 1];
-		if (_pPlayer->inven.RemoveItem(iInput - 1) == SUCCESS)
+		CItem item = _pPlayer->Get_Inven()->Get_ItemArray()[iInput - 1];
+		if (_pPlayer->Get_Inven()->RemoveItem(iInput - 1) == SUCCESS)
 		{
-			_pPlayer->iGold += item.Get_Value();
-			_pMerchant->inven.AddItem(item);
+			_pPlayer->AddGold(item.Get_Value());
+			_pMerchant->Get_Inven()->AddItem(item);
 		}
 	}
 }
 
-void SelectDungeon(INFO* _pPlayer)
+void SelectDungeon(CInfo* _pPlayer)
 {
 	int iInput(0);
 	while (true)
 	{
-		if (_pPlayer->curStat.iHP == 0)
+		if (_pPlayer->Get_CurStat()->iHP == 0)
 		{
 			return;
 		}
@@ -343,12 +343,12 @@ int RollDice(int iValue)
 	return rand() % iValue + 1;
 }
 
-void Enter_Dungeon(INFO* _pPlayer, int _iValue)
+void Enter_Dungeon(CInfo* _pPlayer, int _iValue)
 {
 	int iInput(0);
 	while (true)
 	{
-		if (_pPlayer->curStat.iHP == 0)
+		if (_pPlayer->Get_CurStat()->iHP == 0)
 		{
 			//cout << "플레이어 쓰러짐" << endl;
 			//system("pause");
@@ -388,7 +388,7 @@ void Enter_Dungeon(INFO* _pPlayer, int _iValue)
 		case 1:
 			//대기
 			//_pPlayer->ResetStat();
-			_pPlayer->curStat.iHP -= 1;
+			_pPlayer->Get_CurStat()->iHP -= 1;
 
 			break;
 		case 2:
@@ -407,7 +407,7 @@ void Enter_Dungeon(INFO* _pPlayer, int _iValue)
 	}
 }
 
-//void Enter_Grassland(INFO* _pPlayer)
+//void Enter_Grassland(CInfo* _pPlayer)
 //{
 //	int iInput(0);
 //	while (true)
@@ -447,7 +447,7 @@ void Enter_Dungeon(INFO* _pPlayer, int _iValue)
 //	}
 //}
 //
-//void Enter_Mountain(INFO* _pPlayer)
+//void Enter_Mountain(CInfo* _pPlayer)
 //{
 //	int iInput(0);
 //	while (true)
@@ -495,7 +495,7 @@ void Enter_Dungeon(INFO* _pPlayer, int _iValue)
 //	}
 //}
 //
-//void Enter_Cave(INFO* _pPlayer)
+//void Enter_Cave(CInfo* _pPlayer)
 //{
 //	int iInput(0);
 //	while (true)
@@ -537,7 +537,7 @@ void Enter_Dungeon(INFO* _pPlayer, int _iValue)
 //	}
 //}
 
-void TriggerRandomEvent(INFO* _pPlayer, int _iValue)
+void TriggerRandomEvent(CInfo* _pPlayer, int _iValue)
 {
 	const int iEventCount = 3; 
 	int iRandNum = rand() % iEventCount + 1;
@@ -560,7 +560,7 @@ void TriggerRandomEvent(INFO* _pPlayer, int _iValue)
 	}
 }
 
-void TriggerTrap(INFO* _pPlayer, int _iValue)
+void TriggerTrap(CInfo* _pPlayer, int _iValue)
 {
 	system("cls");
 	_pPlayer->PrintInfo();
@@ -573,7 +573,7 @@ void TriggerTrap(INFO* _pPlayer, int _iValue)
 	system("pause");
 	cout << endl;
 
-	int iDice_DEX = RollDice(_pPlayer->curStat.iDEX);
+	int iDice_DEX = RollDice(_pPlayer->Get_CurStat()->iDEX);
 	if (iDice_DEX > _iValue)
 	{
 		cout << "주사위 결과: " << iDice_DEX << endl;
@@ -586,7 +586,7 @@ void TriggerTrap(INFO* _pPlayer, int _iValue)
 	}
 	else
 	{
-		_pPlayer->curStat.iHP -= _iValue;
+		_pPlayer->Get_CurStat()->iHP -= _iValue;
 
 		cout << "주사위 결과: " << iDice_DEX << endl;
 		SetPrintColor(RED);
@@ -602,7 +602,7 @@ void TriggerTrap(INFO* _pPlayer, int _iValue)
 	}
 }
 
-void FindMagicBox(INFO* _pPlayer, int _iValue)
+void FindMagicBox(CInfo* _pPlayer, int _iValue)
 {
 	int iInput(0);
 
@@ -627,7 +627,7 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 		case 1:
 			//마법 풀기
 		{
-			int iDice_INT = RollDice(_pPlayer->curStat.iINT);
+			int iDice_INT = RollDice(_pPlayer->Get_CurStat()->iINT);
 
 			if (iDice_INT > _iValue)
 			{
@@ -641,7 +641,7 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 				strcpy_s(item.Get_Name(), NAME_LEN, "보물");
 				item.Set_Value(500);
 				
-				_pPlayer->inven.AddItem(item);
+				_pPlayer->Get_Inven()->AddItem(item);
 
 				system("pause");
 			}
@@ -666,11 +666,11 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 	
 }
 
-void FaceMonster(INFO* _pPlayer, int _iValue)
+void FaceMonster(CInfo* _pPlayer, int _iValue)
 {
-	INFO* pMonster = new INFO;
-	strcpy_s(pMonster->szName, "???");
-	pMonster->stat.SetStatRandom(_iValue);
+	CInfo* pMonster = new CInfo;
+	strcpy_s(pMonster->Get_Name(), NAME_LEN, "???");
+	pMonster->Get_Stat()->SetStatRandom(_iValue);
 	pMonster->ResetStat();
 
 	RenderBattleInfo(_pPlayer, pMonster);
@@ -688,12 +688,12 @@ void FaceMonster(INFO* _pPlayer, int _iValue)
 	return;
 }
 
-void StartBattle(INFO* _pPlayer, INFO* _pMonster)
+void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 {
 	int iInput(0);
 	RenderBattleInfo(_pPlayer, _pMonster);
 
-	if (_pMonster->curStat.iDEX > _pPlayer->curStat.iDEX)
+	if (_pMonster->Get_CurStat()->iDEX > _pPlayer->Get_CurStat()->iDEX)
 	{
 		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
 		cout << "몬스터의 민첩이 더 높다." << endl;
@@ -707,11 +707,11 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 		TryAttack(_pMonster, _pPlayer);
 		RenderBattleInfo(_pPlayer, _pMonster);
 		
-		if (_pPlayer->curStat.iHP <= 0)
+		if (_pPlayer->Get_CurStat()->iHP <= 0)
 		{
 			RenderBattleInfo(_pPlayer, _pMonster);
 
-			_pPlayer->curStat.iHP = 0;
+			_pPlayer->Get_CurStat()->iHP = 0;
 			SetPrintColor(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
 			SetPrintColor(GRAY);
@@ -746,9 +746,9 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 			RenderBattleInfo(_pPlayer, _pMonster);
 			cout << endl;
 
-			if (_pMonster->curStat.iHP <= 0)
+			if (_pMonster->Get_CurStat()->iHP <= 0)
 			{
-				_pMonster->curStat.iHP = 0;
+				_pMonster->Get_CurStat()->iHP = 0;
 
 				SetPrintColor(YELLOW);
 				cout << "몬스터 쓰러짐!" << endl;
@@ -760,7 +760,7 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 				strcpy_s(item.Get_Name(), NAME_LEN, "Test Item");
 				item.Set_Value(50);
 				cout << "아이템 획득:" << item.Get_Name() << endl;
-				_pPlayer->inven.AddItem(item);
+				_pPlayer->Get_Inven()->AddItem(item);
 
 				system("pause");
 				return;
@@ -784,8 +784,8 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 		case 3:
 			//도망
 		{
-			int iPlayerDice = RollDice(_pPlayer->curStat.iDEX);
-			int iMonsterDice = RollDice(_pMonster->curStat.iDEX);
+			int iPlayerDice = RollDice(_pPlayer->Get_CurStat()->iDEX);
+			int iMonsterDice = RollDice(_pMonster->Get_CurStat()->iDEX);
 
 			if (iPlayerDice > iMonsterDice)
 			{
@@ -826,9 +826,9 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 
 		RenderBattleInfo(_pPlayer, _pMonster);
 
-		if (_pPlayer->curStat.iHP <= 0)
+		if (_pPlayer->Get_CurStat()->iHP <= 0)
 		{
-			_pPlayer->curStat.iHP = 0;
+			_pPlayer->Get_CurStat()->iHP = 0;
 
 			SetPrintColor(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
@@ -842,7 +842,7 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 
 }
 
-void RenderBattleInfo(INFO* _pPlayer, INFO* _pMonster)
+void RenderBattleInfo(CInfo* _pPlayer, CInfo* _pMonster)
 {
 	system("cls");
 	_pPlayer->PrintInfo();
@@ -852,37 +852,37 @@ void RenderBattleInfo(INFO* _pPlayer, INFO* _pMonster)
 	_pMonster->PrintInfo();
 }
 
-void TryAttack(INFO* _pAttacker, INFO* _pTarget)
+void TryAttack(CInfo* _pAttacker, CInfo* _pTarget)
 {
 	SetPrintColor(YELLOW);
-	cout << _pAttacker->szName << "의 공격" << endl;
+	cout << _pAttacker->Get_Name() << "의 공격" << endl;
 	SetPrintColor(GRAY);
 
-	int AttackerDice = RollDice(_pAttacker->curStat.iDEX);
-	int TargetDice = RollDice(_pTarget->curStat.iDEX);
+	int AttackerDice = RollDice(_pAttacker->Get_CurStat()->iDEX);
+	int TargetDice = RollDice(_pTarget->Get_CurStat()->iDEX);
 
 	if (AttackerDice > TargetDice)
 	{
-		cout << _pAttacker->szName << " Dice_DEX: " << AttackerDice << endl;
-		cout << _pTarget->szName << " Dice_DEX: " << TargetDice << endl;
+		cout << _pAttacker->Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
 
-		_pTarget->curStat.iHP -= _pAttacker->curStat.iSTR;
+		_pTarget->Get_CurStat()->iHP -= _pAttacker->Get_CurStat()->iSTR;
 		SetPrintColor(RED);
-		cout << _pAttacker->szName << "의 공격 명중." << endl;
+		cout << _pAttacker->Get_Name() << "의 공격 명중." << endl;
 		SetPrintColor(GRAY);
 		cout << endl;
 
-		int AttackerDice_LUK = RollDice(_pAttacker->curStat.iLUK);
-		int TargetDice_LUK = RollDice(_pTarget->curStat.iLUK);
+		int AttackerDice_LUK = RollDice(_pAttacker->Get_CurStat()->iLUK);
+		int TargetDice_LUK = RollDice(_pTarget->Get_CurStat()->iLUK);
 
 		if (AttackerDice_LUK > TargetDice_LUK)
 		{
-			cout << _pAttacker->szName << " Dice_LUK: " << AttackerDice_LUK << endl;
-			cout << _pTarget->szName << " Dice_LUK: " << TargetDice_LUK << endl;
+			cout << _pAttacker->Get_Name() << " Dice_LUK: " << AttackerDice_LUK << endl;
+			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
 
-			_pTarget->curStat.iHP -= _pAttacker->curStat.iSTR;
+			_pTarget->Get_CurStat()->iHP -= _pAttacker->Get_CurStat()->iSTR;
 			SetPrintColor(RED);
-			cout << _pAttacker->szName << "의 공격이 급소에 명중." << endl;
+			cout << _pAttacker->Get_Name() << "의 공격이 급소에 명중." << endl;
 			SetPrintColor(GRAY);
 
 			cout << endl;
@@ -892,17 +892,17 @@ void TryAttack(INFO* _pAttacker, INFO* _pTarget)
 	}
 	else
 	{
-		cout << _pAttacker->szName << " Dice_DEX: " << AttackerDice << endl;
-		cout << _pTarget->szName << " Dice_DEX: " << TargetDice << endl;
+		cout << _pAttacker->Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
 		SetPrintColor(YELLOW);
-		cout << _pAttacker->szName << "의 공격 빗나감." << endl;
+		cout << _pAttacker->Get_Name() << "의 공격 빗나감." << endl;
 		SetPrintColor(GRAY);
 		cout << endl;
 		system("pause");
 	}
 }
  
-int SelectItem(INFO* _pPlayer, INFO* _pMonster)
+int SelectItem(CInfo* _pPlayer, CInfo* _pMonster)
 {
 	RenderBattleInfo(_pPlayer, _pMonster);
 
@@ -912,7 +912,7 @@ int SelectItem(INFO* _pPlayer, INFO* _pMonster)
 	{
 		RenderBattleInfo(_pPlayer, _pMonster);
 		
-		_pPlayer->inven.PrintAll();
+		_pPlayer->Get_Inven()->PrintAll();
 		cout << "사용할 아이템 선택(취소=0): ";
 		if (GetInput(&iInput) == INPUT_ERROR)
 		{
@@ -929,7 +929,7 @@ int SelectItem(INFO* _pPlayer, INFO* _pMonster)
 		//함수 포인터 값이 달라서 터진다.
 		// 
 		//불러 오기 할때 다시 담아야하나?
-		CItem selectedItem = _pPlayer->inven.Get_ItemArray()[iInput - 1];
+		CItem selectedItem = _pPlayer->Get_Inven()->Get_ItemArray()[iInput - 1];
 		selectedItem.Use(_pPlayer, _pMonster);
 
 		RenderBattleInfo(_pPlayer, _pMonster);
@@ -939,15 +939,15 @@ int SelectItem(INFO* _pPlayer, INFO* _pMonster)
 
 }
 
-void LoadCharacter(INFO** _pPlayer)
+void LoadCharacter(CInfo** _pPlayer)
 {
-	*_pPlayer = new INFO;
+	*_pPlayer = new CInfo;
 
 	FILE* pLoadFile(nullptr);
 	if (fopen_s(&pLoadFile, "../Data/Save.txt", "rb") == 0)
 	{//파일 찾기 성공
 		size_t iResult(0);
-		iResult = fread(*_pPlayer, sizeof(INFO), 1, pLoadFile);
+		iResult = fread(*_pPlayer, sizeof(CInfo), 1, pLoadFile);
 		if (iResult != 1)
 		{
 			cout << "불러오기 오류" << endl;
@@ -964,7 +964,7 @@ void LoadCharacter(INFO** _pPlayer)
 
 }
 
-void SaveCharacter(INFO* _pPlayer)
+void SaveCharacter(CInfo* _pPlayer)
 {
 	FILE* pSaveFile(nullptr);
 
@@ -972,11 +972,11 @@ void SaveCharacter(INFO* _pPlayer)
 	{//새 파일 생성 성공
 
 		size_t iResult(0);
-		iResult = fwrite(_pPlayer, sizeof(INFO), 1, pSaveFile);
+		iResult = fwrite(_pPlayer, sizeof(CInfo), 1, pSaveFile);
 		if (iResult != 1)//fwirte는 카운트를 반환 하는구나
 		{
 			cout << "iResult: " << iResult << endl;
-			//cout << "INFO: " << sizeof(INFO) << endl;
+			//cout << "CInfo: " << sizeof(CInfo) << endl;
 
 			cout << "파일 쓰기 오류" << endl;
 			system("pause");
@@ -998,7 +998,7 @@ void Run_TextRPG()
 {
 	srand(unsigned(time(NULL)));
 
-	INFO* pPlayer(nullptr);
+	CInfo* pPlayer(nullptr);
 	int iInput(0);
 
 	while (true)
