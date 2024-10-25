@@ -5,7 +5,8 @@ class CInven
 {
 	CItem m_pItemArray[MAX_INVEN] = {};
 	int m_iItemCount = 0;
-
+public:
+	CInven();
 public:
 	CItem* Get_ItemArray();
 public:

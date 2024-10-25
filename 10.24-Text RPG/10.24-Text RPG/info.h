@@ -9,12 +9,11 @@
 class CInfo
 {
 	char m_szName[NAME_LEN * 2] = "";
-	int m_iDay;
+	int m_iDay = 1;
 	CStat m_Stat;
 	CStat m_CurStat;
 	CInven m_Inven;
 	int m_iGold = 0;
-	
 public:
 	CInfo();
 public:

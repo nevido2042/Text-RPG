@@ -9,6 +9,8 @@
 
 CInfo::CInfo()
 {
+	//cout << m_szName << __FUNCTION__ << endl;
+	//system("pause");
 }
 
 char* CInfo::Get_Name()
@@ -43,7 +45,7 @@ int CInfo::Get_Day()
 
 void CInfo::Set_Day(int _iDay)
 {
-	m_iDay += _iDay;
+	m_iDay = _iDay;
 }
 
 void CInfo::IncreaseDay()

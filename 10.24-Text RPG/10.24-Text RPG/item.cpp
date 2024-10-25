@@ -7,6 +7,7 @@
 CItem::CItem()//로드할 때 함수 포인터 초기화
 {
 	//cout << __FUNCTION__ << endl;
+	//system("pause");
 
 	if (strcmp(m_szName, "빨간 물약") == SUCCESS)
 	{
@@ -17,7 +18,8 @@ CItem::CItem()//로드할 때 함수 포인터 초기화
 
 CItem::CItem(const char* _szName, int _iValue, void(*_pUse)(CInfo*, CInfo*))
 {//아이템 선언 시 사용
-	//cout << __FUNCTION__ << endl;
+	cout << __FUNCTION__ << endl;
+	//system("pause");
 
 	if (_szName == nullptr) return;
 

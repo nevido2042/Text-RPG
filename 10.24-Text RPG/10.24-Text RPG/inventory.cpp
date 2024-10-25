@@ -2,6 +2,13 @@
 #include "inventory.h"
 #include "misc.h"
 
+CInven::CInven()
+{
+	//cout << __FUNCTION__ << endl;
+	//system("pause");
+
+}
+
 CItem* CInven::Get_ItemArray()
 {
 	return m_pItemArray;
