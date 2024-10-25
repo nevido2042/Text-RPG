@@ -227,9 +227,9 @@ void BuyItem(INFO* _pPlayer, INFO* _pMerchant)
 			break;
 		}
 
-		ITEM item = _pMerchant->inven.itemArray[iInput - 1];
+		ITEM item = _pMerchant->inven.Get_ItemArray()[iInput - 1];
 
-		int iItemValue = _pMerchant->inven.itemArray[iInput - 1].iValue;
+		int iItemValue = _pMerchant->inven.Get_ItemArray()[iInput - 1].iValue;
 		if (_pPlayer->iGold >= iItemValue)
 		{
 			_pPlayer->iGold -= iItemValue;
@@ -266,7 +266,7 @@ void SellItem(INFO* _pPlayer, INFO* _pMerchant)
 			break;
 		}
 
-		ITEM item = _pPlayer->inven.itemArray[iInput - 1];
+		ITEM item = _pPlayer->inven.Get_ItemArray()[iInput - 1];
 		if (_pPlayer->inven.RemoveItem(iInput - 1) == SUCCESS)
 		{
 			_pPlayer->iGold += item.iValue;
@@ -929,7 +929,7 @@ int SelectItem(INFO* _pPlayer, INFO* _pMonster)
 		//함수 포인터 값이 달라서 터진다.
 		// 
 		//불러 오기 할때 다시 담아야하나?
-		ITEM selectedItem = _pPlayer->inven.itemArray[iInput - 1];
+		ITEM selectedItem = _pPlayer->inven.Get_ItemArray()[iInput - 1];
 		selectedItem.Use(_pPlayer, _pMonster);
 
 		RenderBattleInfo(_pPlayer, _pMonster);

@@ -1,14 +1,17 @@
 #pragma once
 #include "item.h"
 
-typedef struct tagInventory
+class CInven
 {
-	ITEM itemArray[MAX_INVEN] = {};
-	int iItemCount = 0;
+	ITEM m_pItemArray[MAX_INVEN] = {};
+	int m_iItemCount = 0;
 
+public:
+	ITEM* Get_ItemArray();
+public:
 	void AddItem(ITEM _item);
 	int RemoveItem(int _iNum);
 	void PrintAll();
 	void ClearInven();
 	void SetMerchantInven();
-}INVEN;
+};

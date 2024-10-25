@@ -2,52 +2,57 @@
 #include "inventory.h"
 #include "misc.h"
 
-void tagInventory::AddItem(ITEM _item)
+ITEM* CInven::Get_ItemArray()
 {
-	if (iItemCount == MAX_INVEN)
+	return m_pItemArray;
+}
+
+void CInven::AddItem(ITEM _item)
+{
+	if (m_iItemCount == MAX_INVEN)
 	{
 		cout << "아이템을 더 가질 수 없습니다." << endl;
 		system("pause");
 		return;
 	}
 
-	itemArray[iItemCount++] = _item;
+	m_pItemArray[m_iItemCount++] = _item;
 }
 
-int tagInventory::RemoveItem(int _iNum)
+int CInven::RemoveItem(int _iNum)
 {
-	if (_iNum >= iItemCount)
+	if (_iNum >= m_iItemCount)
 	{
 		cout << "아이템 없음." << endl;
 		system("pause");
 		return _ERROR;
 	}
 
-	--iItemCount;
-	for (int i = _iNum; i < iItemCount - _iNum; ++i)
+	--m_iItemCount;
+	for (int i = _iNum; i < m_iItemCount - _iNum; ++i)
 	{
-		swap(itemArray[i], itemArray[i + 1]);
+		swap(m_pItemArray[i], m_pItemArray[i + 1]);
 	}
 
 	return SUCCESS;
 }
 
-void tagInventory::PrintAll()
+void CInven::PrintAll()
 {
 	cout << "[소지품]" << endl;
-	for (int i = 0; i < iItemCount; ++i)
+	for (int i = 0; i < m_iItemCount; ++i)
 	{
 		cout << i + 1 << '.';
-		itemArray[i].PrintItem();
+		m_pItemArray[i].PrintItem();
 	}
 }
 
-void tagInventory::ClearInven()
+void CInven::ClearInven()
 {
-	iItemCount = 0;
+	m_iItemCount = 0;
 }
 
-void tagInventory::SetMerchantInven()
+void CInven::SetMerchantInven()
 {
 	extern ITEM redPotion;
 

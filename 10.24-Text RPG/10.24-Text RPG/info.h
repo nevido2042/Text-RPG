@@ -14,7 +14,7 @@ typedef struct tagInfo
 	int iDay = 1;
 	STAT stat;
 	STAT curStat;
-	INVEN inven;
+	CInven inven;
 	int iGold = 0;
 	
 	void RenderStat();
