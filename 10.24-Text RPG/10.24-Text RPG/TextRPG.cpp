@@ -134,7 +134,7 @@ void SelectTask(INFO* _pPlayer)
 		case 999:
 			//치트
 			_pPlayer->iGold += 999;
-			extern ITEM redPotion;
+			extern CItem redPotion;
 			_pPlayer->inven.AddItem(redPotion);
 			break;
 		default:
@@ -227,9 +227,9 @@ void BuyItem(INFO* _pPlayer, INFO* _pMerchant)
 			break;
 		}
 
-		ITEM item = _pMerchant->inven.Get_ItemArray()[iInput - 1];
+		CItem item = _pMerchant->inven.Get_ItemArray()[iInput - 1];
 
-		int iItemValue = _pMerchant->inven.Get_ItemArray()[iInput - 1].iValue;
+		int iItemValue = _pMerchant->inven.Get_ItemArray()[iInput - 1].Get_Value();
 		if (_pPlayer->iGold >= iItemValue)
 		{
 			_pPlayer->iGold -= iItemValue;
@@ -266,10 +266,10 @@ void SellItem(INFO* _pPlayer, INFO* _pMerchant)
 			break;
 		}
 
-		ITEM item = _pPlayer->inven.Get_ItemArray()[iInput - 1];
+		CItem item = _pPlayer->inven.Get_ItemArray()[iInput - 1];
 		if (_pPlayer->inven.RemoveItem(iInput - 1) == SUCCESS)
 		{
-			_pPlayer->iGold += item.iValue;
+			_pPlayer->iGold += item.Get_Value();
 			_pMerchant->inven.AddItem(item);
 		}
 	}
@@ -637,9 +637,9 @@ void FindMagicBox(INFO* _pPlayer, int _iValue)
 				cout << "보물을 획득 했다." << endl;
 				SetPrintColor(GRAY);
 
-				ITEM item;
-				strcpy_s(item.szName, "보물");
-				item.iValue = 500;
+				CItem item;
+				strcpy_s(item.Get_Name(), NAME_LEN, "보물");
+				item.Set_Value(500);
 				
 				_pPlayer->inven.AddItem(item);
 
@@ -756,10 +756,10 @@ void StartBattle(INFO* _pPlayer, INFO* _pMonster)
 
 				cout << "전투 종료" << endl;
 
-				ITEM item;
-				strcpy_s(item.szName, "Test Item");
-				item.iValue = 50;
-				cout << "아이템 획득:" << item.szName << endl;
+				CItem item;
+				strcpy_s(item.Get_Name(), NAME_LEN, "Test Item");
+				item.Set_Value(50);
+				cout << "아이템 획득:" << item.Get_Name() << endl;
 				_pPlayer->inven.AddItem(item);
 
 				system("pause");
@@ -929,7 +929,7 @@ int SelectItem(INFO* _pPlayer, INFO* _pMonster)
 		//함수 포인터 값이 달라서 터진다.
 		// 
 		//불러 오기 할때 다시 담아야하나?
-		ITEM selectedItem = _pPlayer->inven.Get_ItemArray()[iInput - 1];
+		CItem selectedItem = _pPlayer->inven.Get_ItemArray()[iInput - 1];
 		selectedItem.Use(_pPlayer, _pMonster);
 
 		RenderBattleInfo(_pPlayer, _pMonster);

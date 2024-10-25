@@ -2,12 +2,12 @@
 #include "inventory.h"
 #include "misc.h"
 
-ITEM* CInven::Get_ItemArray()
+CItem* CInven::Get_ItemArray()
 {
 	return m_pItemArray;
 }
 
-void CInven::AddItem(ITEM _item)
+void CInven::AddItem(CItem _item)
 {
 	if (m_iItemCount == MAX_INVEN)
 	{
@@ -54,7 +54,7 @@ void CInven::ClearInven()
 
 void CInven::SetMerchantInven()
 {
-	extern ITEM redPotion;
+	extern CItem redPotion;
 
 	ClearInven();
 

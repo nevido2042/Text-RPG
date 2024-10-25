@@ -3,14 +3,20 @@
 
 typedef struct tagInfo INFO;
 
-typedef struct tagItem
+class CItem
 {
-	tagItem();
-	tagItem(const char* _szName, int _iValue = 0, void(*_pUse)(INFO*, INFO*) = nullptr);
-
-	char szName[NAME_LEN] = "";
-	int iValue = 0; // 가치(단위: 골드)
-	void PrintItem();
-	void(*pUse)(INFO* _pUser, INFO* _pTarget) = nullptr;
+	char m_szName[NAME_LEN] = "";
+	int m_iValue = 0; // 가치(단위: 골드)
+	void(*m_pUse)(INFO* _pUser, INFO* _pTarget) = nullptr;
+public:
+	CItem();
+	CItem(const char* _szName, int _iValue = 0, void(*_pUse)(INFO*, INFO*) = nullptr);
+public:
+	char* Get_Name();
+	int Get_Value();
+public:
+	void Set_Value(int _iValue);
+public:
 	void Use(INFO* _pUser, INFO* _pTarget);
-}ITEM;
+	void PrintItem();
+};

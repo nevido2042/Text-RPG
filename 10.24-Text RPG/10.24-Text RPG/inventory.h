@@ -3,13 +3,13 @@
 
 class CInven
 {
-	ITEM m_pItemArray[MAX_INVEN] = {};
+	CItem m_pItemArray[MAX_INVEN] = {};
 	int m_iItemCount = 0;
 
 public:
-	ITEM* Get_ItemArray();
+	CItem* Get_ItemArray();
 public:
-	void AddItem(ITEM _item);
+	void AddItem(CItem _item);
 	int RemoveItem(int _iNum);
 	void PrintAll();
 	void ClearInven();
