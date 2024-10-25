@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "TextRPG.h"
+#include "MainGame.h"
 
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
@@ -23,7 +24,10 @@ int main()
 
 	SetConsoleTitle(L"Text RPG");
 
-	Run_TextRPG();
+	CMainGame MainGame;
+	MainGame.Print_MainMenu();
+
+	//Run_TextRPG();
 	
 	return 0;
 }

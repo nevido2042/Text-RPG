@@ -32,4 +32,7 @@ public:
 	void PrintName();
 	void PrintInfo();
 	void ResetStat();
+	//void Select_Task();
+	//int Receive_Input();
+	//int Check_Input();
 };
