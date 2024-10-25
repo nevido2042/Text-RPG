@@ -103,7 +103,7 @@ void SelectTask(CInfo* _pPlayer)
 
 		case 2:
 			//모험
-			if (_pPlayer->Get_CurStat()->iHP == 0)
+			if (_pPlayer->Get_CurStat()->Get_HP() == 0)
 			{
 				cout << "휴식이 필요." << endl;
 				system("pause");
@@ -280,7 +280,7 @@ void SelectDungeon(CInfo* _pPlayer)
 	int iInput(0);
 	while (true)
 	{
-		if (_pPlayer->Get_CurStat()->iHP == 0)
+		if (_pPlayer->Get_CurStat()->Get_HP() == 0)
 		{
 			return;
 		}
@@ -348,7 +348,7 @@ void Enter_Dungeon(CInfo* _pPlayer, int _iValue)
 	int iInput(0);
 	while (true)
 	{
-		if (_pPlayer->Get_CurStat()->iHP == 0)
+		if (_pPlayer->Get_CurStat()->Get_HP() == 0)
 		{
 			//cout << "플레이어 쓰러짐" << endl;
 			//system("pause");
@@ -388,7 +388,7 @@ void Enter_Dungeon(CInfo* _pPlayer, int _iValue)
 		case 1:
 			//대기
 			//_pPlayer->ResetStat();
-			_pPlayer->Get_CurStat()->iHP -= 1;
+			_pPlayer->Get_CurStat()->Add_HP(-1);
 
 			break;
 		case 2:
@@ -573,7 +573,7 @@ void TriggerTrap(CInfo* _pPlayer, int _iValue)
 	system("pause");
 	cout << endl;
 
-	int iDice_DEX = RollDice(_pPlayer->Get_CurStat()->iDEX);
+	int iDice_DEX = RollDice(_pPlayer->Get_CurStat()->Get_DEX());
 	if (iDice_DEX > _iValue)
 	{
 		cout << "주사위 결과: " << iDice_DEX << endl;
@@ -586,7 +586,7 @@ void TriggerTrap(CInfo* _pPlayer, int _iValue)
 	}
 	else
 	{
-		_pPlayer->Get_CurStat()->iHP -= _iValue;
+		_pPlayer->Get_CurStat()->Add_HP(-_iValue);
 
 		cout << "주사위 결과: " << iDice_DEX << endl;
 		SetPrintColor(RED);
@@ -627,7 +627,7 @@ void FindMagicBox(CInfo* _pPlayer, int _iValue)
 		case 1:
 			//마법 풀기
 		{
-			int iDice_INT = RollDice(_pPlayer->Get_CurStat()->iINT);
+			int iDice_INT = RollDice(_pPlayer->Get_CurStat()->Get_INT());
 
 			if (iDice_INT > _iValue)
 			{
@@ -693,7 +693,7 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 	int iInput(0);
 	RenderBattleInfo(_pPlayer, _pMonster);
 
-	if (_pMonster->Get_CurStat()->iDEX > _pPlayer->Get_CurStat()->iDEX)
+	if (_pMonster->Get_CurStat()->Get_DEX() > _pPlayer->Get_CurStat()->Get_DEX())
 	{
 		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
 		cout << "몬스터의 민첩이 더 높다." << endl;
@@ -707,11 +707,11 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 		TryAttack(_pMonster, _pPlayer);
 		RenderBattleInfo(_pPlayer, _pMonster);
 		
-		if (_pPlayer->Get_CurStat()->iHP <= 0)
+		if (_pPlayer->Get_CurStat()->Get_HP() <= 0)
 		{
 			RenderBattleInfo(_pPlayer, _pMonster);
 
-			_pPlayer->Get_CurStat()->iHP = 0;
+			_pPlayer->Get_CurStat()->Set_HP(0);
 			SetPrintColor(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
 			SetPrintColor(GRAY);
@@ -746,9 +746,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 			RenderBattleInfo(_pPlayer, _pMonster);
 			cout << endl;
 
-			if (_pMonster->Get_CurStat()->iHP <= 0)
+			if (_pMonster->Get_CurStat()->Get_HP() <= 0)
 			{
-				_pMonster->Get_CurStat()->iHP = 0;
+				_pMonster->Get_CurStat()->Set_HP(0);
 
 				SetPrintColor(YELLOW);
 				cout << "몬스터 쓰러짐!" << endl;
@@ -784,8 +784,8 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 		case 3:
 			//도망
 		{
-			int iPlayerDice = RollDice(_pPlayer->Get_CurStat()->iDEX);
-			int iMonsterDice = RollDice(_pMonster->Get_CurStat()->iDEX);
+			int iPlayerDice = RollDice(_pPlayer->Get_CurStat()->Get_DEX());
+			int iMonsterDice = RollDice(_pMonster->Get_CurStat()->Get_DEX());
 
 			if (iPlayerDice > iMonsterDice)
 			{
@@ -826,9 +826,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 
 		RenderBattleInfo(_pPlayer, _pMonster);
 
-		if (_pPlayer->Get_CurStat()->iHP <= 0)
+		if (_pPlayer->Get_CurStat()->Get_HP() <= 0)
 		{
-			_pPlayer->Get_CurStat()->iHP = 0;
+			_pPlayer->Get_CurStat()->Set_HP(0);
 
 			SetPrintColor(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
@@ -858,29 +858,29 @@ void TryAttack(CInfo* _pAttacker, CInfo* _pTarget)
 	cout << _pAttacker->Get_Name() << "의 공격" << endl;
 	SetPrintColor(GRAY);
 
-	int AttackerDice = RollDice(_pAttacker->Get_CurStat()->iDEX);
-	int TargetDice = RollDice(_pTarget->Get_CurStat()->iDEX);
+	int AttackerDice = RollDice(_pAttacker->Get_CurStat()->Get_DEX());
+	int TargetDice = RollDice(_pTarget->Get_CurStat()->Get_DEX());
 
 	if (AttackerDice > TargetDice)
 	{
 		cout << _pAttacker->Get_Name() << " Dice_DEX: " << AttackerDice << endl;
 		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
 
-		_pTarget->Get_CurStat()->iHP -= _pAttacker->Get_CurStat()->iSTR;
+		_pTarget->Get_CurStat()->Add_HP(-_pAttacker->Get_CurStat()->Get_STR());
 		SetPrintColor(RED);
 		cout << _pAttacker->Get_Name() << "의 공격 명중." << endl;
 		SetPrintColor(GRAY);
 		cout << endl;
 
-		int AttackerDice_LUK = RollDice(_pAttacker->Get_CurStat()->iLUK);
-		int TargetDice_LUK = RollDice(_pTarget->Get_CurStat()->iLUK);
+		int AttackerDice_LUK = RollDice(_pAttacker->Get_CurStat()->Get_LUK());
+		int TargetDice_LUK = RollDice(_pTarget->Get_CurStat()->Get_LUK());
 
 		if (AttackerDice_LUK > TargetDice_LUK)
 		{
 			cout << _pAttacker->Get_Name() << " Dice_LUK: " << AttackerDice_LUK << endl;
 			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
-
-			_pTarget->Get_CurStat()->iHP -= _pAttacker->Get_CurStat()->iSTR;
+			
+			_pTarget->Get_CurStat()->Add_HP(-_pAttacker->Get_CurStat()->Get_STR());
 			SetPrintColor(RED);
 			cout << _pAttacker->Get_Name() << "의 공격이 급소에 명중." << endl;
 			SetPrintColor(GRAY);

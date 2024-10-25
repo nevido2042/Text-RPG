@@ -16,12 +16,12 @@ char* CInfo::Get_Name()
 	return m_szName;
 }
 
-STAT* CInfo::Get_Stat()
+CStat* CInfo::Get_Stat()
 {
 	return &m_Stat;
 }
 
-STAT* CInfo::Get_CurStat()
+CStat* CInfo::Get_CurStat()
 {
 	return &m_CurStat;
 }
@@ -60,15 +60,15 @@ void CInfo::RenderStat()
 {
 	cout << "체력: ";
 	SetPrintColor(DARK_RED);
-	for (int i = 0; i < Get_CurStat()->iHP; ++i)
+	for (int i = 0; i < Get_CurStat()->Get_HP(); ++i)
 	{
 		cout << "■";
 	}
 
-	int iEmptyCount = Get_Stat()->iHP - Get_CurStat()->iHP;
+	int iEmptyCount = Get_Stat()->Get_HP() - Get_CurStat()->Get_HP();
 	for (int i = 0; i <iEmptyCount ; ++i)
 	{
-		if (i >= Get_Stat()->iHP)
+		if (i >= Get_Stat()->Get_HP())
 			break;
 
 		cout << "□";
@@ -78,13 +78,13 @@ void CInfo::RenderStat()
 
 	cout << "마나: ";
 	SetPrintColor(DARK_BLUE);
-	for (int i = 0; i < Get_CurStat()->iMP; ++i)
+	for (int i = 0; i < Get_CurStat()->Get_MP(); ++i)
 	{
 		cout << "★";
 	}
-	for (int i = 0; i < Get_Stat()->iMP - Get_CurStat()->iMP; ++i)
+	for (int i = 0; i < Get_Stat()->Get_MP() - Get_CurStat()->Get_MP(); ++i)
 	{
-		if (i >= Get_Stat()->iMP)
+		if (i >= Get_Stat()->Get_MP())
 			break;
 
 		cout << "☆";
@@ -94,7 +94,7 @@ void CInfo::RenderStat()
 
 	cout << "공격력: ";
 	SetPrintColor(DAKR_YELLOW);
-	for (int i = 0; i < Get_CurStat()->iSTR; ++i)
+	for (int i = 0; i < Get_CurStat()->Get_STR(); ++i)
 	{
 		cout << "†";
 	}
@@ -119,10 +119,10 @@ void CInfo::PrintInfo()
 
 void CInfo::ResetStat()
 {
-	Get_CurStat()->iHP = Get_Stat()->iHP;
-	Get_CurStat()->iMP = Get_Stat()->iMP;
-	Get_CurStat()->iSTR = Get_Stat()->iSTR;
-	Get_CurStat()->iDEX = Get_Stat()->iDEX;
-	Get_CurStat()->iLUK = Get_Stat()->iLUK;
-	Get_CurStat()->iINT = Get_Stat()->iINT;
+	Get_CurStat()->Set_HP(Get_Stat()->Get_HP());
+	Get_CurStat()->Set_MP(Get_Stat()->Get_MP());
+	Get_CurStat()->Set_STR(Get_Stat()->Get_STR());
+	Get_CurStat()->Set_DEX(Get_Stat()->Get_DEX());
+	Get_CurStat()->Set_LUK(Get_Stat()->Get_LUK());
+	Get_CurStat()->Set_INT(Get_Stat()->Get_INT());
 }

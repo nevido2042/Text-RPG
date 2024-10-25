@@ -3,25 +3,90 @@
 
 extern int RollDice(int iMaxPoint);
 
-void tagStat::RenderStat()
+int CStat::Get_HP()
+{
+	return m_iHP;
+}
+
+int CStat::Get_MP()
+{
+	return m_iMP;
+}
+
+int CStat::Get_STR()
+{
+	return Get_STR();
+}
+
+int CStat::Get_DEX()
+{
+	return m_iDEX;
+}
+
+int CStat::Get_LUK()
+{
+	return m_iLUK;
+}
+
+int CStat::Get_INT()
+{
+	return m_iINT;
+}
+
+void CStat::Set_HP(int _iValue)
+{
+	m_iHP = _iValue;
+}
+
+void CStat::Set_MP(int _iValue)
+{
+	m_iMP = _iValue;
+}
+
+void CStat::Set_STR(int _iValue)
+{
+	m_iSTR = _iValue;
+}
+
+void CStat::Set_DEX(int _iValue)
+{
+	m_iDEX = _iValue;
+}
+
+void CStat::Set_LUK(int _iValue)
+{
+	m_iLUK = _iValue;
+}
+
+void CStat::Set_INT(int _iValue)
+{
+	m_iINT = _iValue;
+}
+
+void CStat::Add_HP(int _iValue)
+{
+	m_iHP += _iValue;
+}
+
+void CStat::RenderStat()
 {
 	//cout << "====================" << endl;
 	cout << "체력: ";
-	for (int i = 0; i < iHP; ++i)
+	for (int i = 0; i < m_iHP; ++i)
 	{
 		cout << "■";
 	}
 	cout << endl;
 
 	cout << "마나: ";
-	for (int i = 0; i < iMP; ++i)
+	for (int i = 0; i < m_iMP; ++i)
 	{
 		cout << "★";
 	}
 	cout << endl;
 
 	cout << "공격력: ";
-	for (int i = 0; i < iSTR; ++i)
+	for (int i = 0; i < Get_STR(); ++i)
 	{
 		cout << "†";
 	}
@@ -30,36 +95,36 @@ void tagStat::RenderStat()
 	//cout << "====================" << endl;
 }
 
-void tagStat::PrintALL()
+void CStat::PrintALL()
 {
 	//cout << "====================" << endl;
-	cout << "HP: " << iHP << endl;
-	cout << "MP: " << iMP << endl;
-	cout << "STR: " << iSTR << endl;
-	cout << "DEX: " << iDEX << endl;
-	cout << "LUK: " << iLUK << endl;
-	cout << "INT: " << iINT << endl;
+	cout << "HP: " << m_iHP << endl;
+	cout << "MP: " << m_iMP << endl;
+	cout << "STR: " << Get_STR() << endl;
+	cout << "DEX: " << m_iDEX << endl;
+	cout << "LUK: " << m_iLUK << endl;
+	cout << "INT: " << m_iINT << endl;
 	//cout << "====================" << endl;
 	//system("pause");
 }
 
-void tagStat::PrintDetailStat()
+void CStat::PrintDetailStat()
 {
-	cout << "STR: " << iSTR << endl;
-	cout << "DEX: " << iDEX << endl;
-	cout << "LUK: " << iLUK << endl;
-	cout << "INT: " << iINT << endl;
+	cout << "STR: " << Get_STR() << endl;
+	cout << "DEX: " << m_iDEX << endl;
+	cout << "LUK: " << m_iLUK << endl;
+	cout << "INT: " << m_iINT << endl;
 }
 
-void tagStat::SetStatRandom(int _iValue)
+void CStat::SetStatRandom(int _iValue)
 {
-	const int iMaxPoint = iStatCount * _iValue;
-	iHP = RollDice(iMaxPoint);
-	iMP = RollDice(iMaxPoint);
-	iSTR = RollDice(iMaxPoint);
-	iDEX = RollDice(iMaxPoint);
-	iLUK = RollDice(iMaxPoint);
-	iINT = RollDice(iMaxPoint);
+	const int iMaxPoint = m_iStatCount * _iValue;
+	Set_HP(RollDice(iMaxPoint));
+	Set_MP(RollDice(iMaxPoint));
+	Set_STR(RollDice(iMaxPoint));
+	Set_DEX(RollDice(iMaxPoint));
+	Set_LUK(RollDice(iMaxPoint));
+	Set_INT(RollDice(iMaxPoint));
 
 	//const int iMaxPoint = iStatCount * _iValue;
 	//int iRemainPoint = iTotalStat;
@@ -73,7 +138,7 @@ void tagStat::SetStatRandom(int _iValue)
 	//SetRandomPoint(&iINT, &iRemainPoint, &iMaxPoint);
 }
 
-void tagStat::SetRandomPoint(int* _iStatPoint, int* _iRemainPoint, const int* _iMaxPoint)
+void CStat::SetRandomPoint(int* _iStatPoint, int* _iRemainPoint, const int* _iMaxPoint)
 {
 	int iRandomPoint = rand() % *_iMaxPoint + 1;
 	if (*_iRemainPoint - iRandomPoint <= 0)

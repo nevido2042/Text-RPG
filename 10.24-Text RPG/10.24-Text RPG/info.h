@@ -10,8 +10,8 @@ class CInfo
 {
 	char m_szName[NAME_LEN * 2] = "";
 	int m_iDay;
-	STAT m_Stat;
-	STAT m_CurStat;
+	CStat m_Stat;
+	CStat m_CurStat;
 	CInven m_Inven;
 	int m_iGold = 0;
 	
@@ -19,8 +19,8 @@ public:
 	CInfo();
 public:
 	char* Get_Name();
-	STAT* Get_Stat();
-	STAT* Get_CurStat();
+	CStat* Get_Stat();
+	CStat* Get_CurStat();
 	CInven* Get_Inven();
 	int Get_Gold();
 	int Get_Day();
