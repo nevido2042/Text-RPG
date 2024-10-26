@@ -8,6 +8,10 @@ class CInven
 public:
 	CInven();
 public:
+	void Initialize();
+	void Update();
+	void Release();
+public:
 	CItem* Get_ItemArray();
 public:
 	void AddItem(CItem _item);

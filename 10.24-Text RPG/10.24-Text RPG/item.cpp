@@ -28,6 +28,18 @@ CItem::CItem(const char* _szName, int _iValue, void(*_pUse)(CInfo*, CInfo*))
 	m_pUse = _pUse;
 }
 
+void CItem::Initialize()
+{
+}
+
+void CItem::Update()
+{
+}
+
+void CItem::Release()
+{
+}
+
 char* CItem::Get_Name()
 {
 	return m_szName;

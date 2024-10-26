@@ -8,7 +8,7 @@ class CMainGame
 	int m_iInput;
 	CInfo* m_pPlayer;
 	CInfo* m_pMerchant;
-	CInfo* m_Enemy;
+	CInfo* m_pEnemy;
 
 public:
 	int& Get_Input();
@@ -39,6 +39,7 @@ public:
 	void Select_Task();
 	void Load_Player();
 	void Input_Name();
+	void Set_Random_STAT();
 	void Select_Dungeon();
 	void Open_Shop();
 	void Buy_Item();

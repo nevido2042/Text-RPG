@@ -12,6 +12,10 @@ public:
 	CItem();
 	CItem(const char* _szName, int _iValue = 0, void(*_pUse)(CInfo*, CInfo*) = nullptr);
 public:
+	void Initialize();
+	void Update();
+	void Release();
+public:
 	char* Get_Name();
 	int Get_Value();
 public:

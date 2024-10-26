@@ -33,27 +33,30 @@ void CMainGame::Set_Merchant(CInfo* _pMerchant)
 
 CInfo& CMainGame::Get_Enemy()
 {
-	return *m_Enemy;
+	return *m_pEnemy;
 }
 
 void CMainGame::Set_Enemy(CInfo* _pEnemy)
 {
-	m_Enemy = _pEnemy;
+	m_pEnemy = _pEnemy;
 }
 
 CMainGame::CMainGame()
 {
-	//cout << __FUNCTION__ << endl;
-	//system("pause");
 	srand(unsigned(time(NULL)));
 
 	m_iInput = 0;
 
 	m_pPlayer = nullptr;
+
+	m_pMerchant = nullptr;
+
+	m_pEnemy = nullptr;
 }
 
 CMainGame::~CMainGame()
 {
+	Release();
 }
 
 void CMainGame::Initialize()
@@ -66,6 +69,9 @@ void CMainGame::Update()
 
 void CMainGame::Release()
 {
+	SAFE_DELETE(m_pPlayer);
+	SAFE_DELETE(m_pMerchant);
+	SAFE_DELETE(m_pEnemy);
 }
 
 void CMainGame::Print_MainMenu()
@@ -150,6 +156,7 @@ void CMainGame::Create_Player()
 {
 	Set_Player(new CInfo);
 	Input_Name();
+	Set_Random_STAT();
 }
 
 void CMainGame::Select_Task()
@@ -273,6 +280,42 @@ void CMainGame::Input_Name()
 		}
 
 		break;
+	}
+}
+
+void CMainGame::Set_Random_STAT()
+{
+	Get_Player().Get_Stat()->SetStatRandom();
+
+	while (true)
+	{
+		system("cls");
+		cout << "====================" << endl;
+		cout << "<능력치 설정>" << endl;
+		cout << endl;
+
+		Get_Player().PrintName();
+		Get_Player().Get_Stat()->PrintALL();
+
+		cout << "====================" << endl;
+		cout << "1.주사위돌리기 2.결정" << endl;
+
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		switch (Get_Input())
+		{
+		case 1:
+			Get_Player().Get_Stat()->SetStatRandom();
+			continue;
+		case 2:
+			Get_Player().ResetStat();
+			return;
+		default:
+			break;
+		}
 	}
 }
 
@@ -562,7 +605,7 @@ void CMainGame::Face_Enemy(int _iValue)
 
 	Start_Battle();
 
-	SAFE_DELETE(m_Enemy);
+	SAFE_DELETE(m_pEnemy);
 
 	return;
 }

@@ -16,14 +16,23 @@ class CInfo
 	int m_iGold = 0;
 public:
 	CInfo();
+	~CInfo();
+public:
+	void Initialize();
+	void Update();
+	void Release();
 public:
 	char* Get_Name();
+	
 	CStat* Get_Stat();
+	
 	CStat* Get_CurStat();
+	
 	CInven* Get_Inven();
+
 	int Get_Gold();
+
 	int Get_Day();
-public:
 	void Set_Day(int _iDay);
 public:
 	void IncreaseDay();

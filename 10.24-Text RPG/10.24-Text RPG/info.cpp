@@ -13,6 +13,23 @@ CInfo::CInfo()
 	//system("pause");
 }
 
+CInfo::~CInfo()
+{
+	Release();
+}
+
+void CInfo::Initialize()
+{
+}
+
+void CInfo::Update()
+{
+}
+
+void CInfo::Release()
+{
+}
+
 char* CInfo::Get_Name()
 {
 	return m_szName;

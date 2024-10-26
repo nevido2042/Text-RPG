@@ -9,6 +9,18 @@ CInven::CInven()
 
 }
 
+void CInven::Initialize()
+{
+}
+
+void CInven::Update()
+{
+}
+
+void CInven::Release()
+{
+}
+
 CItem* CInven::Get_ItemArray()
 {
 	return m_pItemArray;

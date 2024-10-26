@@ -10,6 +10,12 @@ class CStat
 	int m_iDEX = m_iStatCount;
 	int m_iLUK = m_iStatCount;
 	int m_iINT = m_iStatCount;
+
+public:
+	void Initialize();
+	void Update();
+	void Release();
+
 public:
 	int Get_HP();
 	int Get_MP();

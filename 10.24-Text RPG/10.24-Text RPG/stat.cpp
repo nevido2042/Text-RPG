@@ -3,6 +3,18 @@
 
 extern int RollDice(int iMaxPoint);
 
+void CStat::Initialize()
+{
+}
+
+void CStat::Update()
+{
+}
+
+void CStat::Release()
+{
+}
+
 int CStat::Get_HP()
 {
 	return m_iHP;
