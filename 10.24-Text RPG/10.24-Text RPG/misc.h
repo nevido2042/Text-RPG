@@ -11,6 +11,10 @@ using namespace std;
 #define NAME_LEN 32
 #define MAX_INVEN 5
 
+#define LINE_LINE cout << "===========================" << endl
+#define LINE cout << "---------------------------" << endl
+
+
 //색상
 enum {
 	BLACK,
@@ -32,4 +36,4 @@ enum {
 };
 
 // 콘솔 텍스트 색상 변경해주는 함수
-void SetPrintColor(unsigned short text);
+void Set_Color(unsigned short text);

@@ -53,9 +53,9 @@ int CItem::Get_Value()
 void CItem::PrintItem()
 {
 	cout << m_szName;
-	SetPrintColor(YELLOW);
+	Set_Color(YELLOW);
 	cout << " (" << m_iValue << "G)" << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 }
 

@@ -85,7 +85,12 @@ void CMainGame::Print_MainMenu()
 		cout << "[메인 메뉴]" << endl;
 		cout << endl;
 
-		cout << "1.새 게임 2.게임종료 3.이어하기" << endl;
+		LINE_LINE;
+		cout << " [1] 새로운 게임" << endl;
+		cout << " [2] 게임 종료" << endl;
+		cout << " [3] 이어하기" << endl;
+		LINE_LINE;
+
 		if (Receive_Input() == INPUT_ERROR)
 		{
 			continue;
@@ -170,14 +175,21 @@ void CMainGame::Select_Task()
 		system("cls");
 		Get_Player().PrintInfo();
 
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << Get_Player().Get_Gold() << 'G' << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
-		cout << "Day-" << Get_Player().Get_Day() << endl;
+		cout << "Day - " << Get_Player().Get_Day() << endl;
 		cout << "현재위치: 은신처" << endl;
-		cout << "<행동 결정>" << endl;
-		cout << " 1.휴식 2.모험 3.소지품 4.상점 5.저장&종료 999.치트" << endl;
+		LINE_LINE;
+		cout << " [1] 휴식" << endl;
+		cout << " [2] 모험" << endl;
+		cout << " [3] 소지품" << endl;
+		cout << " [4] 상점" << endl;
+		cout << " [5] 저장 & 종료" << endl;
+		cout << " [999] 치트" << endl;
+		LINE_LINE;
+
 
 		if (Receive_Input() == INPUT_ERROR)
 		{
@@ -264,9 +276,8 @@ void CMainGame::Input_Name()
 	while (true)
 	{
 		system("cls");
-		//cout << "====================" << endl;
 		cout << "<캐릭터 생성>" << endl;
-		cout << endl;
+		LINE_LINE;
 
 		cout << "이름" << '(' << NAME_LEN << "Byte" << ')' << ": ";
 		cin >> Get_Player().Get_Name(); //위험한 짓인가? //그래서 저장공간 두배로 함 일단
@@ -290,15 +301,16 @@ void CMainGame::Set_Random_STAT()
 	while (true)
 	{
 		system("cls");
-		cout << "====================" << endl;
 		cout << "<능력치 설정>" << endl;
-		cout << endl;
 
 		Get_Player().PrintName();
 		Get_Player().Get_Stat()->PrintALL();
 
-		cout << "====================" << endl;
-		cout << "1.주사위돌리기 2.결정" << endl;
+		LINE_LINE;
+
+		cout << "[1] 주사위 굴리기" << endl;
+		cout << "[2] 결정" << endl;
+		LINE_LINE;
 
 		if (Receive_Input() == INPUT_ERROR)
 		{
@@ -332,7 +344,21 @@ void CMainGame::Select_Dungeon()
 		Get_Player().PrintInfo();
 		cout << "현재위치: 갈래길" << endl;
 		cout << "<모험 장소 선택>" << endl;
-		cout << "1.초원 2.산 3.동굴 4.복귀" << endl;
+		LINE_LINE;
+		Set_Color(GREEN);
+		cout << "[1] 초원 " << endl; // 2.산 3.동굴 4.복귀" << endl;
+		Set_Color(GRAY);
+
+		Set_Color(YELLOW);
+		cout << "[2] 산 " << endl;
+		Set_Color(GRAY);
+
+		Set_Color(RED);
+		cout << "[3] 동굴 " << endl;
+		Set_Color(GRAY);
+
+		cout << "[4] 은신처로 돌아가기 " << endl;
+		LINE_LINE;
 
 		if (Receive_Input() == INPUT_ERROR)
 		{
@@ -367,7 +393,14 @@ void CMainGame::Open_Shop()
 	{
 		Render_Shop();
 
-		cout << "1.구매 2.판매 3.나가기" << endl;
+		cout << "현재위치: 상점" << endl;
+		LINE_LINE;
+		cout << "[1] 구매" << endl;
+		cout << "[2] 판매" << endl;
+		cout << "[3] 은신처로 돌아가기" << endl;
+		LINE_LINE;
+
+
 		if (Receive_Input() == INPUT_ERROR)
 		{
 			continue;
@@ -458,14 +491,15 @@ void CMainGame::Render_Shop()
 {
 	system("cls");
 
-	SetPrintColor(YELLOW);
+	cout << "보유 금화: ";
+	Set_Color(YELLOW);
 	cout << Get_Player().Get_Gold() << "G" << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 	cout << "플레이어의 ";
 	Get_Player().Get_Inven()->PrintAll();
 
-	cout << "===============================" << endl;
+	LINE;
 
 	cout << "상인의";
 	Get_Merchant().Get_Inven()->PrintAll();
@@ -519,24 +553,28 @@ void CMainGame::Enter_Dungeon(int _iValue)
 		switch (_iValue)
 		{
 		case Grassland:
-			SetPrintColor(GREEN);
+			Set_Color(GREEN);
 			cout << "현재 위치: 초원" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 			break;
 		case Mountain:
-			SetPrintColor(YELLOW);
+			Set_Color(YELLOW);
 			cout << "현재 위치: 산" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 			break;
 		case Cave:
-			SetPrintColor(RED);
+			Set_Color(RED);
 			cout << "현재 위치: 동굴" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 			break;
 		}
 
-		cout << "[행동 선택]" << endl;
-		cout << "1.대기 2.탐색 3.복귀" << endl;
+		LINE_LINE;
+		cout << "[1] 대기" << endl;
+		cout << "[2] 탐색" << endl;
+		cout << "[3] 갈래길로 돌아가기" << endl;
+		LINE_LINE;
+
 		if (Receive_Input() == INPUT_ERROR)
 		{
 			continue;
@@ -597,9 +635,9 @@ void CMainGame::Face_Enemy(int _iValue)
 
 	Render_Battle_Info();
 
-	SetPrintColor(YELLOW);
+	Set_Color(YELLOW);
 	cout << "몬스터와 마주했다." << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 	system("pause");
 
@@ -614,9 +652,13 @@ void CMainGame::Render_Battle_Info()
 {
 	system("cls");
 	Get_Player().PrintInfo();
+
+	Set_Color(VIOLET);
 	cout << "====================" << endl;
 	cout << "=        VS        =" << endl;
 	cout << "====================" << endl;
+	Set_Color(GRAY);
+
 	Get_Enemy().PrintInfo();
 }
 
@@ -628,9 +670,9 @@ void CMainGame::Start_Battle()
 	{
 		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
 		cout << "몬스터의 민첩이 더 높다." << endl;
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << "몬스터의 선제 공격!" << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
 		cout << endl;
 		system("pause");
@@ -645,9 +687,9 @@ void CMainGame::Start_Battle()
 			Render_Battle_Info();
 			
 			Get_Player().Get_CurStat()->Set_HP(0);
-			SetPrintColor(YELLOW);
+			Set_Color(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 
 			cout << endl;
 
@@ -662,8 +704,12 @@ void CMainGame::Start_Battle()
 		Render_Battle_Info();
 
 		//cout << "몬스터를 발견함." << endl;
-		cout << "[행동 선택]" << endl;
-		cout << "1.공격 2.아이템 3.도망 " << endl;
+		LINE_LINE;
+		cout << "[1] 공격" << endl;
+		cout << "[2] 아이템" << endl;
+		cout << "[3] 도망" << endl;
+		LINE_LINE;
+		
 		if (Receive_Input() == INPUT_ERROR)
 		{
 			continue;
@@ -685,9 +731,9 @@ void CMainGame::Start_Battle()
 			{
 				Get_Enemy().Get_CurStat()->Set_HP(0);
 
-				SetPrintColor(YELLOW);
+				Set_Color(YELLOW);
 				cout << "몬스터 쓰러짐!" << endl;
-				SetPrintColor(GRAY);
+				Set_Color(GRAY);
 
 				cout << "전투 종료" << endl;
 
@@ -727,9 +773,9 @@ void CMainGame::Start_Battle()
 				cout << "PlayerDice: " << iPlayerDice << endl;
 				cout << "MonsterDice: " << iMonsterDice << endl;
 
-				SetPrintColor(YELLOW);
+				Set_Color(YELLOW);
 				cout << "도망 성공" << endl;
-				SetPrintColor(GRAY);
+				Set_Color(GRAY);
 
 				system("pause");
 				return;
@@ -737,9 +783,9 @@ void CMainGame::Start_Battle()
 			}
 			cout << "PlayerDice: " << iPlayerDice << endl;
 			cout << "MonsterDice: " << iMonsterDice << endl;
-			SetPrintColor(YELLOW);
+			Set_Color(YELLOW);
 			cout << "도망 실패" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 
 			system("pause");
 			break;
@@ -748,9 +794,9 @@ void CMainGame::Start_Battle()
 			continue;
 		}
 
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << "적의 턴" << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 		cout << endl;
 
 		system("pause");
@@ -765,9 +811,9 @@ void CMainGame::Start_Battle()
 		{
 			Get_Player().Get_CurStat()->Set_HP(0);
 
-			SetPrintColor(YELLOW);
+			Set_Color(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 
 			cout << "전투 종료" << endl;
 			system("pause");
@@ -873,9 +919,9 @@ void CMainGame::Trigger_Trap(int _iValue)
 	system("cls");
 	Get_Player().PrintInfo();
 
-	SetPrintColor(YELLOW);
+	Set_Color(YELLOW);
 	cout << "함정(" << _iValue << ")이 작동되었다!" << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 	cout << "주사위 굴리기(DEX)" << endl;
 	system("pause");
@@ -885,9 +931,9 @@ void CMainGame::Trigger_Trap(int _iValue)
 	if (iDice_DEX > _iValue)
 	{
 		cout << "주사위 결과: " << iDice_DEX << endl;
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << "재빠른 몸놀림으로 함정을 피했다." << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
 		system("pause");
 		return;
@@ -897,9 +943,9 @@ void CMainGame::Trigger_Trap(int _iValue)
 		Get_Player().Get_CurStat()->Add_HP(-_iValue);
 
 		cout << "주사위 결과: " << iDice_DEX << endl;
-		SetPrintColor(RED);
+		Set_Color(RED);
 		cout << "함정에 피해를 받았다." << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
 		system("pause");
 
@@ -918,11 +964,14 @@ void CMainGame::Find_Magic_Box(int _iValue)
 		system("cls");
 		Get_Player().PrintInfo();
 
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << "마법으로 잠긴 상자(" << _iValue << ")를 발견했다._" << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
-		cout << "1.마법 풀기(INT) 2.무시하기" << endl;
+		LINE_LINE;
+		cout << "[1] 마법 풀기(INT)" << endl; 
+		cout << "[2] 무시하기" << endl;
+		LINE_LINE;
 
 		if (Receive_Input() == INPUT_ERROR)
 		{
@@ -939,10 +988,10 @@ void CMainGame::Find_Magic_Box(int _iValue)
 			if (iDice_INT > _iValue)
 			{
 				cout << "주사위 결과: " << iDice_INT << endl;
-				SetPrintColor(YELLOW);
+				Set_Color(YELLOW);
 				cout << "상자에 걸린 마법을 제거했다." << endl;
 				cout << "보물을 획득 했다." << endl;
-				SetPrintColor(GRAY);
+				Set_Color(GRAY);
 
 				CItem item;
 				strcpy_s(item.Get_Name(), NAME_LEN, "보물");
@@ -955,9 +1004,9 @@ void CMainGame::Find_Magic_Box(int _iValue)
 			else
 			{
 				cout << "주사위 결과: " << iDice_INT << endl;
-				SetPrintColor(YELLOW);
+				Set_Color(YELLOW);
 				cout << "마법을 제거하지 못했다." << endl;
-				SetPrintColor(GRAY);
+				Set_Color(GRAY);
 
 				system("pause");
 			}

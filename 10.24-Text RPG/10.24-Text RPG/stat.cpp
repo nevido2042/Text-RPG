@@ -82,7 +82,6 @@ void CStat::Add_HP(int _iValue)
 
 void CStat::RenderStat()
 {
-	//cout << "====================" << endl;
 	cout << "Ã¼·Â: ";
 	for (int i = 0; i < m_iHP; ++i)
 	{
@@ -103,21 +102,16 @@ void CStat::RenderStat()
 		cout << "¢Ó";
 	}
 	cout << endl;
-
-	//cout << "====================" << endl;
 }
 
 void CStat::PrintALL()
 {
-	//cout << "====================" << endl;
 	cout << "HP: " << m_iHP << endl;
 	cout << "MP: " << m_iMP << endl;
 	cout << "STR: " << m_iSTR << endl;
 	cout << "DEX: " << m_iDEX << endl;
 	cout << "LUK: " << m_iLUK << endl;
 	cout << "INT: " << m_iINT << endl;
-	//cout << "====================" << endl;
-	//system("pause");
 }
 
 void CStat::PrintDetailStat()

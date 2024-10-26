@@ -59,11 +59,14 @@ int CInven::RemoveItem(int _iNum)
 void CInven::PrintAll()
 {
 	cout << "[¼ÒÁöÇ°]" << endl;
+	LINE_LINE;
 	for (int i = 0; i < m_iItemCount; ++i)
 	{
-		cout << i + 1 << '.';
+		cout << "[" << i + 1 << "] " ;
 		m_pItemArray[i].PrintItem();
 	}
+	LINE_LINE;
+
 }
 
 void CInven::ClearInven()

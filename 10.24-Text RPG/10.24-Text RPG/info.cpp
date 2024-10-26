@@ -78,7 +78,7 @@ void CInfo::AddGold(int _iGold)
 void CInfo::RenderStat()
 {
 	cout << "체력: ";
-	SetPrintColor(DARK_RED);
+	Set_Color(DARK_RED);
 	for (int i = 0; i < Get_CurStat()->Get_HP(); ++i)
 	{
 		cout << "■";
@@ -92,11 +92,11 @@ void CInfo::RenderStat()
 
 		cout << "□";
 	}
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 	cout << endl;
 
 	cout << "마나: ";
-	SetPrintColor(DARK_BLUE);
+	Set_Color(DARK_BLUE);
 	for (int i = 0; i < Get_CurStat()->Get_MP(); ++i)
 	{
 		cout << "★";
@@ -108,16 +108,16 @@ void CInfo::RenderStat()
 
 		cout << "☆";
 	}
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 	cout << endl;
 
 	cout << "공격력: ";
-	SetPrintColor(DAKR_YELLOW);
+	Set_Color(DAKR_YELLOW);
 	for (int i = 0; i < Get_CurStat()->Get_STR(); ++i)
 	{
 		cout << "†";
 	}
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 	cout << endl;
 }
 
@@ -148,9 +148,9 @@ void CInfo::ResetStat()
 
 void CInfo::Try_Attack(CInfo* _pTarget)
 {
-	SetPrintColor(YELLOW);
+	Set_Color(YELLOW);
 	cout << Get_Name() << "의 공격" << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 	int AttackerDice = Roll_Dice(Get_CurStat()->Get_DEX());
 	int TargetDice = _pTarget ->Roll_Dice(_pTarget->Get_CurStat()->Get_DEX());
@@ -161,9 +161,9 @@ void CInfo::Try_Attack(CInfo* _pTarget)
 		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
 
 		_pTarget->Get_CurStat()->Add_HP(-Get_CurStat()->Get_STR());
-		SetPrintColor(RED);
+		Set_Color(RED);
 		cout << Get_Name() << "의 공격 명중." << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 		cout << endl;
 
 		int AttackerDice_LUK = Roll_Dice(Get_CurStat()->Get_LUK());
@@ -175,9 +175,9 @@ void CInfo::Try_Attack(CInfo* _pTarget)
 			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
 
 			_pTarget->Get_CurStat()->Add_HP(-Get_CurStat()->Get_STR());
-			SetPrintColor(RED);
+			Set_Color(RED);
 			cout << Get_Name() << "의 공격이 급소에 명중." << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 
 			cout << endl;
 		}
@@ -188,9 +188,9 @@ void CInfo::Try_Attack(CInfo* _pTarget)
 	{
 		cout << Get_Name() << " Dice_DEX: " << AttackerDice << endl;
 		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << Get_Name() << "의 공격 빗나감." << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 		cout << endl;
 		system("pause");
 	}

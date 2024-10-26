@@ -7,7 +7,7 @@ void CreateCharacter(CInfo** _ppPlayer)
 	while (true)
 	{
 		system("cls");
-		//cout << "====================" << endl;
+		LINE_LINE;
 		cout << "<캐릭터 생성>" << endl;
 		cout << endl;
 		*_ppPlayer = new CInfo;
@@ -36,14 +36,14 @@ void SetSTAT(CInfo* _pPlayer)
 	while (true)
 	{
 		system("cls");
-		cout << "====================" << endl;
+		LINE_LINE;
 		cout << "<능력치 설정>" << endl;
 		cout << endl;
 
 		_pPlayer->PrintName();
 		_pPlayer->Get_Stat()->PrintALL();
 
-		cout << "====================" << endl;
+		LINE_LINE;
 		cout << "1.주사위돌리기 2.결정" << endl;
 
 		if (GetInput(&iInput) == INPUT_ERROR)
@@ -78,11 +78,11 @@ void SelectTask(CInfo* _pPlayer)
 		system("cls");
 		_pPlayer->PrintInfo();
 
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << _pPlayer->Get_Gold() << 'G' << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
-		cout << "Day-" << _pPlayer->Get_Day() << endl;
+		cout << "Day -" << _pPlayer->Get_Day() << endl;
 		cout << "현재위치: 은신처" << endl;
 		cout << "<행동 결정>" << endl;
 		cout << " 1.휴식 2.모험 3.소지품 4.상점 5.저장&종료 999.치트" << endl;
@@ -194,14 +194,14 @@ void RenderShop(CInfo* _pPlayer, CInfo* _pMerchant)
 {
 	system("cls");
 
-	SetPrintColor(YELLOW);
+	Set_Color(YELLOW);
 	cout << _pPlayer->Get_Gold()<<"G" << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 	cout << "플레이어의 ";
 	_pPlayer->Get_Inven()->PrintAll();
 
-	cout << "===============================" << endl;
+	LINE_LINE;
 
 	cout << "상인의";
 	_pMerchant->Get_Inven()->PrintAll();
@@ -361,19 +361,19 @@ void Enter_Dungeon(CInfo* _pPlayer, int _iValue)
 		switch (_iValue)
 		{
 		case Grassland:
-			SetPrintColor(GREEN);
+			Set_Color(GREEN);
 			cout << "현재 위치: 초원" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 			break;
 		case Mountain:
-			SetPrintColor(YELLOW);
+			Set_Color(YELLOW);
 			cout << "현재 위치: 산" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 			break;
 		case Cave:
-			SetPrintColor(RED);
+			Set_Color(RED);
 			cout << "현재 위치: 동굴" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 			break;
 		}
 
@@ -565,9 +565,9 @@ void TriggerTrap(CInfo* _pPlayer, int _iValue)
 	system("cls");
 	_pPlayer->PrintInfo();
 
-	SetPrintColor(YELLOW);
+	Set_Color(YELLOW);
 	cout << "함정(" << _iValue << ")이 작동되었다!" << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 	cout << "주사위 굴리기(DEX)" << endl;
 	system("pause");
@@ -577,9 +577,9 @@ void TriggerTrap(CInfo* _pPlayer, int _iValue)
 	if (iDice_DEX > _iValue)
 	{
 		cout << "주사위 결과: " << iDice_DEX << endl;
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << "재빠른 몸놀림으로 함정을 피했다." << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
 		system("pause");
 		return;
@@ -589,9 +589,9 @@ void TriggerTrap(CInfo* _pPlayer, int _iValue)
 		_pPlayer->Get_CurStat()->Add_HP(-_iValue);
 
 		cout << "주사위 결과: " << iDice_DEX << endl;
-		SetPrintColor(RED);
+		Set_Color(RED);
 		cout << "함정에 피해를 받았다." << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
 		system("pause");
 
@@ -611,9 +611,9 @@ void FindMagicBox(CInfo* _pPlayer, int _iValue)
 		system("cls");
 		_pPlayer->PrintInfo();
 
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << "마법으로 잠긴 상자(" << _iValue << ")를 발견했다._" << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
 		cout << "1.마법 풀기(INT) 2.무시하기" << endl;
 
@@ -632,10 +632,10 @@ void FindMagicBox(CInfo* _pPlayer, int _iValue)
 			if (iDice_INT > _iValue)
 			{
 				cout << "주사위 결과: " << iDice_INT << endl;
-				SetPrintColor(YELLOW);
+				Set_Color(YELLOW);
 				cout << "상자에 걸린 마법을 제거했다." << endl;
 				cout << "보물을 획득 했다." << endl;
-				SetPrintColor(GRAY);
+				Set_Color(GRAY);
 
 				CItem item;
 				strcpy_s(item.Get_Name(), NAME_LEN, "보물");
@@ -648,9 +648,9 @@ void FindMagicBox(CInfo* _pPlayer, int _iValue)
 			else
 			{
 				cout << "주사위 결과: " << iDice_INT << endl;
-				SetPrintColor(YELLOW);
+				Set_Color(YELLOW);
 				cout << "마법을 제거하지 못했다." << endl;
-				SetPrintColor(GRAY);
+				Set_Color(GRAY);
 
 				system("pause");
 			}
@@ -675,9 +675,9 @@ void FaceMonster(CInfo* _pPlayer, int _iValue)
 
 	RenderBattleInfo(_pPlayer, pMonster);
 
-	SetPrintColor(YELLOW);
+	Set_Color(YELLOW);
 	cout << "몬스터와 마주했다." << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 	system("pause");
 
@@ -697,9 +697,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 	{
 		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
 		cout << "몬스터의 민첩이 더 높다." << endl;
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << "몬스터의 선제 공격!" << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 
 		cout << endl;
 		system("pause");
@@ -712,9 +712,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 			RenderBattleInfo(_pPlayer, _pMonster);
 
 			_pPlayer->Get_CurStat()->Set_HP(0);
-			SetPrintColor(YELLOW);
+			Set_Color(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 
 			cout << endl;
 
@@ -750,9 +750,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 			{
 				_pMonster->Get_CurStat()->Set_HP(0);
 
-				SetPrintColor(YELLOW);
+				Set_Color(YELLOW);
 				cout << "몬스터 쓰러짐!" << endl;
-				SetPrintColor(GRAY);
+				Set_Color(GRAY);
 
 				cout << "전투 종료" << endl;
 
@@ -792,9 +792,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 				cout << "PlayerDice: " << iPlayerDice << endl;
 				cout << "MonsterDice: " << iMonsterDice << endl;
 				
-				SetPrintColor(YELLOW);
+				Set_Color(YELLOW);
 				cout << "도망 성공" << endl;
-				SetPrintColor(GRAY);
+				Set_Color(GRAY);
 
 				system("pause");
 				return;
@@ -802,9 +802,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 			}
 			cout << "PlayerDice: " << iPlayerDice << endl;
 			cout << "MonsterDice: " << iMonsterDice << endl;
-			SetPrintColor(YELLOW);
+			Set_Color(YELLOW);
 			cout << "도망 실패" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 
 			system("pause");
 			break;
@@ -813,9 +813,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 			continue;
 		}
 
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << "적의 턴" << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 		cout << endl;
 
 		system("pause");
@@ -830,9 +830,9 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 		{
 			_pPlayer->Get_CurStat()->Set_HP(0);
 
-			SetPrintColor(YELLOW);
+			Set_Color(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 
 			cout << "전투 종료" << endl;
 			system("pause");
@@ -854,9 +854,9 @@ void RenderBattleInfo(CInfo* _pPlayer, CInfo* _pMonster)
 
 void TryAttack(CInfo* _pAttacker, CInfo* _pTarget)
 {
-	SetPrintColor(YELLOW);
+	Set_Color(YELLOW);
 	cout << _pAttacker->Get_Name() << "의 공격" << endl;
-	SetPrintColor(GRAY);
+	Set_Color(GRAY);
 
 	int AttackerDice = RollDice(_pAttacker->Get_CurStat()->Get_DEX());
 	int TargetDice = RollDice(_pTarget->Get_CurStat()->Get_DEX());
@@ -867,9 +867,9 @@ void TryAttack(CInfo* _pAttacker, CInfo* _pTarget)
 		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
 
 		_pTarget->Get_CurStat()->Add_HP(-_pAttacker->Get_CurStat()->Get_STR());
-		SetPrintColor(RED);
+		Set_Color(RED);
 		cout << _pAttacker->Get_Name() << "의 공격 명중." << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 		cout << endl;
 
 		int AttackerDice_LUK = RollDice(_pAttacker->Get_CurStat()->Get_LUK());
@@ -881,9 +881,9 @@ void TryAttack(CInfo* _pAttacker, CInfo* _pTarget)
 			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
 			
 			_pTarget->Get_CurStat()->Add_HP(-_pAttacker->Get_CurStat()->Get_STR());
-			SetPrintColor(RED);
+			Set_Color(RED);
 			cout << _pAttacker->Get_Name() << "의 공격이 급소에 명중." << endl;
-			SetPrintColor(GRAY);
+			Set_Color(GRAY);
 
 			cout << endl;
 		}
@@ -894,9 +894,9 @@ void TryAttack(CInfo* _pAttacker, CInfo* _pTarget)
 	{
 		cout << _pAttacker->Get_Name() << " Dice_DEX: " << AttackerDice << endl;
 		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
-		SetPrintColor(YELLOW);
+		Set_Color(YELLOW);
 		cout << _pAttacker->Get_Name() << "의 공격 빗나감." << endl;
-		SetPrintColor(GRAY);
+		Set_Color(GRAY);
 		cout << endl;
 		system("pause");
 	}
