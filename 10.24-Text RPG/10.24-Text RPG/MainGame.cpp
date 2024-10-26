@@ -589,7 +589,8 @@ void CMainGame::Enter_Dungeon(int _iValue)
 			break;
 		case 2:
 			//탐색
-			//적 조우, 함정(DEX), 상자(INT)-미믹,보물,함정
+			Get_Player().Get_CurStat()->Add_HP(-1);
+			//적 조우, 함정(DEX) 스텟을 감소시키는 효과, 상자(INT)-미믹,보물,함정
 			Trigger_Random_Event(_iValue);
 			//FaceMonster(_pPlayer, 2);
 			break;
@@ -720,9 +721,7 @@ void CMainGame::Start_Battle()
 		case 1:
 		{
 			//공격
-			//Try_Attack(&Get_Player(), &Get_Enemy());
 			Get_Player().Try_Attack(&Get_Enemy());
-
 
 			Render_Battle_Info();
 			cout << endl;
@@ -802,7 +801,7 @@ void CMainGame::Start_Battle()
 		system("pause");
 
 		Render_Battle_Info();
-		//Try_Attack(&Get_Enemy(), &Get_Player());
+		
 		Get_Enemy().Try_Attack(&Get_Player());
 
 		Render_Battle_Info();
@@ -821,56 +820,6 @@ void CMainGame::Start_Battle()
 		}
 	}
 }
-
-//void CMainGame::Try_Attack(CInfo* _pAttacker, CInfo* _pTarget)
-//{
-//	SetPrintColor(YELLOW);
-//	cout << _pAttacker->Get_Name() << "의 공격" << endl;
-//	SetPrintColor(GRAY);
-//
-//	int AttackerDice = Roll_Dice(_pAttacker->Get_CurStat()->Get_DEX());
-//	int TargetDice = Roll_Dice(_pTarget->Get_CurStat()->Get_DEX());
-//
-//	if (AttackerDice > TargetDice)
-//	{
-//		cout << _pAttacker->Get_Name() << " Dice_DEX: " << AttackerDice << endl;
-//		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
-//
-//		_pTarget->Get_CurStat()->Add_HP(-_pAttacker->Get_CurStat()->Get_STR());
-//		SetPrintColor(RED);
-//		cout << _pAttacker->Get_Name() << "의 공격 명중." << endl;
-//		SetPrintColor(GRAY);
-//		cout << endl;
-//
-//		int AttackerDice_LUK = Roll_Dice(_pAttacker->Get_CurStat()->Get_LUK());
-//		int TargetDice_LUK = Roll_Dice(_pTarget->Get_CurStat()->Get_LUK());
-//
-//		if (AttackerDice_LUK > TargetDice_LUK)
-//		{
-//			cout << _pAttacker->Get_Name() << " Dice_LUK: " << AttackerDice_LUK << endl;
-//			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
-//
-//			_pTarget->Get_CurStat()->Add_HP(-_pAttacker->Get_CurStat()->Get_STR());
-//			SetPrintColor(RED);
-//			cout << _pAttacker->Get_Name() << "의 공격이 급소에 명중." << endl;
-//			SetPrintColor(GRAY);
-//
-//			cout << endl;
-//		}
-//
-//		system("pause");
-//	}
-//	else
-//	{
-//		cout << _pAttacker->Get_Name() << " Dice_DEX: " << AttackerDice << endl;
-//		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
-//		SetPrintColor(YELLOW);
-//		cout << _pAttacker->Get_Name() << "의 공격 빗나감." << endl;
-//		SetPrintColor(GRAY);
-//		cout << endl;
-//		system("pause");
-//	}
-//}
 
 int CMainGame::Roll_Dice(int _iValue)
 {

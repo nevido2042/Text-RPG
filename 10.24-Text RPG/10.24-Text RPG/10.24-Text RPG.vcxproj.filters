@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Class">
+      <UniqueIdentifier>{53747a43-0c6a-4f0a-9a72-5da41a266bfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -53,26 +56,26 @@
     <ClInclude Include="TextRPG.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="info.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="inventory.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="item.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="item_RedPotion.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="misc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="stat.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="info.h">
+      <Filter>헤더 파일\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="inventory.h">
+      <Filter>헤더 파일\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>헤더 파일\Class</Filter>
     </ClInclude>
     <ClInclude Include="MainGame.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="stat.h">
+      <Filter>헤더 파일\Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

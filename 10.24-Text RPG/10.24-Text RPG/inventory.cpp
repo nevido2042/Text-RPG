@@ -4,9 +4,8 @@
 
 CInven::CInven()
 {
-	//cout << __FUNCTION__ << endl;
-	//system("pause");
-
+	ZeroMemory(m_pItemArray, sizeof(m_pItemArray));
+	m_iItemCount = 0;
 }
 
 void CInven::Initialize()

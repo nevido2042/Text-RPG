@@ -11,6 +11,10 @@ CInfo::CInfo()
 {
 	//cout << m_szName << __FUNCTION__ << endl;
 	//system("pause");
+
+	ZeroMemory(m_szName, sizeof(m_szName));
+	m_iDay = 1;
+	m_iGold = 0;
 }
 
 CInfo::~CInfo()

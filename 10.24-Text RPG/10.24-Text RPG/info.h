@@ -8,12 +8,12 @@
 
 class CInfo
 {
-	char m_szName[NAME_LEN * 2] = "";
-	int m_iDay = 1;
-	CStat m_Stat;
-	CStat m_CurStat;
-	CInven m_Inven;
-	int m_iGold = 0;
+	char m_szName[NAME_LEN * 2];
+	int m_iDay;
+	CStat m_Stat; //동적할당을 하는게 좋은가? 할당,반환이 적을 것 같긴한데
+	CStat m_CurStat;//동적할당을 하는게 좋은가? 할당,반환이 적을 것 같긴한데
+	CInven m_Inven;//동적할당을 하는게 좋은가? 할당,반환이 적을 것 같긴한데
+	int m_iGold;
 public:
 	CInfo();
 	~CInfo();

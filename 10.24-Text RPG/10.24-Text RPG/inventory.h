@@ -3,8 +3,8 @@
 
 class CInven
 {
-	CItem m_pItemArray[MAX_INVEN] = {};
-	int m_iItemCount = 0;
+	CItem m_pItemArray[MAX_INVEN];//동적할당을 하는게 좋은가? 할당,반환이 자주 일어날 듯
+	int m_iItemCount;
 public:
 	CInven();
 public:
