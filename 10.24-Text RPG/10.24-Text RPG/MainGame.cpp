@@ -21,6 +21,16 @@ void CMainGame::Set_Player(CInfo* _pPlayer)
 	m_pPlayer = _pPlayer;
 }
 
+CInfo& CMainGame::Get_Merchant()
+{
+	return *m_pMerchant;
+}
+
+void CMainGame::Set_Merchant(CInfo* _pMerchant)
+{
+	m_pMerchant = _pMerchant;
+}
+
 CMainGame::CMainGame()
 {
 	//cout << __FUNCTION__ << endl;
@@ -135,11 +145,8 @@ void CMainGame::Create_Player()
 void CMainGame::Select_Task()
 {
 	//상인도 나중에 처리하자
-	CInfo* pMerchant(nullptr);
-	pMerchant = new CInfo;
-	pMerchant->Get_Inven()->SetMerchantInven();
-
-	//int iInput(0);
+	Set_Merchant(new CInfo);
+	Get_Merchant().Get_Inven()->SetMerchantInven();
 
 	while (true)
 	{
@@ -166,44 +173,44 @@ void CMainGame::Select_Task()
 			//휴식
 			Get_Player().ResetStat();
 			Get_Player().IncreaseDay();
-			pMerchant->Get_Inven()->SetMerchantInven();
+			Get_Merchant().Get_Inven()->SetMerchantInven();
 			break;
 
 		case 2:
 			//모험
-			if (_pPlayer->Get_CurStat()->Get_HP() == 0)
+			if (Get_Player().Get_CurStat()->Get_HP() == 0)
 			{
 				cout << "휴식이 필요." << endl;
 				system("pause");
 				continue;
 			}
 
-			SelectDungeon(_pPlayer);
+			Select_Dungeon();
 
 			break;
 
 		case 3:
 			//소지품
 			system("cls");
-			_pPlayer->ResetStat();
-			_pPlayer->Get_Inven()->PrintAll();
+			Get_Player().ResetStat();
+			Get_Player().Get_Inven()->PrintAll();
 			system("pause");
 			break;
 		case 4:
 			//상점
-			OpenShop(_pPlayer, pMerchant);
+			Open_Shop();
 			break;
 		case 5:
 			//저장&종료
-			SaveCharacter(_pPlayer);
-			SAFE_DELETE(_pPlayer);
-			SAFE_DELETE(pMerchant);
+			Save_Player();
+			SAFE_DELETE(m_pPlayer);
+			SAFE_DELETE(m_pMerchant);
 			return;
 		case 999:
 			//치트
-			_pPlayer->AddGold(999);
+			Get_Player().AddGold(999);
 			extern CItem redPotion;
-			_pPlayer->Get_Inven()->AddItem(redPotion);
+			Get_Player().Get_Inven()->AddItem(redPotion);
 			break;
 		default:
 			break;
@@ -256,5 +263,653 @@ void CMainGame::Input_Name()
 		}
 
 		break;
+	}
+}
+
+void CMainGame::Select_Dungeon()
+{
+	while (true)
+	{
+		if (Get_Player().Get_CurStat()->Get_HP() == 0)
+		{
+			return;
+		}
+
+		system("cls");
+		Get_Player().PrintInfo();
+		cout << "현재위치: 갈래길" << endl;
+		cout << "<모험 장소 선택>" << endl;
+		cout << "1.초원 2.산 3.동굴 4.복귀" << endl;
+
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		switch (Get_Input())
+		{
+		case 1:
+			//Enter_Grassland(_pPlayer);
+			Enter_Dungeon(Grassland);
+			break;
+		case 2:
+			//Enter_Mountain(Get_Player());
+			Enter_Dungeon(Mountain);
+			break;
+		case 3:
+			//Enter_Cave(Get_Player());
+			Enter_Dungeon(Cave);
+			break;
+		case 4:
+			return;
+		default:
+			break;
+		}
+	}
+}
+
+void CMainGame::Open_Shop()
+{
+	while (true)
+	{
+		Render_Shop();
+
+		cout << "1.구매 2.판매 3.나가기" << endl;
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		switch (Get_Input())
+		{
+		case 1:
+			Buy_Item();
+			break;
+		case 2:
+			Sell_Item();
+			break;
+		case 3:
+			//SAFE_DELETE(merchant);
+			return;
+		default:
+			break;
+		}
+	}
+}
+
+void CMainGame::Buy_Item()
+{
+	while (true)
+	{
+		Render_Shop();
+
+		cout << "사고싶은 품목의 번호를 선택(취소=0)" << endl;
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		if (Get_Input() == 0)
+		{
+			break;
+		}
+
+		CItem item = Get_Merchant().Get_Inven()->Get_ItemArray()[Get_Input() - 1];
+
+		int iItemValue = Get_Merchant().Get_Inven()->Get_ItemArray()[Get_Input() - 1].Get_Value();
+		if (Get_Player().Get_Gold() >= iItemValue)
+		{
+			Get_Player().AddGold(-iItemValue);
+		}
+		else
+		{
+			cout << "소지금이 부족합니다." << endl;
+			system("pause");
+			continue;
+		}
+
+		if (Get_Merchant().Get_Inven()->RemoveItem(Get_Input() - 1) == SUCCESS)
+		{
+			Get_Player().Get_Inven()->AddItem(item);
+		}
+	}
+}
+
+void CMainGame::Sell_Item()
+{
+	while (true)
+	{
+		Render_Shop();
+
+		cout << "팔고싶은 품목의 번호를 선택(취소=0)" << endl;
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		if (Get_Input() == 0)
+		{
+			break;
+		}
+
+		CItem item = Get_Player().Get_Inven()->Get_ItemArray()[Get_Input() - 1];
+		if (Get_Player().Get_Inven()->RemoveItem(Get_Input() - 1) == SUCCESS)
+		{
+			Get_Player().AddGold(item.Get_Value());
+			Get_Merchant().Get_Inven()->AddItem(item);
+		}
+	}
+}
+
+void CMainGame::Render_Shop()
+{
+	system("cls");
+
+	SetPrintColor(YELLOW);
+	cout << Get_Player().Get_Gold() << "G" << endl;
+	SetPrintColor(GRAY);
+
+	cout << "플레이어의 ";
+	Get_Player().Get_Inven()->PrintAll();
+
+	cout << "===============================" << endl;
+
+	cout << "상인의";
+	Get_Merchant().Get_Inven()->PrintAll();
+	cout << endl;
+}
+
+void CMainGame::Save_Player()
+{
+	FILE* pSaveFile(nullptr);
+
+	if (fopen_s(&pSaveFile, "../Data/Save.txt", "wb") == 0)
+	{//새 파일 생성 성공
+
+		size_t iResult(0);
+		iResult = fwrite(&Get_Player(), sizeof(CInfo), 1, pSaveFile);
+		if (iResult != 1)//fwirte는 카운트를 반환 하는구나
+		{
+			cout << "iResult: " << iResult << endl;
+			//cout << "CInfo: " << sizeof(CInfo) << endl;
+
+			cout << "파일 쓰기 오류" << endl;
+			system("pause");
+		}
+
+		fclose(pSaveFile);
+		cout << "저장 완료!" << endl;
+		system("pause");
+	}
+	else
+	{
+		cout << "저장실패!" << endl;
+		cout << "새 파일 생성 실패" << endl;
+		system("pause");
+	}
+}
+
+void CMainGame::Enter_Dungeon(int _iValue)
+{
+	while (true)
+	{
+		if (Get_Player().Get_CurStat()->Get_HP() == 0)
+		{
+			//cout << "플레이어 쓰러짐" << endl;
+			//system("pause");
+			return;
+		}
+
+		system("cls");
+		Get_Player().PrintInfo();
+
+		switch (_iValue)
+		{
+		case Grassland:
+			SetPrintColor(GREEN);
+			cout << "현재 위치: 초원" << endl;
+			SetPrintColor(GRAY);
+			break;
+		case Mountain:
+			SetPrintColor(YELLOW);
+			cout << "현재 위치: 산" << endl;
+			SetPrintColor(GRAY);
+			break;
+		case Cave:
+			SetPrintColor(RED);
+			cout << "현재 위치: 동굴" << endl;
+			SetPrintColor(GRAY);
+			break;
+		}
+
+		cout << "[행동 선택]" << endl;
+		cout << "1.대기 2.탐색 3.복귀" << endl;
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+		switch (Get_Input())
+		{
+		case 1:
+			//대기
+			//_pPlayer->ResetStat();
+			Get_Player().Get_CurStat()->Add_HP(-1);
+
+			break;
+		case 2:
+			//탐색
+			//적 조우, 함정(DEX), 상자(INT)-미믹,보물,함정
+			Trigger_Random_Event(_iValue);
+			//FaceMonster(_pPlayer, 2);
+			break;
+		case 3:
+			//복귀
+			return;
+		default:
+			break;
+		}
+
+	}
+}
+
+void CMainGame::Trigger_Random_Event(int _iValue)
+{
+	const int iEventCount = 3;
+	int iRandNum = rand() % iEventCount + 1;
+
+	switch (iRandNum)
+	{
+	case 1:
+		Face_Enemy(_iValue);
+		return;
+	case 2:
+		Trigger_Trap(_iValue);
+		return;
+	case 3:
+		Find_Magic_Box(_iValue);
+		return;
+	default:
+		cout << __FUNCTION__ << endl;
+		system("pause");
+		break;
+	}
+}
+
+void CMainGame::Face_Enemy(int _iValue)
+{
+	CInfo* pEnemy = new CInfo;
+	strcpy_s(pEnemy->Get_Name(), NAME_LEN, "???");
+	pEnemy->Get_Stat()->SetStatRandom(_iValue);
+	pEnemy->ResetStat();
+
+	Render_Battle_Info(pEnemy);
+
+	SetPrintColor(YELLOW);
+	cout << "몬스터와 마주했다." << endl;
+	SetPrintColor(GRAY);
+
+	system("pause");
+
+	Start_Battle(pEnemy);
+
+	SAFE_DELETE(pEnemy);
+
+	return;
+}
+
+void CMainGame::Render_Battle_Info(CInfo* _pEnemy)
+{
+	system("cls");
+	Get_Player().PrintInfo();
+	cout << "====================" << endl;
+	cout << "=        VS        =" << endl;
+	cout << "====================" << endl;
+	_pEnemy->PrintInfo();
+}
+
+void CMainGame::Start_Battle(CInfo* _pEnemy)
+{
+	Render_Battle_Info(_pEnemy);
+
+	if (_pEnemy->Get_CurStat()->Get_DEX() > Get_Player().Get_CurStat()->Get_DEX())
+	{
+		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
+		cout << "몬스터의 민첩이 더 높다." << endl;
+		SetPrintColor(YELLOW);
+		cout << "몬스터의 선제 공격!" << endl;
+		SetPrintColor(GRAY);
+
+		cout << endl;
+		system("pause");
+
+		Try_Attack(_pEnemy, &Get_Player());
+		Render_Battle_Info(_pEnemy);
+
+		if (Get_Player().Get_CurStat()->Get_HP() <= 0)
+		{
+			Render_Battle_Info(_pEnemy);
+			
+			Get_Player().Get_CurStat()->Set_HP(0);
+			SetPrintColor(YELLOW);
+			cout << "플레이어 쓰러짐!" << endl;
+			SetPrintColor(GRAY);
+
+			cout << endl;
+
+			system("pause");
+
+			return;
+		}
+	}
+
+	while (true)
+	{
+		Render_Battle_Info(_pEnemy);
+
+		//cout << "몬스터를 발견함." << endl;
+		cout << "[행동 선택]" << endl;
+		cout << "1.공격 2.아이템 3.도망 " << endl;
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		switch (Get_Input())
+		{
+		case 1:
+		{
+			//공격
+			Try_Attack(&Get_Player(), _pEnemy);
+
+			Render_Battle_Info(_pEnemy);
+			cout << endl;
+
+			if (_pEnemy->Get_CurStat()->Get_HP() <= 0)
+			{
+				_pEnemy->Get_CurStat()->Set_HP(0);
+
+				SetPrintColor(YELLOW);
+				cout << "몬스터 쓰러짐!" << endl;
+				SetPrintColor(GRAY);
+
+				cout << "전투 종료" << endl;
+
+				CItem item;
+				strcpy_s(item.Get_Name(), NAME_LEN, "Test Item");
+				item.Set_Value(50);
+				cout << "아이템 획득:" << item.Get_Name() << endl;
+				Get_Player().Get_Inven()->AddItem(item);
+
+				system("pause");
+				return;
+			}
+
+			//system("pause");
+
+			break;
+		}
+
+		case 2:
+			//아이템
+			if (Select_Item(_pEnemy) == SUCCESS)
+			{
+				break;
+			}
+			else
+			{
+				continue;
+			}
+		case 3:
+			//도망
+		{
+			int iPlayerDice = Roll_Dice(Get_Player().Get_CurStat()->Get_DEX());
+			int iMonsterDice = Roll_Dice(Get_Player().Get_CurStat()->Get_DEX());
+
+			if (iPlayerDice > iMonsterDice)
+			{
+				cout << "PlayerDice: " << iPlayerDice << endl;
+				cout << "MonsterDice: " << iMonsterDice << endl;
+
+				SetPrintColor(YELLOW);
+				cout << "도망 성공" << endl;
+				SetPrintColor(GRAY);
+
+				system("pause");
+				return;
+
+			}
+			cout << "PlayerDice: " << iPlayerDice << endl;
+			cout << "MonsterDice: " << iMonsterDice << endl;
+			SetPrintColor(YELLOW);
+			cout << "도망 실패" << endl;
+			SetPrintColor(GRAY);
+
+			system("pause");
+			break;
+		}
+		default:
+			continue;
+		}
+
+		SetPrintColor(YELLOW);
+		cout << "적의 턴" << endl;
+		SetPrintColor(GRAY);
+		cout << endl;
+
+		system("pause");
+
+		Render_Battle_Info(_pEnemy);
+		Try_Attack(_pEnemy, &Get_Player());
+
+		Render_Battle_Info(_pEnemy);
+
+		if (Get_Player().Get_CurStat()->Get_HP() <= 0)
+		{
+			Get_Player().Get_CurStat()->Set_HP(0);
+
+			SetPrintColor(YELLOW);
+			cout << "플레이어 쓰러짐!" << endl;
+			SetPrintColor(GRAY);
+
+			cout << "전투 종료" << endl;
+			system("pause");
+			return;
+		}
+	}
+}
+
+void CMainGame::Try_Attack(CInfo* _pAttacker, CInfo* _pTarget)
+{
+	SetPrintColor(YELLOW);
+	cout << _pAttacker->Get_Name() << "의 공격" << endl;
+	SetPrintColor(GRAY);
+
+	int AttackerDice = Roll_Dice(_pAttacker->Get_CurStat()->Get_DEX());
+	int TargetDice = Roll_Dice(_pTarget->Get_CurStat()->Get_DEX());
+
+	if (AttackerDice > TargetDice)
+	{
+		cout << _pAttacker->Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
+
+		_pTarget->Get_CurStat()->Add_HP(-_pAttacker->Get_CurStat()->Get_STR());
+		SetPrintColor(RED);
+		cout << _pAttacker->Get_Name() << "의 공격 명중." << endl;
+		SetPrintColor(GRAY);
+		cout << endl;
+
+		int AttackerDice_LUK = Roll_Dice(_pAttacker->Get_CurStat()->Get_LUK());
+		int TargetDice_LUK = Roll_Dice(_pTarget->Get_CurStat()->Get_LUK());
+
+		if (AttackerDice_LUK > TargetDice_LUK)
+		{
+			cout << _pAttacker->Get_Name() << " Dice_LUK: " << AttackerDice_LUK << endl;
+			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
+
+			_pTarget->Get_CurStat()->Add_HP(-_pAttacker->Get_CurStat()->Get_STR());
+			SetPrintColor(RED);
+			cout << _pAttacker->Get_Name() << "의 공격이 급소에 명중." << endl;
+			SetPrintColor(GRAY);
+
+			cout << endl;
+		}
+
+		system("pause");
+	}
+	else
+	{
+		cout << _pAttacker->Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
+		SetPrintColor(YELLOW);
+		cout << _pAttacker->Get_Name() << "의 공격 빗나감." << endl;
+		SetPrintColor(GRAY);
+		cout << endl;
+		system("pause");
+	}
+}
+
+int CMainGame::Roll_Dice(int _iValue)
+{
+	if (_iValue == 0)
+		return 0;
+
+	return rand() % _iValue + 1;
+}
+
+int CMainGame::Select_Item(CInfo* _pEnemy)
+{
+	Render_Battle_Info(_pEnemy);
+
+	while ((true))
+	{
+		Render_Battle_Info(_pEnemy);
+
+		Get_Player().Get_Inven()->PrintAll();
+		cout << "사용할 아이템 선택(취소=0): ";
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		if (Get_Input() == 0)
+		{
+			return _ERROR;
+		}
+
+		//게임중 얻는 아이템과
+		//불러오기로 들어온 아이템의
+		//함수 포인터 값이 달라서 터진다.
+		// 
+		//불러 오기 할때 다시 담아야하나?
+		CItem selectedItem = Get_Player().Get_Inven()->Get_ItemArray()[Get_Input() - 1];
+		selectedItem.Use(&Get_Player(), _pEnemy);
+
+		Render_Battle_Info(_pEnemy);
+
+		return SUCCESS;
+	}
+}
+
+void CMainGame::Trigger_Trap(int _iValue)
+{
+	system("cls");
+	Get_Player().PrintInfo();
+
+	SetPrintColor(YELLOW);
+	cout << "함정(" << _iValue << ")이 작동되었다!" << endl;
+	SetPrintColor(GRAY);
+
+	cout << "주사위 굴리기(DEX)" << endl;
+	system("pause");
+	cout << endl;
+
+	int iDice_DEX = Roll_Dice(Get_Player().Get_CurStat()->Get_DEX());
+	if (iDice_DEX > _iValue)
+	{
+		cout << "주사위 결과: " << iDice_DEX << endl;
+		SetPrintColor(YELLOW);
+		cout << "재빠른 몸놀림으로 함정을 피했다." << endl;
+		SetPrintColor(GRAY);
+
+		system("pause");
+		return;
+	}
+	else
+	{
+		Get_Player().Get_CurStat()->Add_HP(-_iValue);
+
+		cout << "주사위 결과: " << iDice_DEX << endl;
+		SetPrintColor(RED);
+		cout << "함정에 피해를 받았다." << endl;
+		SetPrintColor(GRAY);
+
+		system("pause");
+
+		system("cls");
+		Get_Player().PrintInfo();
+
+		return;
+	}
+}
+
+void CMainGame::Find_Magic_Box(int _iValue)
+{
+
+	while (true)
+	{
+		system("cls");
+		Get_Player().PrintInfo();
+
+		SetPrintColor(YELLOW);
+		cout << "마법으로 잠긴 상자(" << _iValue << ")를 발견했다._" << endl;
+		SetPrintColor(GRAY);
+
+		cout << "1.마법 풀기(INT) 2.무시하기" << endl;
+
+		if (Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		switch (Get_Input())
+		{
+		case 1:
+			//마법 풀기
+		{
+			int iDice_INT = Roll_Dice(Get_Player().Get_CurStat()->Get_INT());
+
+			if (iDice_INT > _iValue)
+			{
+				cout << "주사위 결과: " << iDice_INT << endl;
+				SetPrintColor(YELLOW);
+				cout << "상자에 걸린 마법을 제거했다." << endl;
+				cout << "보물을 획득 했다." << endl;
+				SetPrintColor(GRAY);
+
+				CItem item;
+				strcpy_s(item.Get_Name(), NAME_LEN, "보물");
+				item.Set_Value(500);
+
+				Get_Player().Get_Inven()->AddItem(item);
+
+				system("pause");
+			}
+			else
+			{
+				cout << "주사위 결과: " << iDice_INT << endl;
+				SetPrintColor(YELLOW);
+				cout << "마법을 제거하지 못했다." << endl;
+				SetPrintColor(GRAY);
+
+				system("pause");
+			}
+			return;
+		}
+		case 2:
+			//무시 하기
+			return;
+		default:
+			break;
+		}
 	}
 }
