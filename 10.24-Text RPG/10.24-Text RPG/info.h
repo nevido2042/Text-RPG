@@ -32,6 +32,8 @@ public:
 	void PrintName();
 	void PrintInfo();
 	void ResetStat();
+	void Try_Attack(CInfo* _pTarget);
+	int Roll_Dice(int _iValue);
 	//void Select_Task();
 	//int Receive_Input();
 	//int Check_Input();

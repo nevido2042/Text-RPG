@@ -50,7 +50,7 @@ public:
 	void Face_Enemy(int _iValue);
 	void Render_Battle_Info();//적도 멤버로 만들어야 겠다.
 	void Start_Battle();//적도 멤버로 만들어야 겠다.
-	void Try_Attack(CInfo* _pAttacker, CInfo* _pTarget);
+	//void Try_Attack(CInfo* _pAttacker, CInfo* _pTarget);//이거 CInfo로 넣어야지
 	int Roll_Dice(int _iValue);
 	int Select_Item();//적도 멤버로 만들어야 겠다.
 	void Trigger_Trap(int _iValue);

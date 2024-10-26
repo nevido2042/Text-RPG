@@ -128,3 +128,61 @@ void CInfo::ResetStat()
 	Get_CurStat()->Set_LUK(Get_Stat()->Get_LUK());
 	Get_CurStat()->Set_INT(Get_Stat()->Get_INT());
 }
+
+void CInfo::Try_Attack(CInfo* _pTarget)
+{
+	SetPrintColor(YELLOW);
+	cout << Get_Name() << "의 공격" << endl;
+	SetPrintColor(GRAY);
+
+	int AttackerDice = Roll_Dice(Get_CurStat()->Get_DEX());
+	int TargetDice = _pTarget ->Roll_Dice(_pTarget->Get_CurStat()->Get_DEX());
+
+	if (AttackerDice > TargetDice)
+	{
+		cout << Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
+
+		_pTarget->Get_CurStat()->Add_HP(-Get_CurStat()->Get_STR());
+		SetPrintColor(RED);
+		cout << Get_Name() << "의 공격 명중." << endl;
+		SetPrintColor(GRAY);
+		cout << endl;
+
+		int AttackerDice_LUK = Roll_Dice(Get_CurStat()->Get_LUK());
+		int TargetDice_LUK = _pTarget->Roll_Dice(_pTarget->Get_CurStat()->Get_LUK());
+
+		if (AttackerDice_LUK > TargetDice_LUK)
+		{
+			cout << Get_Name() << " Dice_LUK: " << AttackerDice_LUK << endl;
+			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
+
+			_pTarget->Get_CurStat()->Add_HP(-Get_CurStat()->Get_STR());
+			SetPrintColor(RED);
+			cout << Get_Name() << "의 공격이 급소에 명중." << endl;
+			SetPrintColor(GRAY);
+
+			cout << endl;
+		}
+
+		system("pause");
+	}
+	else
+	{
+		cout << Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
+		SetPrintColor(YELLOW);
+		cout << Get_Name() << "의 공격 빗나감." << endl;
+		SetPrintColor(GRAY);
+		cout << endl;
+		system("pause");
+	}
+}
+
+int CInfo::Roll_Dice(int _iValue)
+{
+	if (_iValue == 0)
+		return 0;
+
+	return rand() % _iValue + 1;
+}
