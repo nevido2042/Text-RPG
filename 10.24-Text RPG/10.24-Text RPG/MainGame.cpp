@@ -31,6 +31,16 @@ void CMainGame::Set_Merchant(CInfo* _pMerchant)
 	m_pMerchant = _pMerchant;
 }
 
+CInfo& CMainGame::Get_Enemy()
+{
+	return *m_Enemy;
+}
+
+void CMainGame::Set_Enemy(CInfo* _pEnemy)
+{
+	m_Enemy = _pEnemy;
+}
+
 CMainGame::CMainGame()
 {
 	//cout << __FUNCTION__ << endl;
@@ -537,12 +547,12 @@ void CMainGame::Trigger_Random_Event(int _iValue)
 
 void CMainGame::Face_Enemy(int _iValue)
 {
-	CInfo* pEnemy = new CInfo;
-	strcpy_s(pEnemy->Get_Name(), NAME_LEN, "???");
-	pEnemy->Get_Stat()->SetStatRandom(_iValue);
-	pEnemy->ResetStat();
+	Set_Enemy(new CInfo);
+	strcpy_s(Get_Enemy().Get_Name(), NAME_LEN, "???");
+	Get_Enemy().Get_Stat()->SetStatRandom(_iValue);
+	Get_Enemy().ResetStat();
 
-	Render_Battle_Info(pEnemy);
+	Render_Battle_Info();
 
 	SetPrintColor(YELLOW);
 	cout << "몬스터와 마주했다." << endl;
@@ -550,28 +560,28 @@ void CMainGame::Face_Enemy(int _iValue)
 
 	system("pause");
 
-	Start_Battle(pEnemy);
+	Start_Battle();
 
-	SAFE_DELETE(pEnemy);
+	SAFE_DELETE(m_Enemy);
 
 	return;
 }
 
-void CMainGame::Render_Battle_Info(CInfo* _pEnemy)
+void CMainGame::Render_Battle_Info()
 {
 	system("cls");
 	Get_Player().PrintInfo();
 	cout << "====================" << endl;
 	cout << "=        VS        =" << endl;
 	cout << "====================" << endl;
-	_pEnemy->PrintInfo();
+	Get_Enemy().PrintInfo();
 }
 
-void CMainGame::Start_Battle(CInfo* _pEnemy)
+void CMainGame::Start_Battle()
 {
-	Render_Battle_Info(_pEnemy);
+	Render_Battle_Info();
 
-	if (_pEnemy->Get_CurStat()->Get_DEX() > Get_Player().Get_CurStat()->Get_DEX())
+	if (Get_Enemy().Get_CurStat()->Get_DEX() > Get_Player().Get_CurStat()->Get_DEX())
 	{
 		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
 		cout << "몬스터의 민첩이 더 높다." << endl;
@@ -582,12 +592,12 @@ void CMainGame::Start_Battle(CInfo* _pEnemy)
 		cout << endl;
 		system("pause");
 
-		Try_Attack(_pEnemy, &Get_Player());
-		Render_Battle_Info(_pEnemy);
+		Try_Attack(&Get_Enemy(), &Get_Player());
+		Render_Battle_Info();
 
 		if (Get_Player().Get_CurStat()->Get_HP() <= 0)
 		{
-			Render_Battle_Info(_pEnemy);
+			Render_Battle_Info();
 			
 			Get_Player().Get_CurStat()->Set_HP(0);
 			SetPrintColor(YELLOW);
@@ -604,7 +614,7 @@ void CMainGame::Start_Battle(CInfo* _pEnemy)
 
 	while (true)
 	{
-		Render_Battle_Info(_pEnemy);
+		Render_Battle_Info();
 
 		//cout << "몬스터를 발견함." << endl;
 		cout << "[행동 선택]" << endl;
@@ -619,14 +629,14 @@ void CMainGame::Start_Battle(CInfo* _pEnemy)
 		case 1:
 		{
 			//공격
-			Try_Attack(&Get_Player(), _pEnemy);
+			Try_Attack(&Get_Player(), &Get_Enemy());
 
-			Render_Battle_Info(_pEnemy);
+			Render_Battle_Info();
 			cout << endl;
 
-			if (_pEnemy->Get_CurStat()->Get_HP() <= 0)
+			if (Get_Enemy().Get_CurStat()->Get_HP() <= 0)
 			{
-				_pEnemy->Get_CurStat()->Set_HP(0);
+				Get_Enemy().Get_CurStat()->Set_HP(0);
 
 				SetPrintColor(YELLOW);
 				cout << "몬스터 쓰러짐!" << endl;
@@ -651,7 +661,7 @@ void CMainGame::Start_Battle(CInfo* _pEnemy)
 
 		case 2:
 			//아이템
-			if (Select_Item(_pEnemy) == SUCCESS)
+			if (Select_Item() == SUCCESS)
 			{
 				break;
 			}
@@ -698,10 +708,10 @@ void CMainGame::Start_Battle(CInfo* _pEnemy)
 
 		system("pause");
 
-		Render_Battle_Info(_pEnemy);
-		Try_Attack(_pEnemy, &Get_Player());
+		Render_Battle_Info();
+		Try_Attack(&Get_Enemy(), &Get_Player());
 
-		Render_Battle_Info(_pEnemy);
+		Render_Battle_Info();
 
 		if (Get_Player().Get_CurStat()->Get_HP() <= 0)
 		{
@@ -776,13 +786,13 @@ int CMainGame::Roll_Dice(int _iValue)
 	return rand() % _iValue + 1;
 }
 
-int CMainGame::Select_Item(CInfo* _pEnemy)
+int CMainGame::Select_Item()
 {
-	Render_Battle_Info(_pEnemy);
+	Render_Battle_Info();
 
 	while ((true))
 	{
-		Render_Battle_Info(_pEnemy);
+		Render_Battle_Info();
 
 		Get_Player().Get_Inven()->PrintAll();
 		cout << "사용할 아이템 선택(취소=0): ";
@@ -802,9 +812,9 @@ int CMainGame::Select_Item(CInfo* _pEnemy)
 		// 
 		//불러 오기 할때 다시 담아야하나?
 		CItem selectedItem = Get_Player().Get_Inven()->Get_ItemArray()[Get_Input() - 1];
-		selectedItem.Use(&Get_Player(), _pEnemy);
+		selectedItem.Use(&Get_Player(), &Get_Enemy());
 
-		Render_Battle_Info(_pEnemy);
+		Render_Battle_Info();
 
 		return SUCCESS;
 	}

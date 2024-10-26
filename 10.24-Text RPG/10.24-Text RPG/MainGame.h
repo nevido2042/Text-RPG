@@ -8,6 +8,7 @@ class CMainGame
 	int m_iInput;
 	CInfo* m_pPlayer;
 	CInfo* m_pMerchant;
+	CInfo* m_Enemy;
 
 public:
 	int& Get_Input();
@@ -18,6 +19,9 @@ public:
 
 	CInfo& Get_Merchant();
 	void Set_Merchant(CInfo* _pMerchant);
+
+	CInfo& Get_Enemy();
+	void Set_Enemy(CInfo* _pEnemy);
 public:
 	CMainGame();
 	~CMainGame();
@@ -44,11 +48,11 @@ public:
 	void Enter_Dungeon(int _iValue);
 	void Trigger_Random_Event(int _iValue);
 	void Face_Enemy(int _iValue);
-	void Render_Battle_Info(CInfo* _pEnemy);//적도 멤버로 만들어야 겠다.
-	void Start_Battle(CInfo* _pEnemy);//적도 멤버로 만들어야 겠다.
+	void Render_Battle_Info();//적도 멤버로 만들어야 겠다.
+	void Start_Battle();//적도 멤버로 만들어야 겠다.
 	void Try_Attack(CInfo* _pAttacker, CInfo* _pTarget);
 	int Roll_Dice(int _iValue);
-	int Select_Item(CInfo* _pMonster);//적도 멤버로 만들어야 겠다.
+	int Select_Item();//적도 멤버로 만들어야 겠다.
 	void Trigger_Trap(int _iValue);
 	void Find_Magic_Box(int _iValue);
 };
