@@ -3,8 +3,34 @@
 
 //extern int RollDice(int iMaxPoint);
 
+CStat::CStat()
+{
+	m_iStatCount = 0;
+	m_iTotalStat = 0;
+
+	m_iMP = 0;
+	m_iSTR = 0;
+	m_iHP = 0;
+	m_iDEX = 0;
+	m_iLUK = 0;
+	m_iINT = 0;
+}
+
+CStat::~CStat()
+{
+}
+
 void CStat::Initialize()
 {
+	m_iStatCount = 6;
+	m_iTotalStat = m_iStatCount * m_iStatCount;
+
+	m_iMP = m_iStatCount;
+	m_iSTR = m_iStatCount;
+	m_iHP = m_iStatCount;
+	m_iDEX = m_iStatCount;
+	m_iLUK = m_iStatCount;
+	m_iINT = m_iStatCount;
 }
 
 void CStat::Update()

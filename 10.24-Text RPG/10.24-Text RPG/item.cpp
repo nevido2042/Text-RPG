@@ -6,13 +6,14 @@
 
 CItem::CItem()
 {
-
+	ZeroMemory(m_szName, sizeof(m_szName));
+	m_iValue = 0;
+	m_pUse = nullptr;
 }
 
 CItem::CItem(const char* _szName, int _iValue, void(*_pUse)(CInfo*, CInfo*))
-{//아이템 선언 시 사용
-	cout << __FUNCTION__ << endl;
-	//system("pause");
+{
+	CItem();
 
 	if (_szName == nullptr) return;
 

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define SAFE_DELETE(p) delete p; p = nullptr;
+#define SAFE_DELETE(p) if(p) {delete p; p = nullptr;}
 
 #define INPUT_ERROR -1
 #define _ERROR -1

@@ -25,6 +25,7 @@ int main()
 	SetConsoleTitle(L"Text RPG");
 
 	CMainGame MainGame;
+	MainGame.Initialize();
 	MainGame.Print_MainMenu();
 
 	//Run_TextRPG();

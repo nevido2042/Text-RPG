@@ -1,15 +1,19 @@
 #pragma once
 class CStat
 {
-	const int m_iStatCount = 6;
-	const int m_iTotalStat = m_iStatCount * m_iStatCount;
+	int m_iStatCount;
+	int m_iTotalStat;
 
-	int m_iHP = m_iStatCount;
-	int m_iMP = m_iStatCount;
-	int m_iSTR = m_iStatCount;
-	int m_iDEX = m_iStatCount;
-	int m_iLUK = m_iStatCount;
-	int m_iINT = m_iStatCount;
+	int m_iHP;
+	int m_iMP;
+	int m_iSTR;
+	int m_iDEX;
+	int m_iLUK;
+	int m_iINT;
+
+public:
+	CStat();
+	~CStat();
 
 public:
 	void Initialize();

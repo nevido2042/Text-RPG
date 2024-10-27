@@ -48,6 +48,12 @@
     <ClCompile Include="MainGame.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Dungeon.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -75,6 +81,12 @@
       <Filter>헤더 파일\Class</Filter>
     </ClInclude>
     <ClInclude Include="stat.h">
+      <Filter>헤더 파일\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon.h">
+      <Filter>헤더 파일\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
       <Filter>헤더 파일\Class</Filter>
     </ClInclude>
   </ItemGroup>

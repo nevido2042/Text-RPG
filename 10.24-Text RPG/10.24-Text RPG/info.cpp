@@ -1,11 +1,6 @@
 #include "pch.h"
 #include "info.h"
 #include "misc.h"
-//#include "TextRPG.h"
-
-//tagInfo::tagInfo()
-//{
-//}
 
 CInfo::CInfo()
 {
@@ -26,6 +21,8 @@ CInfo::~CInfo()
 void CInfo::Initialize()
 {
 	Get_Inven()->Initialize();
+	Get_CurStat()->Initialize();
+	Get_Stat()->Initialize();
 }
 
 void CInfo::Update()
@@ -208,4 +205,38 @@ int CInfo::Roll_Dice(int _iValue)
 		return 0;
 
 	return rand() % _iValue + 1;
+}
+
+int CInfo::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
+{
+	//Render_Battle_Info();
+
+	while ((true))
+	{
+		//Render_Battle_Info();
+
+		Get_Inven()->PrintAll();
+		cout << "사용할 아이템 선택(취소=0): ";
+		if (_InputManager->Receive_Input() == INPUT_ERROR)
+		{
+			continue;
+		}
+
+		if (_InputManager->Get_Input() == 0)
+		{
+			return CANCLE;
+		}
+
+		//게임중 얻는 아이템과
+		//불러오기로 들어온 아이템의
+		//함수 포인터 값이 달라서 터진다.
+		// 
+		//불러 오기 할때 다시 담아야하나?
+		CItem selectedItem = Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
+		selectedItem.Use(this, _pTarget);
+
+		//Render_Battle_Info();
+
+		return SUCCESS;
+	}
 }
