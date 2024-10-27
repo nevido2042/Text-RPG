@@ -10,9 +10,9 @@ CInven::CInven()
 
 void CInven::Initialize()
 {
-	for (int i = 0; i < MAX_INVEN; ++i)
+	for (int i = 0; i < m_iItemCount; ++i)
 	{
-		Get_ItemArray()[0].Initialize();
+		Get_ItemArray()[i].Initialize();
 	}
 }
 

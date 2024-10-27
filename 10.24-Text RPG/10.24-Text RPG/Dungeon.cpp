@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Dungeon.h"
-#include "InputManager.h"
 
 CDungeon::CDungeon()
 {
