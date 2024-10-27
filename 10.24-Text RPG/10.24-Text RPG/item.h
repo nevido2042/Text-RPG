@@ -5,9 +5,9 @@ class CInfo;
 
 class CItem
 {
-	char m_szName[NAME_LEN] = "";
-	int m_iValue = 0; // 가치(단위: 골드)
-	void(*m_pUse)(CInfo* _pUser, CInfo* _pTarget) = nullptr;
+	char m_szName[NAME_LEN];
+	int m_iValue; // 가치(단위: 골드)
+	void(*m_pUse)(CInfo* _pUser, CInfo* _pTarget);
 public:
 	CItem();
 	CItem(const char* _szName, int _iValue = 0, void(*_pUse)(CInfo*, CInfo*) = nullptr);
@@ -23,4 +23,6 @@ public:
 public:
 	void Use(CInfo* _pUser, CInfo* _pTarget);
 	void PrintItem();
+private:
+	void Refresh();
 };

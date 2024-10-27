@@ -9,12 +9,13 @@
 
 CInfo::CInfo()
 {
-	//cout << m_szName << __FUNCTION__ << endl;
-	//system("pause");
-
 	ZeroMemory(m_szName, sizeof(m_szName));
 	m_iDay = 1;
 	m_iGold = 0;
+
+	ZeroMemory(&m_Stat, sizeof(CStat));
+	ZeroMemory(&m_CurStat, sizeof(CStat));
+	ZeroMemory(&m_Inven, sizeof(CInven));
 }
 
 CInfo::~CInfo()
@@ -24,6 +25,7 @@ CInfo::~CInfo()
 
 void CInfo::Initialize()
 {
+	Get_Inven()->Initialize();
 }
 
 void CInfo::Update()

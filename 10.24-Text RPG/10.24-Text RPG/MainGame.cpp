@@ -221,9 +221,9 @@ void CMainGame::Select_Task()
 		case 3:
 			//소지품
 			system("cls");
-			Get_Player().ResetStat();
-			Get_Player().Get_Inven()->PrintAll();
-			system("pause");
+
+			Select_Item();
+
 			break;
 		case 4:
 			//상점
@@ -251,6 +251,9 @@ void CMainGame::Load_Player()
 {
 	Set_Player(new CInfo);
 
+	//인벤토리 아이템, 할당, 생성자 호출 후
+	//옛 함수 주소 집어넣어서 문제였다.
+
 	FILE* pLoadFile(nullptr);
 	if (fopen_s(&pLoadFile, "../Data/Save.txt", "rb") == 0)
 	{//파일 찾기 성공
@@ -263,6 +266,8 @@ void CMainGame::Load_Player()
 		}
 
 		fclose(pLoadFile);
+
+		Get_Player().Initialize();
 	}
 	else
 	{
@@ -831,11 +836,11 @@ int CMainGame::Roll_Dice(int _iValue)
 
 int CMainGame::Select_Item()
 {
-	Render_Battle_Info();
+	//Render_Battle_Info();
 
 	while ((true))
 	{
-		Render_Battle_Info();
+		//Render_Battle_Info();
 
 		Get_Player().Get_Inven()->PrintAll();
 		cout << "사용할 아이템 선택(취소=0): ";
@@ -846,7 +851,7 @@ int CMainGame::Select_Item()
 
 		if (Get_Input() == 0)
 		{
-			return _ERROR;
+			return CANCLE;
 		}
 
 		//게임중 얻는 아이템과
@@ -857,7 +862,7 @@ int CMainGame::Select_Item()
 		CItem selectedItem = Get_Player().Get_Inven()->Get_ItemArray()[Get_Input() - 1];
 		selectedItem.Use(&Get_Player(), &Get_Enemy());
 
-		Render_Battle_Info();
+		//Render_Battle_Info();
 
 		return SUCCESS;
 	}

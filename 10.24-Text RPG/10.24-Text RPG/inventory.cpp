@@ -10,6 +10,10 @@ CInven::CInven()
 
 void CInven::Initialize()
 {
+	for (int i = 0; i < MAX_INVEN; ++i)
+	{
+		Get_ItemArray()[0].Initialize();
+	}
 }
 
 void CInven::Update()

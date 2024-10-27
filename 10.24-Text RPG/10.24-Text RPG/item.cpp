@@ -4,16 +4,9 @@
 
 #include "info.h"
 
-CItem::CItem()//로드할 때 함수 포인터 초기화
+CItem::CItem()
 {
-	//cout << __FUNCTION__ << endl;
-	//system("pause");
 
-	if (strcmp(m_szName, "빨간 물약") == SUCCESS)
-	{
-		extern void RecoveryHP(CInfo * _pUser, CInfo * _pTarget);
-		m_pUse = &RecoveryHP;
-	}
 }
 
 CItem::CItem(const char* _szName, int _iValue, void(*_pUse)(CInfo*, CInfo*))
@@ -30,6 +23,7 @@ CItem::CItem(const char* _szName, int _iValue, void(*_pUse)(CInfo*, CInfo*))
 
 void CItem::Initialize()
 {
+	Refresh();
 }
 
 void CItem::Update()
@@ -57,6 +51,16 @@ void CItem::PrintItem()
 	cout << " (" << m_iValue << "G)" << endl;
 	Set_Color(GRAY);
 
+}
+
+void CItem::Refresh()
+{
+	if (strcmp(m_szName, "빨간 물약") == SUCCESS)
+	{
+		extern void RecoveryHP(CInfo * _pUser, CInfo * _pTarget);
+		m_iValue = 50;
+		m_pUse = &RecoveryHP;
+	}
 }
 
 void CItem::Set_Value(int _iValue)

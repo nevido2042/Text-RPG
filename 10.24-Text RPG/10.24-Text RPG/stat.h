@@ -31,6 +31,7 @@ public:
 	void Set_LUK(int _iValue);
 	void Set_INT(int _iValue);
 public:
+	int Roll_Dice(int iValue);
 	void Add_HP(int _iValue);
 	void RenderStat();
 	void PrintALL();

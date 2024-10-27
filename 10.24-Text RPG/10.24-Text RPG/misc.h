@@ -6,6 +6,7 @@ using namespace std;
 
 #define INPUT_ERROR -1
 #define _ERROR -1
+#define CANCLE -1
 #define SUCCESS 0
 
 #define NAME_LEN 32

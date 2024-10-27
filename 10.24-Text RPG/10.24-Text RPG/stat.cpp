@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "stat.h"
 
-extern int RollDice(int iMaxPoint);
+//extern int RollDice(int iMaxPoint);
 
 void CStat::Initialize()
 {
@@ -75,6 +75,14 @@ void CStat::Set_INT(int _iValue)
 	m_iINT = _iValue;
 }
 
+int CStat::Roll_Dice(int iValue)
+{
+	if (iValue == 0)
+		return 0;
+
+	return rand() % iValue + 1;
+}
+
 void CStat::Add_HP(int _iValue)
 {
 	m_iHP += _iValue;
@@ -125,23 +133,12 @@ void CStat::PrintDetailStat()
 void CStat::SetStatRandom(int _iValue)
 {
 	const int iMaxPoint = m_iStatCount * _iValue;
-	Set_HP(RollDice(iMaxPoint));
-	Set_MP(RollDice(iMaxPoint));
-	Set_STR(RollDice(iMaxPoint));
-	Set_DEX(RollDice(iMaxPoint));
-	Set_LUK(RollDice(iMaxPoint));
-	Set_INT(RollDice(iMaxPoint));
-
-	//const int iMaxPoint = iStatCount * _iValue;
-	//int iRemainPoint = iTotalStat;
-
-	//SetRandomPoint(&iHP, &iRemainPoint, &iMaxPoint);
-	//SetRandomPoint(&iMP, &iRemainPoint, &iMaxPoint);
-	//SetRandomPoint(&iSTR, &iRemainPoint, &iMaxPoint);
-	//SetRandomPoint(&iDEX, &iRemainPoint, &iMaxPoint);
-	//SetRandomPoint(&iLUK, &iRemainPoint, &iMaxPoint);
-	////iINT = iRemainPoint;
-	//SetRandomPoint(&iINT, &iRemainPoint, &iMaxPoint);
+	Set_HP(Roll_Dice(iMaxPoint));
+	Set_MP(Roll_Dice(iMaxPoint));
+	Set_STR(Roll_Dice(iMaxPoint));
+	Set_DEX(Roll_Dice(iMaxPoint));
+	Set_LUK(Roll_Dice(iMaxPoint));
+	Set_INT(Roll_Dice(iMaxPoint));
 }
 
 void CStat::SetRandomPoint(int* _iStatPoint, int* _iRemainPoint, const int* _iMaxPoint)
