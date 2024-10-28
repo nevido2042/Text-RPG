@@ -15,6 +15,8 @@ using namespace std;
 #define LINE_LINE cout << "===========================" << endl
 #define LINE cout << "---------------------------" << endl
 
+#define PRINT_ERROR cout << "__FUNCTION__" << " ERROR" << endl; system("pause")
+
 
 //»ö»ó
 enum {

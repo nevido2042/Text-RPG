@@ -77,7 +77,7 @@ void CInven::ClearInven()
 	m_iItemCount = 0;
 }
 
-void CInven::SetMerchantInven()
+void CInven::SetMerchantInven()//상인 안에서 구현해야겠다 나중에
 {
 	extern CItem redPotion;
 

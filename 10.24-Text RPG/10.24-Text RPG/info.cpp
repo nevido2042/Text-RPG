@@ -240,3 +240,82 @@ int CInfo::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
 		return SUCCESS;
 	}
 }
+
+void CInfo::Select_Task()
+{
+	//while (true)
+	//{
+	//	system("cls");
+	//	Get_Player().PrintInfo();
+
+	//	Set_Color(YELLOW);
+	//	cout << Get_Player().Get_Gold() << 'G' << endl;
+	//	Set_Color(GRAY);
+
+	//	cout << "Day - " << Get_Player().Get_Day() << endl;
+	//	cout << "현재위치: 은신처" << endl;
+	//	LINE_LINE;
+	//	cout << " [1] 휴식" << endl;
+	//	cout << " [2] 모험" << endl;
+	//	cout << " [3] 소지품" << endl;
+	//	cout << " [4] 상점" << endl;
+	//	cout << " [5] 저장 & 종료" << endl;
+	//	cout << " [999] 치트" << endl;
+	//	LINE_LINE;
+
+
+	//	if (Get_InputManager().Receive_Input() == INPUT_ERROR)
+	//	{
+	//		continue;
+	//	}
+
+	//	switch (Get_InputManager().Get_Input())
+	//	{
+	//	case 1:
+	//		//휴식
+	//		Get_Player().ResetStat();
+	//		Get_Player().IncreaseDay();
+	//		Get_Merchant().Get_Inven()->SetMerchantInven();
+	//		break;
+
+	//	case 2:
+	//		//모험
+	//		if (Get_Player().Get_CurStat()->Get_HP() == 0)
+	//		{
+	//			cout << "휴식이 필요." << endl;
+	//			system("pause");
+	//			continue;
+	//		}
+
+	//		Select_Dungeon();
+
+	//		break;
+
+	//	case 3:
+	//		//소지품
+	//		system("cls");
+
+	//		Get_Player().Select_Item(&Get_InputManager(), nullptr);
+
+	//		break;
+	//	case 4:
+	//		//상점
+	//		Open_Shop();
+	//		break;
+	//	case 5:
+	//		//저장&종료
+	//		Save_Player();
+	//		SAFE_DELETE(m_pPlayer);
+	//		SAFE_DELETE(m_pMerchant);
+	//		return;
+	//	case 999:
+	//		//치트
+	//		Get_Player().AddGold(999);
+	//		extern CItem redPotion;
+	//		Get_Player().Get_Inven()->AddItem(redPotion);
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//}
+}

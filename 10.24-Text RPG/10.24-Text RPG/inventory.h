@@ -18,5 +18,5 @@ public:
 	int RemoveItem(int _iNum);
 	void PrintAll();
 	void ClearInven();
-	void SetMerchantInven();
+	void SetMerchantInven();//merchant
 };
