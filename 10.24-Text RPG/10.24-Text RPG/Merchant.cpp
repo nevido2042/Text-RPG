@@ -62,10 +62,10 @@ void CMerchant::Open_Shop(CPlayer* _pPlayer, CInputManager* _pInputManager)
 		switch (_pInputManager->Get_Input())
 		{
 		case 1:
-			_pPlayer->Buy_Item();
+			_pPlayer->Buy_Item(this, _pInputManager);
 			break;
 		case 2:
-			_pPlayer->Sell_Item();
+			_pPlayer->Sell_Item(this, _pInputManager);
 			break;
 		case 3:
 			//SAFE_DELETE(merchant);

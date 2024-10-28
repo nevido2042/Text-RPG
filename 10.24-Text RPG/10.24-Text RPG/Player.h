@@ -3,6 +3,8 @@
 #include "InputManager.h"
 #include "Merchant.h" //나중에 빼야할 듯
 
+//class CMerchant;
+
 class CPlayer
 {
 	CInfo* m_pInfo;
