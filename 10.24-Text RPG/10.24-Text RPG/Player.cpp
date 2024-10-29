@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Player.h"
 #include "Dungeon.h" //나중에 빼야할 듯
+#include "Merchant.h"
 
 enum DUNGEON { Grassland = 1, Mountain, Cave };//나중에 빼야할 듯
 

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Merchant.h"
+#include "Player.h"
 
 CMerchant::CMerchant()
 {
