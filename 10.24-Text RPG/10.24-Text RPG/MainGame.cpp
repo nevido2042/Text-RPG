@@ -22,6 +22,7 @@ CMerchant& CMainGame::Get_Merchant()
 void CMainGame::Set_Merchant(CMerchant* _pMerchant)
 {
 	m_pMerchant = _pMerchant;
+	Get_Merchant().Initialize();
 }
 
 CInputManager& CMainGame::Get_InputManager()
@@ -224,10 +225,10 @@ void CMainGame::Load_Player()
 	//옛 함수 주소 집어넣어서 문제였다.
 
 	FILE* pLoadFile(nullptr);
-	if (fopen_s(&pLoadFile, "../Data/Save.txt", "rb") == 0)
+	if (fopen_s(&pLoadFile, "./Save.txt", "rb") == 0)
 	{//파일 찾기 성공
 		size_t iResult(0);
-		iResult = fread(&Get_Player(), sizeof(CInfo), 1, pLoadFile);
+		iResult = fread(&Get_Player(), sizeof(CPlayer), 1, pLoadFile);
 		if (iResult != 1)
 		{
 			cout << "불러오기 오류" << endl;
@@ -236,7 +237,10 @@ void CMainGame::Load_Player()
 
 		fclose(pLoadFile);
 
+		//로드파일에 옛날 주소가 담겨 있어서 엑세스 에러 뜨는 거 같다.
 		Get_Player().Get_Info().Get_Inven()->Initialize();
+		//Get_Player().Initialize();
+
 	}
 	else
 	{
@@ -496,11 +500,11 @@ void CMainGame::Save_Player()
 {
 	FILE* pSaveFile(nullptr);
 
-	if (fopen_s(&pSaveFile, "../Data/Save.txt", "wb") == 0)
+	if (fopen_s(&pSaveFile, "./Save.txt", "wb") == 0)
 	{//새 파일 생성 성공
 
 		size_t iResult(0);
-		iResult = fwrite(&Get_Player(), sizeof(CInfo), 1, pSaveFile);
+		iResult = fwrite(&Get_Player(), sizeof(CPlayer), 1, pSaveFile);
 		if (iResult != 1)//fwirte는 카운트를 반환 하는구나
 		{
 			cout << "iResult: " << iResult << endl;

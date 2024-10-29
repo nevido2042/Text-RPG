@@ -1,6 +1,5 @@
 #pragma once
 #include "info.h"
-//#include "Player.h"//나중에 빼야할 듯?
 #include "InputManager.h"
 
 class CPlayer;

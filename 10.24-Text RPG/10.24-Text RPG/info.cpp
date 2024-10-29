@@ -149,97 +149,97 @@ void CInfo::ResetStat()
 	Get_CurStat()->Set_INT(Get_Stat()->Get_INT());
 }
 
-void CInfo::Try_Attack(CInfo* _pTarget)
-{
-	Set_Color(YELLOW);
-	cout << Get_Name() << "의 공격" << endl;
-	Set_Color(GRAY);
+//void CInfo::Try_Attack(CInfo* _pTarget)
+//{
+//	Set_Color(YELLOW);
+//	cout << Get_Name() << "의 공격" << endl;
+//	Set_Color(GRAY);
+//
+//	int AttackerDice = Roll_Dice(Get_CurStat()->Get_DEX());
+//	int TargetDice = _pTarget ->Roll_Dice(_pTarget->Get_CurStat()->Get_DEX());
+//
+//	if (AttackerDice > TargetDice)
+//	{
+//		cout << Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+//		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
+//
+//		_pTarget->Get_CurStat()->Add_HP(-Get_CurStat()->Get_STR());
+//		Set_Color(RED);
+//		cout << Get_Name() << "의 공격 명중." << endl;
+//		Set_Color(GRAY);
+//		cout << endl;
+//
+//		int AttackerDice_LUK = Roll_Dice(Get_CurStat()->Get_LUK());
+//		int TargetDice_LUK = _pTarget->Roll_Dice(_pTarget->Get_CurStat()->Get_LUK());
+//
+//		if (AttackerDice_LUK > TargetDice_LUK)
+//		{
+//			cout << Get_Name() << " Dice_LUK: " << AttackerDice_LUK << endl;
+//			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
+//
+//			_pTarget->Get_CurStat()->Add_HP(-Get_CurStat()->Get_STR());
+//			Set_Color(RED);
+//			cout << Get_Name() << "의 공격이 급소에 명중." << endl;
+//			Set_Color(GRAY);
+//
+//			cout << endl;
+//		}
+//
+//		system("pause");
+//	}
+//	else
+//	{
+//		cout << Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+//		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
+//		Set_Color(YELLOW);
+//		cout << Get_Name() << "의 공격 빗나감." << endl;
+//		Set_Color(GRAY);
+//		cout << endl;
+//		system("pause");
+//	}
+//}
 
-	int AttackerDice = Roll_Dice(Get_CurStat()->Get_DEX());
-	int TargetDice = _pTarget ->Roll_Dice(_pTarget->Get_CurStat()->Get_DEX());
+//int CInfo::Roll_Dice(int _iValue)
+//{
+//	if (_iValue == 0)
+//		return 0;
+//
+//	return rand() % _iValue + 1;
+//}
 
-	if (AttackerDice > TargetDice)
-	{
-		cout << Get_Name() << " Dice_DEX: " << AttackerDice << endl;
-		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
-
-		_pTarget->Get_CurStat()->Add_HP(-Get_CurStat()->Get_STR());
-		Set_Color(RED);
-		cout << Get_Name() << "의 공격 명중." << endl;
-		Set_Color(GRAY);
-		cout << endl;
-
-		int AttackerDice_LUK = Roll_Dice(Get_CurStat()->Get_LUK());
-		int TargetDice_LUK = _pTarget->Roll_Dice(_pTarget->Get_CurStat()->Get_LUK());
-
-		if (AttackerDice_LUK > TargetDice_LUK)
-		{
-			cout << Get_Name() << " Dice_LUK: " << AttackerDice_LUK << endl;
-			cout << _pTarget->Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
-
-			_pTarget->Get_CurStat()->Add_HP(-Get_CurStat()->Get_STR());
-			Set_Color(RED);
-			cout << Get_Name() << "의 공격이 급소에 명중." << endl;
-			Set_Color(GRAY);
-
-			cout << endl;
-		}
-
-		system("pause");
-	}
-	else
-	{
-		cout << Get_Name() << " Dice_DEX: " << AttackerDice << endl;
-		cout << _pTarget->Get_Name() << " Dice_DEX: " << TargetDice << endl;
-		Set_Color(YELLOW);
-		cout << Get_Name() << "의 공격 빗나감." << endl;
-		Set_Color(GRAY);
-		cout << endl;
-		system("pause");
-	}
-}
-
-int CInfo::Roll_Dice(int _iValue)
-{
-	if (_iValue == 0)
-		return 0;
-
-	return rand() % _iValue + 1;
-}
-
-int CInfo::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
-{
-	//Render_Battle_Info();
-
-	while ((true))
-	{
-		//Render_Battle_Info();
-
-		Get_Inven()->PrintAll();
-		cout << "사용할 아이템 선택(취소=0): ";
-		if (_InputManager->Receive_Input() == INPUT_ERROR)
-		{
-			continue;
-		}
-
-		if (_InputManager->Get_Input() == 0)
-		{
-			return CANCLE;
-		}
-
-		//게임중 얻는 아이템과
-		//불러오기로 들어온 아이템의
-		//함수 포인터 값이 달라서 터진다.
-		// 
-		//불러 오기 할때 다시 담아야하나?
-		CItem selectedItem = Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
-		selectedItem.Use(this, _pTarget);
-
-		//Render_Battle_Info();
-
-		return SUCCESS;
-	}
-}
+//int CInfo::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
+//{
+//	//Render_Battle_Info();
+//
+//	while ((true))
+//	{
+//		//Render_Battle_Info();
+//
+//		Get_Inven()->PrintAll();
+//		cout << "사용할 아이템 선택(취소=0): ";
+//		if (_InputManager->Receive_Input() == INPUT_ERROR)
+//		{
+//			continue;
+//		}
+//
+//		if (_InputManager->Get_Input() == 0)
+//		{
+//			return CANCLE;
+//		}
+//
+//		//게임중 얻는 아이템과
+//		//불러오기로 들어온 아이템의
+//		//함수 포인터 값이 달라서 터진다.
+//		// 
+//		//불러 오기 할때 다시 담아야하나?
+//		CItem selectedItem = Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
+//		selectedItem.Use(this, _pTarget);
+//
+//		//Render_Battle_Info();
+//
+//		return SUCCESS;
+//	}
+//}
 
 //void CInfo::Select_Task()
 //{

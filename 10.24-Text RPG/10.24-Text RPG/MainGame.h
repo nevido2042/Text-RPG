@@ -36,13 +36,8 @@ public:
 	void Load_Player();
 	void Save_Player();
 
-	//void Select_Task();//info //player
 	void Input_Name();//info //player
 	void Set_Random_STAT();//stat 
-	//void Select_Dungeon();//info //player
-	//void Open_Shop();//info //merchant?
-	//void Buy_Item();//info //player
-	//void Sell_Item();//info //player
-	//void Render_Shop();//info //merchant?
+
 };
 

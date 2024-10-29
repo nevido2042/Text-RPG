@@ -1,29 +1,33 @@
 #pragma once
 #include "info.h"
 #include "InputManager.h"
+#include "Enemy.h"
+
+class CPlayer;
+
 class CDungeon
 {
 	enum DUNGEON { Grassland = 1, Mountain, Cave };
 
 	int m_iValue;
-	CInfo* m_pPlayer;
-	CInfo* m_pEnemy;
+	CPlayer* m_pPlayer;
+	CEnemy* m_pEnemy;
 	CInputManager* m_pInputManager;
 
 public:
 	CDungeon();
-	CDungeon(CInfo* _pPlayer, int _iValue, CInputManager* _InputManager);
+	CDungeon(CPlayer* _pPlayer, int _iValue, CInputManager* _InputManager);
 	~CDungeon();
 	
 public:
-	CInfo& Get_Player();
+	CPlayer& Get_Player();
 
 	int Get_Value();
 
 	CInputManager& Get_InputManager();
 
-	CInfo& Get_Enemy();
-	void Set_Enemy(CInfo* _pEnemy);
+	CEnemy& Get_Enemy();
+	void Set_Enemy(CEnemy* _pEnemy);
 
 public:
 	void Initialize();

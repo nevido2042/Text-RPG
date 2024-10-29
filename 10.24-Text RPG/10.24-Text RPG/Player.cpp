@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Dungeon.h" //나중에 빼야할 듯
 #include "Merchant.h"
+#include "Enemy.h"
 
 enum DUNGEON { Grassland = 1, Mountain, Cave };//나중에 빼야할 듯
 
@@ -90,7 +91,7 @@ int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
         	//소지품
         	system("cls");
         
-        	Get_Info().Select_Item(_pInputManager, nullptr);
+        	Select_Item(_pInputManager, nullptr);
         
         	break;
         case 4:
@@ -156,7 +157,7 @@ void CPlayer::Select_Dungeon(CInputManager* _pInputManager)
         {
         case 1:
         {
-            CDungeon* Dungeon = new CDungeon(&Get_Info(), Grassland, _pInputManager);
+            CDungeon* Dungeon = new CDungeon(this, Grassland, _pInputManager);
             Dungeon->Initialize();
             SAFE_DELETE(Dungeon);
             break;
@@ -164,7 +165,7 @@ void CPlayer::Select_Dungeon(CInputManager* _pInputManager)
 
         case 2:
         {
-            CDungeon* Dungeon = new CDungeon(&Get_Info(), Mountain, _pInputManager);
+            CDungeon* Dungeon = new CDungeon(this, Mountain, _pInputManager);
             Dungeon->Initialize();
             SAFE_DELETE(Dungeon);
             break;
@@ -172,7 +173,7 @@ void CPlayer::Select_Dungeon(CInputManager* _pInputManager)
 
         case 3:
         {
-            CDungeon* Dungeon = new CDungeon(&Get_Info(), Cave, _pInputManager);
+            CDungeon* Dungeon = new CDungeon(this, Cave, _pInputManager);
             Dungeon->Initialize();
             SAFE_DELETE(Dungeon);
             break;
@@ -247,5 +248,97 @@ void CPlayer::Sell_Item(CMerchant* _pMerchant, CInputManager* _pInputManager)
             Get_Info().AddGold(item.Get_Value());
             _pMerchant->Get_Info().Get_Inven()->AddItem(item);
         }
+    }
+}
+
+void CPlayer::Try_Attack(CEnemy* _pTarget)
+{
+    Set_Color(YELLOW);
+    cout << Get_Info().Get_Name() << "의 공격" << endl;
+    Set_Color(GRAY);
+
+    int AttackerDice = Roll_Dice(Get_Info().Get_CurStat()->Get_DEX());
+    int TargetDice = _pTarget->Roll_Dice(_pTarget->Get_Info().Get_CurStat()->Get_DEX());
+
+    if (AttackerDice > TargetDice)
+    {
+        cout << Get_Info().Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+        cout << _pTarget->Get_Info().Get_Name() << " Dice_DEX: " << TargetDice << endl;
+
+        _pTarget->Get_Info().Get_CurStat()->Add_HP(-Get_Info().Get_CurStat()->Get_STR());
+        Set_Color(RED);
+        cout << Get_Info().Get_Name() << "의 공격 명중." << endl;
+        Set_Color(GRAY);
+        cout << endl;
+
+        int AttackerDice_LUK = Roll_Dice(Get_Info().Get_CurStat()->Get_LUK());
+        int TargetDice_LUK = _pTarget->Roll_Dice(_pTarget->Get_Info().Get_CurStat()->Get_LUK());
+
+        if (AttackerDice_LUK > TargetDice_LUK)
+        {
+            cout << Get_Info().Get_Name() << " Dice_LUK: " << AttackerDice_LUK << endl;
+            cout << _pTarget->Get_Info().Get_Name() << " Dice_LUK: " << TargetDice_LUK << endl;
+
+            _pTarget->Get_Info().Get_CurStat()->Add_HP(-Get_Info().Get_CurStat()->Get_STR());
+            Set_Color(RED);
+            cout << Get_Info().Get_Name() << "의 공격이 급소에 명중." << endl;
+            Set_Color(GRAY);
+
+            cout << endl;
+        }
+
+        system("pause");
+    }
+    else
+    {
+        cout << Get_Info().Get_Name() << " Dice_DEX: " << AttackerDice << endl;
+        cout << _pTarget->Get_Info().Get_Name() << " Dice_DEX: " << TargetDice << endl;
+        Set_Color(YELLOW);
+        cout << Get_Info().Get_Name() << "의 공격 빗나감." << endl;
+        Set_Color(GRAY);
+        cout << endl;
+        system("pause");
+    }
+}
+
+int CPlayer::Roll_Dice(int _iValue)
+{
+    if (_iValue == 0)
+        return 0;
+
+    return rand() % _iValue + 1;
+}
+
+int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
+{
+    //Render_Battle_Info();
+
+    while ((true))
+    {
+        //Render_Battle_Info();
+
+        Get_Info().Get_Inven()->PrintAll();
+        cout << "사용할 아이템 선택(취소=0): ";
+        if (_InputManager->Receive_Input() == INPUT_ERROR)
+        {
+            continue;
+        }
+
+        if (_InputManager->Get_Input() == 0)
+        {
+            return CANCLE;
+        }
+
+        //게임중 얻는 아이템과
+        //불러오기로 들어온 아이템의
+        //함수 포인터 값이 달라서 터진다.
+        // 
+        //불러 오기 할때 다시 담아야하나?
+        CItem selectedItem = Get_Info().Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
+        selectedItem.Use(&Get_Info(), _pTarget); //Info가 매개변수가 아니라 플레이어, 적이 되어야 할거 같은 느낌
+
+        //Render_Battle_Info();
+
+        return SUCCESS;
     }
 }

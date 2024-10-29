@@ -1,8 +1,8 @@
 #pragma once
 #include "info.h"
 #include "InputManager.h"
-//#include "Merchant.h" //나중에 빼야할 듯
 
+class CEnemy;
 class CMerchant;
 
 class CPlayer
@@ -26,5 +26,9 @@ public:
 	void Select_Dungeon(CInputManager* _pInputManager);
 	void Buy_Item(CMerchant* _pMerchant, CInputManager* _pInputManager);
 	void Sell_Item(CMerchant* _pMerchant, CInputManager* _pInputManager);
+	void Try_Attack(CEnemy* _pTarget);
+	int Roll_Dice(int _iValue);
+	int Select_Item(CInputManager* _InputManager, CInfo* _pTarget);
+
 };
 

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Dungeon.h"
+#include "Player.h"
 
 CDungeon::CDungeon()
 {
@@ -9,7 +10,7 @@ CDungeon::CDungeon()
 	m_pEnemy = nullptr;
 }
 
-CDungeon::CDungeon(CInfo* _pPlayer, int _iValue, CInputManager* _InputManager)
+CDungeon::CDungeon(CPlayer* _pPlayer, int _iValue, CInputManager* _InputManager)
 {
 	CDungeon();
 
@@ -23,7 +24,7 @@ CDungeon::~CDungeon()
 	SAFE_DELETE(m_pEnemy);
 }
 
-CInfo& CDungeon::Get_Player()
+CPlayer& CDungeon::Get_Player()
 {
 	return *m_pPlayer;
 }
@@ -38,12 +39,12 @@ CInputManager& CDungeon::Get_InputManager()
 	return *m_pInputManager;
 }
 
-CInfo& CDungeon::Get_Enemy()
+CEnemy& CDungeon::Get_Enemy()
 {
 	return *m_pEnemy;
 }
 
-void CDungeon::Set_Enemy(CInfo* _pEnemy)
+void CDungeon::Set_Enemy(CEnemy* _pEnemy)
 {
 	m_pEnemy = _pEnemy;
 	Get_Enemy().Initialize();
@@ -53,15 +54,15 @@ void CDungeon::Initialize()
 {
 	while (true)
 	{
-		if (Get_Player().Get_CurStat()->Get_HP() == 0)
+		if (Get_Player().Get_Info().Get_CurStat()->Get_HP() == 0)
 		{
-			//cout << "플레이어 쓰러짐" << endl;
-			//system("pause");
+			cout << "체력이 없어서 모험을 할 수 없습니다." << endl;
+			system("pause");
 			return;
 		}
 
 		system("cls");
-		Get_Player().PrintInfo();
+		Get_Player().Get_Info().PrintInfo();
 
 		switch (Get_Value())
 		{
@@ -97,12 +98,12 @@ void CDungeon::Initialize()
 		case 1:
 			//대기
 			//_pPlayer->ResetStat();
-			Get_Player().Get_CurStat()->Add_HP(-1);
+			Get_Player().Get_Info().Get_CurStat()->Add_HP(-1);
 
 			break;
 		case 2:
 			//탐색
-			Get_Player().Get_CurStat()->Add_HP(-1);
+			Get_Player().Get_Info().Get_CurStat()->Add_HP(-1);
 			//적 조우, 함정(DEX) 스텟을 감소시키는 효과, 상자(INT)-미믹,보물,함정
 			Trigger_Random_Event(Get_Value());
 			//FaceMonster(_pPlayer, 2);
@@ -128,7 +129,7 @@ void CDungeon::Release()
 void CDungeon::Render_Battle_Info()
 {
 	system("cls");
-	Get_Player().PrintInfo();
+	Get_Player().Get_Info().PrintInfo();
 
 	Set_Color(VIOLET);
 	cout << "====================" << endl;
@@ -136,14 +137,14 @@ void CDungeon::Render_Battle_Info()
 	cout << "====================" << endl;
 	Set_Color(GRAY);
 
-	Get_Enemy().PrintInfo();
+	Get_Enemy().Get_Info().PrintInfo();
 }
 
 void CDungeon::Start_Battle()
 {
 	Render_Battle_Info();
 
-	if (Get_Enemy().Get_CurStat()->Get_DEX() > Get_Player().Get_CurStat()->Get_DEX())
+	if (Get_Enemy().Get_Info().Get_CurStat()->Get_DEX() > Get_Player().Get_Info().Get_CurStat()->Get_DEX())
 	{
 		//_pPlayer->curStat.iHP -= _pMonster->curStat.iSTR;
 		cout << "몬스터의 민첩이 더 높다." << endl;
@@ -159,11 +160,11 @@ void CDungeon::Start_Battle()
 
 		Render_Battle_Info();
 
-		if (Get_Player().Get_CurStat()->Get_HP() <= 0)
+		if (Get_Player().Get_Info().Get_CurStat()->Get_HP() <= 0)
 		{
 			Render_Battle_Info();
 
-			Get_Player().Get_CurStat()->Set_HP(0);
+			Get_Player().Get_Info().Get_CurStat()->Set_HP(0);
 			Set_Color(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
 			Set_Color(GRAY);
@@ -202,9 +203,9 @@ void CDungeon::Start_Battle()
 			Render_Battle_Info();
 			cout << endl;
 
-			if (Get_Enemy().Get_CurStat()->Get_HP() <= 0)
+			if (Get_Enemy().Get_Info().Get_CurStat()->Get_HP() <= 0)
 			{
-				Get_Enemy().Get_CurStat()->Set_HP(0);
+				Get_Enemy().Get_Info().Get_CurStat()->Set_HP(0);
 
 				Set_Color(YELLOW);
 				cout << "몬스터 쓰러짐!" << endl;
@@ -216,7 +217,7 @@ void CDungeon::Start_Battle()
 				strcpy_s(item.Get_Name(), NAME_LEN, "Test Item");
 				item.Set_Value(50);
 				cout << "아이템 획득:" << item.Get_Name() << endl;
-				Get_Player().Get_Inven()->AddItem(item);
+				Get_Player().Get_Info().Get_Inven()->AddItem(item);
 
 				system("pause");
 				return;
@@ -229,7 +230,7 @@ void CDungeon::Start_Battle()
 
 		case 2:
 			//아이템
-			if (Get_Player().Select_Item(&Get_InputManager(), &Get_Enemy()) == SUCCESS)
+			if (Get_Player().Select_Item(&Get_InputManager(), &Get_Enemy().Get_Info()) == SUCCESS)
 			{
 				break;
 			}
@@ -240,8 +241,8 @@ void CDungeon::Start_Battle()
 		case 3:
 			//도망
 		{
-			int iPlayerDice = Get_Player().Roll_Dice(Get_Player().Get_CurStat()->Get_DEX());
-			int iEnemyDice = Get_Enemy().Roll_Dice(Get_Enemy().Get_CurStat()->Get_DEX());
+			int iPlayerDice = Get_Player().Roll_Dice(Get_Player().Get_Info().Get_CurStat()->Get_DEX());
+			int iEnemyDice = Get_Enemy().Roll_Dice(Get_Enemy().Get_Info().Get_CurStat()->Get_DEX());
 
 
 			if (iPlayerDice > iEnemyDice)
@@ -283,9 +284,9 @@ void CDungeon::Start_Battle()
 
 		Render_Battle_Info();
 
-		if (Get_Player().Get_CurStat()->Get_HP() <= 0)
+		if (Get_Player().Get_Info().Get_CurStat()->Get_HP() <= 0)
 		{
-			Get_Player().Get_CurStat()->Set_HP(0);
+			Get_Player().Get_Info().Get_CurStat()->Set_HP(0);
 
 			Set_Color(YELLOW);
 			cout << "플레이어 쓰러짐!" << endl;
@@ -323,10 +324,10 @@ void CDungeon::Trigger_Random_Event(int _iValue)
 
 void CDungeon::Face_Enemy(int _iValue)
 {
-	Set_Enemy(new CInfo);
-	strcpy_s(Get_Enemy().Get_Name(), NAME_LEN, "???");
-	Get_Enemy().Get_Stat()->SetStatRandom(_iValue);
-	Get_Enemy().ResetStat();
+	Set_Enemy(new CEnemy);
+	strcpy_s(Get_Enemy().Get_Info().Get_Name(), NAME_LEN, "???");
+	Get_Enemy().Get_Info().Get_Stat()->SetStatRandom(_iValue);
+	Get_Enemy().Get_Info().ResetStat();
 
 	Render_Battle_Info();
 
@@ -346,7 +347,7 @@ void CDungeon::Face_Enemy(int _iValue)
 void CDungeon::Trigger_Trap(int _iValue)
 {
 	system("cls");
-	Get_Player().PrintInfo();
+	Get_Player().Get_Info().PrintInfo();
 
 	Set_Color(YELLOW);
 	cout << "함정(" << _iValue << ")이 작동되었다!" << endl;
@@ -356,7 +357,7 @@ void CDungeon::Trigger_Trap(int _iValue)
 	system("pause");
 	cout << endl;
 
-	int iDice_DEX = Get_Player().Roll_Dice(Get_Player().Get_CurStat()->Get_DEX());
+	int iDice_DEX = Get_Player().Roll_Dice(Get_Player().Get_Info().Get_CurStat()->Get_DEX());
 	if (iDice_DEX > _iValue)
 	{
 		cout << "주사위 결과: " << iDice_DEX << endl;
@@ -369,7 +370,7 @@ void CDungeon::Trigger_Trap(int _iValue)
 	}
 	else
 	{
-		Get_Player().Get_CurStat()->Add_HP(-_iValue);
+		Get_Player().Get_Info().Get_CurStat()->Add_HP(-_iValue);
 
 		cout << "주사위 결과: " << iDice_DEX << endl;
 		Set_Color(RED);
@@ -379,7 +380,7 @@ void CDungeon::Trigger_Trap(int _iValue)
 		system("pause");
 
 		system("cls");
-		Get_Player().PrintInfo();
+		Get_Player().Get_Info().PrintInfo();
 
 		return;
 	}
@@ -390,7 +391,7 @@ void CDungeon::Find_Magic_Box(int _iValue)
 	while (true)
 	{
 		system("cls");
-		Get_Player().PrintInfo();
+		Get_Player().Get_Info().PrintInfo();
 
 		Set_Color(YELLOW);
 		cout << "마법으로 잠긴 상자(" << _iValue << ")를 발견했다._" << endl;
@@ -411,7 +412,7 @@ void CDungeon::Find_Magic_Box(int _iValue)
 		case 1:
 			//마법 풀기
 		{
-			int iDice_INT = Get_Player().Roll_Dice(Get_Player().Get_CurStat()->Get_INT());
+			int iDice_INT = Get_Player().Roll_Dice(Get_Player().Get_Info().Get_CurStat()->Get_INT());
 
 			if (iDice_INT > _iValue)
 			{
@@ -425,7 +426,7 @@ void CDungeon::Find_Magic_Box(int _iValue)
 				strcpy_s(item.Get_Name(), NAME_LEN, "보물");
 				item.Set_Value(500);
 
-				Get_Player().Get_Inven()->AddItem(item);
+				Get_Player().Get_Info().Get_Inven()->AddItem(item);
 
 				system("pause");
 			}

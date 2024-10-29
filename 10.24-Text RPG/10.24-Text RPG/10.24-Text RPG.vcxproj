@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="info.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -182,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="info.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
