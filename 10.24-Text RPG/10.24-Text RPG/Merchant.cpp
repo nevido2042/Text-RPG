@@ -3,7 +3,7 @@
 #include "Player.h"
 
 CMerchant::CMerchant()
-	:m_pInfo(nullptr)
+	//:m_pInfo(nullptr)
 {
     //m_pInfo = nullptr;
 }
@@ -13,25 +13,26 @@ CMerchant::~CMerchant()
     Release();
 }
 
-CInfo& CMerchant::Get_Info()
-{
-    return *m_pInfo;
-}
-
-void CMerchant::Set_Info(CInfo* _pInfo)
-{
-    m_pInfo = _pInfo;
-}
+//CInfo& CMerchant::Get_Info()
+//{
+//    return *m_pInfo;
+//}
+//
+//void CMerchant::Set_Info(CInfo* _pInfo)
+//{
+//    m_pInfo = _pInfo;
+//}
 
 void CMerchant::Initialize()
 {
-    Set_Info(new CInfo);
-    Get_Info().Initialize();
+	CEntity::Initialize();
+    //Set_Info(new CInfo);
+    //Get_Info().Initialize();
 }
 
 void CMerchant::Release()
 {
-    SAFE_DELETE(m_pInfo);
+    //SAFE_DELETE(m_pInfo);
 }
 
 void CMerchant::Set_Merchant_Inven()

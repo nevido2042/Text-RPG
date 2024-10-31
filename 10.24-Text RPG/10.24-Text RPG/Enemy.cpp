@@ -2,7 +2,7 @@
 #include "Enemy.h"
 
 CEnemy::CEnemy()
-	:m_pInfo(nullptr)
+	//:m_pInfo(nullptr)
 {
     //m_pInfo = nullptr;
 }
@@ -12,25 +12,26 @@ CEnemy::~CEnemy()
     Release();
 }
 
-CInfo& CEnemy::Get_Info()
-{
-    return *m_pInfo;
-}
-
-void CEnemy::Set_Info(CInfo* _pInfo)
-{
-    m_pInfo = _pInfo;
-}
+//CInfo& CEnemy::Get_Info()
+//{
+//    return *m_pInfo;
+//}
+//
+//void CEnemy::Set_Info(CInfo* _pInfo)
+//{
+//    m_pInfo = _pInfo;
+//}
 
 void CEnemy::Initialize()
 {
-    Set_Info(new CInfo);
-    Get_Info().Initialize();
+	CEntity::Initialize();
+    //Set_Info(new CInfo);
+    //Get_Info().Initialize();
 }
 
 void CEnemy::Release()
 {
-    SAFE_DELETE(m_pInfo);
+    //SAFE_DELETE(m_pInfo);
 }
 
 void CEnemy::Try_Attack(CPlayer* _pTarget)

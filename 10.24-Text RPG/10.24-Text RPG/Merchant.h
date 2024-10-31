@@ -1,20 +1,21 @@
 #pragma once
-#include "info.h"
+//#include "info.h"
+#include "Entity.h"
 #include "InputManager.h"
 
 class CPlayer;
 
-class CMerchant
+class CMerchant: public CEntity
 {
-	CInfo* m_pInfo;
+	//CInfo* m_pInfo;
 
 public:
 	CMerchant();
 	~CMerchant();
 
 public:
-	CInfo& Get_Info();
-	void Set_Info(CInfo* _pInfo);
+	//CInfo& Get_Info();
+	//void Set_Info(CInfo* _pInfo);
 
 public:
 	void Initialize();

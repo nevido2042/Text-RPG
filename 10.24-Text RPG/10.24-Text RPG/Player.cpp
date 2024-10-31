@@ -7,7 +7,7 @@
 //int CPlayer::iTryCount = 100;
 
 CPlayer::CPlayer()
-    :m_pInfo(nullptr)
+    //:m_pInfo(nullptr)
 {
     //m_pInfo = nullptr;
 }
@@ -17,30 +17,31 @@ CPlayer::~CPlayer()
     Release();
 }
 
-CInfo& CPlayer::Get_Info()
-{
-    return *m_pInfo;
-}
+//CInfo& CPlayer::Get_Info()
+//{
+//    return *m_pInfo;
+//}
 
-void CPlayer::Set_Info(CInfo* _pInfo)
-{
-    if (m_pInfo != nullptr)
-    {
-        PRINT_ERROR;
-    }
-
-    m_pInfo = _pInfo;
-}
+//void CPlayer::Set_Info(CInfo* _pInfo)
+//{
+//    if (m_pInfo != nullptr)
+//    {
+//        PRINT_ERROR;
+//    }
+//
+//    m_pInfo = _pInfo;
+//}
 
 void CPlayer::Initialize()
 {
-    Set_Info(new CInfo);
-    Get_Info().Initialize();
+    CEntity::Initialize();
+    //Set_Info(new CInfo);
+    //Get_Info().Initialize();
 }
 
 void CPlayer::Release()
 {
-    SAFE_DELETE(m_pInfo);
+    //SAFE_DELETE(m_pInfo);
 }
 
 int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
