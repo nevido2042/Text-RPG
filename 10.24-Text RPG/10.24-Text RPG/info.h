@@ -29,6 +29,7 @@ public:
 	CStat* Get_Stat();
 	
 	CStat* Get_CurStat();
+	void Set_CurStat(CStat* _pStat);
 	
 	CInven* Get_Inven();
 

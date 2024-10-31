@@ -49,6 +49,11 @@ CStat* CInfo::Get_CurStat()
 	return &m_CurStat;
 }
 
+void CInfo::Set_CurStat(CStat* _pStat)
+{
+	m_CurStat = *_pStat;
+}
+
 CInven* CInfo::Get_Inven()
 {
 	return &m_Inven;
@@ -142,10 +147,12 @@ void CInfo::PrintInfo()
 
 void CInfo::ResetStat()
 {
-	Get_CurStat()->Set_HP(Get_Stat()->Get_HP());
+	Set_CurStat(Get_Stat());
+
+	/*Get_CurStat()->Set_HP(Get_Stat()->Get_HP());
 	Get_CurStat()->Set_MP(Get_Stat()->Get_MP());
 	Get_CurStat()->Set_STR(Get_Stat()->Get_STR());
 	Get_CurStat()->Set_DEX(Get_Stat()->Get_DEX());
 	Get_CurStat()->Set_LUK(Get_Stat()->Get_LUK());
-	Get_CurStat()->Set_INT(Get_Stat()->Get_INT());
+	Get_CurStat()->Set_INT(Get_Stat()->Get_INT());*/
 }

@@ -7,13 +7,13 @@ class CPlayer;
 
 class CDungeon
 {
-	enum DUNGEON { Grassland = 1, Mountain, Cave };
-
 	int m_iValue;
 	CPlayer* m_pPlayer;
 	CEnemy* m_pEnemy;
 	CInputManager* m_pInputManager;
 
+public:
+	enum DUNGEON { Grassland = 1, Mountain, Cave };
 public:
 	CDungeon();
 	CDungeon(CPlayer* _pPlayer, int _iValue, CInputManager* _InputManager);

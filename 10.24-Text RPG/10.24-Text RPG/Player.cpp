@@ -1,10 +1,8 @@
 #include "pch.h"
 #include "Player.h"
-#include "Dungeon.h" //나중에 빼야할 듯
+#include "Dungeon.h"
 #include "Merchant.h"
 #include "Enemy.h"
-
-enum DUNGEON { Grassland = 1, Mountain, Cave };//나중에 빼야할 듯
 
 //int CPlayer::iTryCount = 100;
 
@@ -167,7 +165,7 @@ void CPlayer::Select_Dungeon(CInputManager* _pInputManager)
         {
         case 1:
         {
-            CDungeon* Dungeon = new CDungeon(this, Grassland, _pInputManager);
+            CDungeon* Dungeon = new CDungeon(this, CDungeon::Grassland, _pInputManager);
             Dungeon->Initialize();
             SAFE_DELETE(Dungeon);
             break;
@@ -175,7 +173,7 @@ void CPlayer::Select_Dungeon(CInputManager* _pInputManager)
 
         case 2:
         {
-            CDungeon* Dungeon = new CDungeon(this, Mountain, _pInputManager);
+            CDungeon* Dungeon = new CDungeon(this, CDungeon::Mountain, _pInputManager);
             Dungeon->Initialize();
             SAFE_DELETE(Dungeon);
             break;
@@ -183,7 +181,7 @@ void CPlayer::Select_Dungeon(CInputManager* _pInputManager)
 
         case 3:
         {
-            CDungeon* Dungeon = new CDungeon(this, Cave, _pInputManager);
+            CDungeon* Dungeon = new CDungeon(this, CDungeon::Cave, _pInputManager);
             Dungeon->Initialize();
             SAFE_DELETE(Dungeon);
             break;
