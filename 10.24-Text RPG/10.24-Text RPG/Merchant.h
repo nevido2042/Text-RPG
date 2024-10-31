@@ -23,6 +23,7 @@ public:
 
 public:
 	void Set_Merchant_Inven();
+	void Set_Dungeon_Merchant_Inven();
 	void Open_Shop(CPlayer* _pPlayer, CInputManager* _pInputManager);
 	void Render_Shop(CPlayer* _pPlayer);
 

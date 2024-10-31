@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Dungeon.h"
 #include "Player.h"
+#include "Merchant.h"
 
 CDungeon::CDungeon() 
 	:m_iValue(0), m_pPlayer(nullptr), m_pInputManager(nullptr), m_pEnemy(nullptr)
@@ -308,7 +309,7 @@ void CDungeon::Start_Battle()
 
 void CDungeon::Trigger_Random_Event(int _iValue)
 {
-	const int iEventCount = 3;
+	const int iEventCount = 4;
 	int iRandNum = rand() % iEventCount + 1;
 
 	switch (iRandNum)
@@ -321,6 +322,9 @@ void CDungeon::Trigger_Random_Event(int _iValue)
 		return;
 	case 3:
 		Find_Magic_Box(_iValue);
+		return;
+	case 4:
+		Face_Merchant();
 		return;
 	default:
 		cout << __FUNCTION__ << endl;
@@ -455,4 +459,22 @@ void CDungeon::Find_Magic_Box(int _iValue)
 			break;
 		}
 	}
+}
+
+void CDungeon::Face_Merchant()
+{
+
+	Set_Color(YELLOW);
+	cout << "떠돌이 상인을 만났다!" << endl;
+	Set_Color(GRAY);
+
+	system("pause");
+
+	CMerchant* Merchant = new CMerchant;
+	Merchant->Initialize();
+	Merchant->Set_Dungeon_Merchant_Inven();
+
+	Merchant->Open_Shop(&Get_Player(), &Get_InputManager());
+
+	SAFE_DELETE(Merchant);
 }

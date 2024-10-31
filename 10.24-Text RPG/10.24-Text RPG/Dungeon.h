@@ -37,8 +37,10 @@ public:
 	void Render_Battle_Info();
 	void Start_Battle();
 	void Trigger_Random_Event(int _iValue);
+
 	void Face_Enemy(int _iValue);
 	void Trigger_Trap(int _iValue);
 	void Find_Magic_Box(int _iValue);
+	void Face_Merchant();
 };
 

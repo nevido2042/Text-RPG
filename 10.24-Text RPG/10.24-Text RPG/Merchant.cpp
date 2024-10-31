@@ -43,6 +43,16 @@ void CMerchant::Set_Merchant_Inven()
     //Get_Info().Get_Inven()->SetMerchantInven();
 }
 
+void CMerchant::Set_Dungeon_Merchant_Inven()
+{
+	extern CItem redPotion;
+	extern CItem swordOfLegend;
+	Get_Info().Get_Inven()->ClearInven();
+	Get_Info().Get_Inven()->AddItem(swordOfLegend);
+	Get_Info().Get_Inven()->AddItem(redPotion);
+	//Get_Info().Get_Inven()->SetMerchantInven();
+}
+
 void CMerchant::Open_Shop(CPlayer* _pPlayer, CInputManager* _pInputManager)
 {
 	while (true)
@@ -53,7 +63,7 @@ void CMerchant::Open_Shop(CPlayer* _pPlayer, CInputManager* _pInputManager)
 		LINE_LINE;
 		cout << "[1] 구매" << endl;
 		cout << "[2] 판매" << endl;
-		cout << "[3] 은신처로 돌아가기" << endl;
+		cout << "[3] 상점 나가기" << endl;
 		LINE_LINE;
 
 

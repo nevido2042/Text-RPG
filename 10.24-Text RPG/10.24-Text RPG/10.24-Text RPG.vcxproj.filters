@@ -74,7 +74,7 @@
     <ClInclude Include="TextRPG.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="item_RedPotion.h">
+    <ClInclude Include="item_List.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="misc.h">

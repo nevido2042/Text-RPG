@@ -9,3 +9,5 @@ CItem redPotion("빨간 물약", 50, RecoveryHP);
 //	50,
 //	RecoveryHP
 //};
+
+CItem swordOfLegend("전설의 검", 999, nullptr);
