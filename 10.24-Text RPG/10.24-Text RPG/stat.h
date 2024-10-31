@@ -21,7 +21,7 @@ public:
 	void Release();
 
 public:
-	int Get_HP();
+	int Get_HP() const;
 	int Get_MP();
 	int Get_STR();
 	int Get_DEX();
@@ -38,8 +38,8 @@ public:
 	int Roll_Dice(int iValue);
 	void Add_HP(int _iValue);
 	void RenderStat();
-	void PrintALL();
-	void PrintDetailStat();
+	void PrintALL() const;
+	void PrintDetailStat() const;
 	void SetStatRandom(int _iValue = 2);
 	void SetRandomPoint(int* _iStatPoint, int* _iRemainPoint, const int* _iMaxPoint);
 };

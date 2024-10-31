@@ -30,5 +30,11 @@ public:
 	int Roll_Dice(int _iValue);
 	int Select_Item(CInputManager* _InputManager, CInfo* _pTarget);
 
+//public:
+//	static int iTryCount;
 };
+
+//int g_iNum = 0;
+
+//int CPlayer::iTryCount = 0;
 

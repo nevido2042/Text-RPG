@@ -2,21 +2,23 @@
 #include "Dungeon.h"
 #include "Player.h"
 
-CDungeon::CDungeon()
+CDungeon::CDungeon() 
+	:m_iValue(0), m_pPlayer(nullptr), m_pInputManager(nullptr), m_pEnemy(nullptr)
 {
-	m_iValue = 0;
+	/*m_iValue = 0;
 	m_pPlayer = nullptr;
 	m_pInputManager = nullptr;
-	m_pEnemy = nullptr;
+	m_pEnemy = nullptr;*/
 }
 
 CDungeon::CDungeon(CPlayer* _pPlayer, int _iValue, CInputManager* _InputManager)
+	:m_pPlayer(_pPlayer), m_iValue(_iValue), m_pInputManager(_InputManager), m_pEnemy(nullptr)
 {
-	CDungeon();
+	//CDungeon();
 
-	m_pPlayer = _pPlayer;
+	/*m_pPlayer = _pPlayer;
 	m_iValue = _iValue;
-	m_pInputManager = _InputManager;
+	m_pInputManager = _InputManager;*/
 }
 
 CDungeon::~CDungeon()
@@ -46,6 +48,11 @@ CEnemy& CDungeon::Get_Enemy()
 
 void CDungeon::Set_Enemy(CEnemy* _pEnemy)
 {
+	if (m_pEnemy != nullptr)
+	{
+		PRINT_ERROR;
+	}
+
 	m_pEnemy = _pEnemy;
 	Get_Enemy().Initialize();
 }

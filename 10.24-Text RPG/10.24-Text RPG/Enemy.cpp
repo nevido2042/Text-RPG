@@ -2,8 +2,9 @@
 #include "Enemy.h"
 
 CEnemy::CEnemy()
+	:m_pInfo(nullptr)
 {
-    m_pInfo = nullptr;
+    //m_pInfo = nullptr;
 }
 
 CEnemy::~CEnemy()

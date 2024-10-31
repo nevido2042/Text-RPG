@@ -5,10 +5,11 @@
 #include "info.h"
 
 CItem::CItem()
+	:m_iValue(0), m_pUse(nullptr)
 {
 	ZeroMemory(m_szName, sizeof(m_szName));
-	m_iValue = 0;
-	m_pUse = nullptr;
+	//m_iValue = 0;
+	//m_pUse = nullptr;
 }
 
 CItem::CItem(const char* _szName, int _iValue, void(*_pUse)(CInfo*, CInfo*))

@@ -40,7 +40,7 @@ public:
 	void IncreaseDay();
 	void AddGold(int _iGold);
 	void RenderStat();
-	void PrintName();
+	void PrintName() const;
 	void PrintInfo();
 	void ResetStat();
 	//void Try_Attack(CInfo* _pTarget);

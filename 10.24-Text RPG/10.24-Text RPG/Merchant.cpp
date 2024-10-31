@@ -3,8 +3,9 @@
 #include "Player.h"
 
 CMerchant::CMerchant()
+	:m_pInfo(nullptr)
 {
-    m_pInfo = nullptr;
+    //m_pInfo = nullptr;
 }
 
 CMerchant::~CMerchant()

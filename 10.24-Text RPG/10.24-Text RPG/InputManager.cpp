@@ -3,8 +3,9 @@
 #include "misc.h"
 
 CInputManager::CInputManager()
+	:m_iInput(0)
 {
-    m_iInput = 0;
+    //m_iInput = 0;
 }
 
 CInputManager::~CInputManager()

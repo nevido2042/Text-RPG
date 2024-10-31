@@ -6,9 +6,12 @@
 
 enum DUNGEON { Grassland = 1, Mountain, Cave };//나중에 빼야할 듯
 
+//int CPlayer::iTryCount = 100;
+
 CPlayer::CPlayer()
+    :m_pInfo(nullptr)
 {
-    m_pInfo = nullptr;
+    //m_pInfo = nullptr;
 }
 
 CPlayer::~CPlayer()
@@ -23,6 +26,11 @@ CInfo& CPlayer::Get_Info()
 
 void CPlayer::Set_Info(CInfo* _pInfo)
 {
+    if (m_pInfo != nullptr)
+    {
+        PRINT_ERROR;
+    }
+
     m_pInfo = _pInfo;
 }
 
@@ -43,6 +51,8 @@ int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
     {
         system("cls");
         Get_Info().PrintInfo();
+
+        //cout << "시도 횟수: " << CPlayer::iTryCount << endl;
         
         Set_Color(YELLOW);
         cout << Get_Info().Get_Gold() << 'G' << endl;

@@ -3,9 +3,10 @@
 #include "misc.h"
 
 CInven::CInven()
+	:m_iItemCount(0)
 {
 	ZeroMemory(m_pItemArray, sizeof(m_pItemArray));
-	m_iItemCount = 0;
+	//m_iItemCount = 0;
 }
 
 void CInven::Initialize()

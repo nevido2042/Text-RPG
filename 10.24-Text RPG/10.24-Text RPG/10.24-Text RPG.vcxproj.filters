@@ -105,7 +105,7 @@
       <Filter>헤더 파일\Class</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

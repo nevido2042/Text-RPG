@@ -9,6 +9,11 @@ CPlayer& CMainGame::Get_Player()
 
 void CMainGame::Set_Player(CPlayer* _pPlayer)
 {
+	if (m_pPlayer != nullptr)
+	{
+		PRINT_ERROR;
+	}
+
 	m_pPlayer = _pPlayer;
 
 	Get_Player().Initialize();
@@ -21,6 +26,11 @@ CMerchant& CMainGame::Get_Merchant()
 
 void CMainGame::Set_Merchant(CMerchant* _pMerchant)
 {
+	if (m_pMerchant != nullptr)
+	{
+		PRINT_ERROR;
+	}
+
 	m_pMerchant = _pMerchant;
 	Get_Merchant().Initialize();
 }
@@ -32,16 +42,22 @@ CInputManager& CMainGame::Get_InputManager()
 
 void CMainGame::Set_InputManager(CInputManager* _pInputManager)
 {
+	if (m_pInputManager != nullptr)
+	{
+		PRINT_ERROR;
+	}
+
 	m_pInputManager = _pInputManager;
 }
 
 CMainGame::CMainGame()
+	:m_pInputManager(nullptr), m_pPlayer(nullptr), m_pMerchant(nullptr)
 {
-	m_pInputManager = nullptr;
+	//m_pInputManager = nullptr;
 
-	m_pPlayer = nullptr;
+	//m_pPlayer = nullptr;
 
-	m_pMerchant = nullptr;
+	//m_pMerchant = nullptr;
 }
 
 CMainGame::~CMainGame()
@@ -80,7 +96,7 @@ void CMainGame::Print_MainMenu()
 		LINE_LINE;
 		cout << " [1] 새로운 게임" << endl;
 		cout << " [2] 게임 종료" << endl;
-		cout << " [3] 이어하기" << endl;
+		cout << " [3] 이어하기(고장: 파싱 필요?)" << endl;
 		LINE_LINE;
 
 		if (Get_InputManager().Receive_Input() == INPUT_ERROR)
@@ -137,85 +153,6 @@ void CMainGame::Create_Player()
 	Input_Name();
 	Set_Random_STAT();
 }
-
-//void CMainGame::Select_Task()
-//{
-//	while (true)
-//	{
-//		system("cls");
-//		Get_Player().Get_Info().PrintInfo();
-//
-//		Set_Color(YELLOW);
-//		cout << Get_Player().Get_Info().Get_Gold() << 'G' << endl;
-//		Set_Color(GRAY);
-//
-//		cout << "Day - " << Get_Player().Get_Info().Get_Day() << endl;
-//		cout << "현재위치: 은신처" << endl;
-//		LINE_LINE;
-//		cout << " [1] 휴식" << endl;
-//		cout << " [2] 모험" << endl;
-//		cout << " [3] 소지품" << endl;
-//		cout << " [4] 상점" << endl;
-//		cout << " [5] 저장 & 종료" << endl;
-//		cout << " [999] 치트" << endl;
-//		LINE_LINE;
-//
-//
-//		if (Get_InputManager().Receive_Input() == INPUT_ERROR)
-//		{
-//			continue;
-//		}
-//
-//		switch (Get_InputManager().Get_Input())
-//		{
-//		case 1:
-//			//휴식
-//			Get_Player().Get_Info().ResetStat();
-//			Get_Player().Get_Info().IncreaseDay();
-//			Get_Merchant().Get_Inven()->SetMerchantInven();
-//			break;
-//
-//		case 2:
-//			//모험
-//			if (Get_Player().Get_Info().Get_CurStat()->Get_HP() == 0)
-//			{
-//				cout << "휴식이 필요." << endl;
-//				system("pause");
-//				continue;
-//			}
-//
-//			Select_Dungeon();
-//
-//			break;
-//
-//		case 3:
-//			//소지품
-//			system("cls");
-//
-//			Get_Player().Get_Info().Select_Item(&Get_InputManager(), nullptr);
-//
-//			break;
-//		case 4:
-//			//상점
-//			Open_Shop();
-//			break;
-//		case 5:
-//			//저장&종료
-//			Save_Player();
-//			SAFE_DELETE(m_pPlayer);
-//			SAFE_DELETE(m_pMerchant);
-//			return;
-//		case 999:
-//			//치트
-//			Get_Player().Get_Info().AddGold(999);
-//			extern CItem redPotion;
-//			Get_Player().Get_Info().Get_Inven()->AddItem(redPotion);
-//			break;
-//		default:
-//			break;
-//		}
-//	}
-//}
 
 void CMainGame::Load_Player()
 {
@@ -308,193 +245,6 @@ void CMainGame::Set_Random_STAT()
 		}
 	}
 }
-
-//void CMainGame::Select_Dungeon()
-//{
-//	while (true)
-//	{
-//		if (Get_Player().Get_Info().Get_CurStat()->Get_HP() == 0)
-//		{
-//			return;
-//		}
-//
-//		system("cls");
-//		Get_Player().Get_Info().PrintInfo();
-//		cout << "현재위치: 갈래길" << endl;
-//		cout << "<모험 장소 선택>" << endl;
-//		LINE_LINE;
-//		Set_Color(GREEN);
-//		cout << "[1] 초원 " << endl; // 2.산 3.동굴 4.복귀" << endl;
-//		Set_Color(GRAY);
-//
-//		Set_Color(YELLOW);
-//		cout << "[2] 산 " << endl;
-//		Set_Color(GRAY);
-//
-//		Set_Color(RED);
-//		cout << "[3] 동굴 " << endl;
-//		Set_Color(GRAY);
-//
-//		cout << "[4] 은신처로 돌아가기 " << endl;
-//		LINE_LINE;
-//
-//		if (Get_InputManager().Receive_Input() == INPUT_ERROR)
-//		{
-//			continue;
-//		}
-//
-//		switch (Get_InputManager().Get_Input())
-//		{
-//		case 1:
-//		{
-//			CDungeon* Dungeon = new CDungeon(&Get_Player().Get_Info(), Grassland, &Get_InputManager());
-//			Dungeon->Initialize();
-//			SAFE_DELETE(Dungeon);
-//			break;
-//		}
-//
-//		case 2:
-//		{
-//			CDungeon* Dungeon = new CDungeon(&Get_Player().Get_Info(), Mountain, &Get_InputManager());
-//			Dungeon->Initialize();
-//			SAFE_DELETE(Dungeon);
-//			break;
-//		}
-//			
-//		case 3:
-//		{
-//			CDungeon* Dungeon = new CDungeon(&Get_Player().Get_Info(), Cave, &Get_InputManager());
-//			Dungeon->Initialize();
-//			SAFE_DELETE(Dungeon);
-//			break;
-//		}
-//			
-//		case 4:
-//			return;
-//		default:
-//			break;
-//		}
-//	}
-//}
-
-//void CMainGame::Open_Shop()
-//{
-//	while (true)
-//	{
-//		Render_Shop();
-//
-//		cout << "현재위치: 상점" << endl;
-//		LINE_LINE;
-//		cout << "[1] 구매" << endl;
-//		cout << "[2] 판매" << endl;
-//		cout << "[3] 은신처로 돌아가기" << endl;
-//		LINE_LINE;
-//
-//
-//		if (Get_InputManager().Receive_Input() == INPUT_ERROR)
-//		{
-//			continue;
-//		}
-//
-//		switch (Get_InputManager().Get_Input())
-//		{
-//		case 1:
-//			Buy_Item();
-//			break;
-//		case 2:
-//			Sell_Item();
-//			break;
-//		case 3:
-//			//SAFE_DELETE(merchant);
-//			return;
-//		default:
-//			break;
-//		}
-//	}
-//}
-
-//void CMainGame::Buy_Item()
-//{
-//	while (true)
-//	{
-//		Render_Shop();
-//
-//		cout << "사고싶은 품목의 번호를 선택(취소=0)" << endl;
-//		if (Get_InputManager().Receive_Input() == INPUT_ERROR)
-//		{
-//			continue;
-//		}
-//
-//		if (Get_InputManager().Get_Input() == 0)
-//		{
-//			break;
-//		}
-//
-//		CItem item = Get_Merchant().Get_Inven()->Get_ItemArray()[Get_InputManager().Get_Input() - 1];
-//
-//		int iItemValue = Get_Merchant().Get_Inven()->Get_ItemArray()[Get_InputManager().Get_Input() - 1].Get_Value();
-//		if (Get_Player().Get_Info().Get_Gold() >= iItemValue)
-//		{
-//			Get_Player().Get_Info().AddGold(-iItemValue);
-//		}
-//		else
-//		{
-//			cout << "소지금이 부족합니다." << endl;
-//			system("pause");
-//			continue;
-//		}
-//
-//		if (Get_Merchant().Get_Inven()->RemoveItem(Get_InputManager().Get_Input() - 1) == SUCCESS)
-//		{
-//			Get_Player().Get_Info().Get_Inven()->AddItem(item);
-//		}
-//	}
-//}
-
-//void CMainGame::Sell_Item()
-//{
-//	while (true)
-//	{
-//		Render_Shop();
-//
-//		cout << "팔고싶은 품목의 번호를 선택(취소=0)" << endl;
-//		if (Get_InputManager().Receive_Input() == INPUT_ERROR)
-//		{
-//			continue;
-//		}
-//
-//		if (Get_InputManager().Get_Input() == 0)
-//		{
-//			break;
-//		}
-//
-//		CItem item = Get_Player().Get_Info().Get_Inven()->Get_ItemArray()[Get_InputManager().Get_Input() - 1];
-//		if (Get_Player().Get_Info().Get_Inven()->RemoveItem(Get_InputManager().Get_Input() - 1) == SUCCESS)
-//		{
-//			Get_Player().Get_Info().AddGold(item.Get_Value());
-//			Get_Merchant().Get_Inven()->AddItem(item);
-//		}
-//	}
-//}
-
-//void CMainGame::Render_Shop()
-//{
-//	system("cls");
-//
-//	cout << "보유 금화: ";
-//	Set_Color(YELLOW);
-//	cout << Get_Player().Get_Info().Get_Gold() << "G" << endl;
-//	Set_Color(GRAY);
-//
-//	cout << "플레이어의 ";
-//	Get_Player().Get_Info().Get_Inven()->PrintAll();
-//
-//	LINE;
-//
-//	cout << "상인의";
-//	Get_Merchant().Get_Inven()->PrintAll();
-//	cout << endl;
-//}
 
 void CMainGame::Save_Player()
 {

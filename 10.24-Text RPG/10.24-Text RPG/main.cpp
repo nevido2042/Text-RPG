@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "TextRPG.h"
+//#include "TextRPG.h"
 #include "MainGame.h"
 
 #define _CRTDBG_MAP_ALLOC
@@ -14,6 +14,10 @@
 #define DBG_NEW new
 #endif
 
+//#include "Player.h"
+
+//extern int CPlayer::iTryCount;
+
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -23,6 +27,12 @@ int main()
 	system("mode con:cols=100 lines=40");
 
 	SetConsoleTitle(L"Text RPG");
+
+	//cout << "½Ãµµ È½¼ö: " << CPlayer::iTryCount << endl;
+	//system("pause");
+
+	//cout << "iNum: " << g_iNum << endl;
+	//system("pause");
 
 	CMainGame MainGame;
 	MainGame.Initialize();

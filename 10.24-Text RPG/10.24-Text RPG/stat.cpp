@@ -4,8 +4,11 @@
 //extern int RollDice(int iMaxPoint);
 
 CStat::CStat()
+	:m_iStatCount(0), m_iTotalStat(0),
+	m_iHP(0), m_iMP(0), 
+	m_iSTR(0), m_iDEX(0), m_iLUK(0), m_iINT(0)
 {
-	m_iStatCount = 0;
+	/*m_iStatCount = 0;
 	m_iTotalStat = 0;
 
 	m_iMP = 0;
@@ -13,7 +16,7 @@ CStat::CStat()
 	m_iHP = 0;
 	m_iDEX = 0;
 	m_iLUK = 0;
-	m_iINT = 0;
+	m_iINT = 0;*/
 }
 
 CStat::~CStat()
@@ -41,7 +44,7 @@ void CStat::Release()
 {
 }
 
-int CStat::Get_HP()
+int CStat::Get_HP() const
 {
 	return m_iHP;
 }
@@ -138,7 +141,7 @@ void CStat::RenderStat()
 	cout << endl;
 }
 
-void CStat::PrintALL()
+void CStat::PrintALL() const
 {
 	cout << "HP: " << m_iHP << endl;
 	cout << "MP: " << m_iMP << endl;
@@ -148,7 +151,7 @@ void CStat::PrintALL()
 	cout << "INT: " << m_iINT << endl;
 }
 
-void CStat::PrintDetailStat()
+void CStat::PrintDetailStat() const
 {
 	cout << "STR: " << m_iSTR << endl;
 	cout << "DEX: " << m_iDEX << endl;
