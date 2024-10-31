@@ -30,6 +30,7 @@ public:
 	void Try_Attack(CEnemy* _pTarget);
 	int Roll_Dice(int _iValue);
 	int Select_Item(CInputManager* _InputManager, CInfo* _pTarget);
+	void Open_Equipment(CInputManager* _InputManager);
 
 //public:
 //	static int iTryCount;

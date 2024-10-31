@@ -46,6 +46,8 @@ void CPlayer::Release()
 
 int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
 {
+    enum TASK { Rest = 1, Adventure, Inventory, Equipment, Shop, Save_Exit, Cheat };
+
     while (true)
     {
         system("cls");
@@ -63,8 +65,9 @@ int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
         cout << " [1] 휴식" << endl;
         cout << " [2] 모험" << endl;
         cout << " [3] 소지품" << endl;
-        cout << " [4] 상점" << endl;
-        cout << " [5] 저장 & 종료" << endl;
+        cout << " [4] 장비창(공사중)" << endl;
+        cout << " [5] 상점" << endl;
+        cout << " [6] 저장 & 종료" << endl;
         cout << " [999] 치트" << endl;
         LINE_LINE;
         
@@ -76,14 +79,14 @@ int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
         
         switch (_pInputManager->Get_Input())
         {
-        case 1:
+        case Rest:
         	//휴식
         	Get_Info().ResetStat();
         	Get_Info().IncreaseDay();
             _pMerchant->Set_Merchant_Inven();
         	break;
         
-        case 2:
+        case Adventure:
         	//모험
         	if (Get_Info().Get_CurStat()->Get_HP() == 0)
         	{
@@ -96,24 +99,29 @@ int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
         
         	break;
         
-        case 3:
+        case Inventory:
         	//소지품
         	system("cls");
         
         	Select_Item(_pInputManager, nullptr);
         
         	break;
-        case 4:
+        case Equipment:
+            //장비창
+            Open_Equipment(_pInputManager);
+            break;
+
+        case Shop:
         	//상점
             _pMerchant->Open_Shop(this, _pInputManager);
         	break;
-        case 5:
+        case Save_Exit:
         	//저장&종료
         	//Save_Player();
         	//SAFE_DELETE(m_pPlayer);
         	//SAFE_DELETE(m_pMerchant);
         	return SUCCESS;
-        case 999:
+        case Cheat:
         	//치트
         	Get_Info().AddGold(999);
         	extern CItem redPotion;
@@ -350,4 +358,37 @@ int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
 
         return SUCCESS;
     }
+}
+
+void CPlayer::Open_Equipment(CInputManager* _InputManager)
+{
+    while (true)
+    {
+        system("cls");
+        //장비창 출력
+        LINE_LINE;
+        cout << "[1] 머리: " << endl;
+        cout << "[2] 상의: " << endl;
+        cout << "[3] 하의: " << endl;
+        cout << "[4] 신발: " << endl;
+        cout << "[5] 무기: " << endl;
+        LINE_LINE;
+
+        //system("pause");
+
+
+        cout << endl;
+        cout << "변경하고 싶은 부위를 선택(취소=0)" << endl;
+        //변경하고싶은 부위 선택
+        if (_InputManager->Receive_Input() == INPUT_ERROR)
+        {
+            continue;
+        }
+
+        if (_InputManager->Get_Input() == 0)
+        {
+            return;
+        }
+    }
+ 
 }
