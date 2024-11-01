@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "stat.h"
+#include "misc.h"
 
 //extern int RollDice(int iMaxPoint);
 
 CStat::CStat()
 	:m_iStatCount(0), m_iTotalStat(0),
 	m_iHP(0), m_iMP(0), 
-	m_iSTR(0), m_iDEX(0), m_iLUK(0), m_iINT(0)
+	m_iSTR(0), m_iDEX(0), m_iLUK(0), m_iINT(0),
+	m_iAddSTR(0)
 {
 	/*m_iStatCount = 0;
 	m_iTotalStat = 0;
@@ -74,6 +76,11 @@ int CStat::Get_INT()
 	return m_iINT;
 }
 
+int CStat::Get_AddSTR() const
+{
+	return m_iAddSTR;
+}
+
 void CStat::Set_HP(int _iValue)
 {
 	m_iHP = _iValue;
@@ -102,6 +109,11 @@ void CStat::Set_LUK(int _iValue)
 void CStat::Set_INT(int _iValue)
 {
 	m_iINT = _iValue;
+}
+
+void CStat::Set_AddSTR(int _iValue)
+{
+	m_iAddSTR = _iValue;
 }
 
 int CStat::Roll_Dice(int iValue)
@@ -144,16 +156,26 @@ void CStat::RenderStat()
 void CStat::PrintALL() const
 {
 	cout << "HP: " << m_iHP << endl;
+
 	cout << "MP: " << m_iMP << endl;
+
 	cout << "STR: " << m_iSTR << endl;
+
 	cout << "DEX: " << m_iDEX << endl;
+
 	cout << "LUK: " << m_iLUK << endl;
+
 	cout << "INT: " << m_iINT << endl;
 }
 
 void CStat::PrintDetailStat() const
 {
-	cout << "STR: " << m_iSTR << endl;
+	cout << "STR: " << m_iSTR;
+	Set_Color(RED);
+	cout << "(+" << Get_AddSTR() << ")";
+	Set_Color(GRAY);
+	cout << endl;
+
 	cout << "DEX: " << m_iDEX << endl;
 	cout << "LUK: " << m_iLUK << endl;
 	cout << "INT: " << m_iINT << endl;

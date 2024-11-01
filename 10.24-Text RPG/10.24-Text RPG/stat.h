@@ -11,6 +11,8 @@ class CStat
 	int m_iLUK;
 	int m_iINT;
 
+	int m_iAddSTR;
+
 public:
 	CStat();
 	~CStat();
@@ -27,6 +29,8 @@ public:
 	int Get_DEX();
 	int Get_LUK();
 	int Get_INT();
+
+	int Get_AddSTR() const;
 public:
 	void Set_HP(int _iValue);
 	void Set_MP(int _iValue);
@@ -34,6 +38,8 @@ public:
 	void Set_DEX(int _iValue);
 	void Set_LUK(int _iValue);
 	void Set_INT(int _iValue);
+
+	void Set_AddSTR(int _iValue);
 public:
 	int Roll_Dice(int iValue);
 	void Add_HP(int _iValue);

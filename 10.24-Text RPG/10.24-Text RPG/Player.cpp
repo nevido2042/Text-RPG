@@ -7,7 +7,8 @@
 //int CPlayer::iTryCount = 100;
 
 CPlayer::CPlayer()
-    //:m_pInfo(nullptr)
+    :m_Head(nullptr), m_Top(nullptr), m_Bottom(nullptr),
+    m_Shoes(nullptr), m_Weapon(nullptr)
 {
     //m_pInfo = nullptr;
 }
@@ -46,7 +47,7 @@ void CPlayer::Release()
 
 int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
 {
-    enum TASK { Rest = 1, Adventure, Inventory, Equipment, Shop, Save_Exit, Cheat };
+    enum TASK { Rest = 1, Adventure, Inventory, Equipment, Shop, Save_Exit, Cheat = 999 };
 
     while (true)
     {
@@ -125,7 +126,10 @@ int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
         	//치트
         	Get_Info().AddGold(999);
         	extern CItem redPotion;
+            extern CItem swordOfLegend;
         	Get_Info().Get_Inven()->AddItem(redPotion);
+            Get_Info().Get_Inven()->AddItem(swordOfLegend);
+
         	break;
         default:
         	break;
@@ -326,7 +330,7 @@ int CPlayer::Roll_Dice(int _iValue)
     return rand() % _iValue + 1;
 }
 
-int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
+int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)//entitiy로 바꿀 예정
 {
     //Render_Battle_Info();
 
@@ -351,8 +355,8 @@ int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
         //함수 포인터 값이 달라서 터진다.
         // 
         //불러 오기 할때 다시 담아야하나?
-        CItem selectedItem = Get_Info().Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
-        selectedItem.Use(&Get_Info(), _pTarget); //Info가 매개변수가 아니라 플레이어, 적이 되어야 할거 같은 느낌
+        CItem* selectedItem = &Get_Info().Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
+        selectedItem->Use(&Get_Info(), _pTarget); //Info가 매개변수가 아니라 플레이어, 적이 되어야 할거 같은 느낌
 
         //Render_Battle_Info();
 
@@ -360,8 +364,53 @@ int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)
     }
 }
 
+int CPlayer::Equip_Item(CInputManager* _InputManager, CItem** _Part)
+{
+    //Render_Battle_Info();
+
+    while ((true))
+    {
+        //Render_Battle_Info();
+
+        Get_Info().Get_Inven()->PrintAll();
+        cout << "사용할 아이템 선택(취소=0): ";
+        if (_InputManager->Receive_Input() == INPUT_ERROR)
+        {
+            continue;
+        }
+
+        if (_InputManager->Get_Input() == 0)
+        {
+            return CANCLE;
+        }
+
+        //게임중 얻는 아이템과
+        //불러오기로 들어온 아이템의
+        //함수 포인터 값이 달라서 터진다.
+        // 
+        //불러 오기 할때 다시 담아야하나?
+        int iIndex = _InputManager->Get_Input() - 1;
+        CItem* selectedItem = &Get_Info().Get_Inven()->Get_ItemArray()[iIndex];
+
+        int iResult(0);
+
+        iResult = selectedItem->Equip(this); //Info가 매개변수가 아니라 플레이어, 적이 되어야 할거 같은 느낌
+
+        if (iResult == SUCCESS)
+        {
+            *_Part = selectedItem;
+            //Render_Battle_Info();
+
+            Get_Info().Get_Inven()->RemoveItem(iIndex);
+        }
+
+        return SUCCESS;
+    }
+}
+
 void CPlayer::Open_Equipment(CInputManager* _InputManager)
 {
+    enum EQUIP { Head = 1, Top, Bottom, Shoes, Weapon };
     while (true)
     {
         system("cls");
@@ -371,7 +420,14 @@ void CPlayer::Open_Equipment(CInputManager* _InputManager)
         cout << "[2] 상의: " << endl;
         cout << "[3] 하의: " << endl;
         cout << "[4] 신발: " << endl;
-        cout << "[5] 무기: " << endl;
+
+        cout << "[5] 무기: ";
+        if (m_Weapon != nullptr)
+        {
+            cout << m_Weapon->Get_Name();
+        }
+        cout << endl;
+
         LINE_LINE;
 
         //system("pause");
@@ -388,6 +444,29 @@ void CPlayer::Open_Equipment(CInputManager* _InputManager)
         if (_InputManager->Get_Input() == 0)
         {
             return;
+        }
+
+        switch (_InputManager->Get_Input())
+        {
+        case Head:
+            break;
+
+        case Top:
+            break;
+
+        case Bottom:
+            break;
+
+        case Shoes:
+            break;
+
+        case Weapon:
+            system("cls");
+            Equip_Item(_InputManager, &m_Weapon);
+            break;
+
+        default:
+            break;
         }
     }
  

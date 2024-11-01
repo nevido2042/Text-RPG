@@ -9,6 +9,12 @@ class CMerchant;
 class CPlayer :public CEntity
 {
 	//CInfo* m_pInfo;
+	CItem* m_Head;
+	CItem* m_Top;
+	CItem* m_Bottom;
+	CItem* m_Shoes;
+	CItem* m_Weapon;
+
 
 public:
 	CPlayer();
@@ -30,6 +36,7 @@ public:
 	void Try_Attack(CEnemy* _pTarget);
 	int Roll_Dice(int _iValue);
 	int Select_Item(CInputManager* _InputManager, CInfo* _pTarget);
+	int Equip_Item(CInputManager* _InputManager, CItem** _Part);
 	void Open_Equipment(CInputManager* _InputManager);
 
 //public:
