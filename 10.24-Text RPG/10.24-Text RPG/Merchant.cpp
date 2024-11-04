@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "Merchant.h"
 #include "Player.h"
+#include "item_List.h"
+
+extern CRedPotion g_RedPotion;
+extern CSmall_RedPotion g_Small_RedPotion;
+extern CSword_Of_Legend g_Sword_Of_Legend;
 
 CMerchant::CMerchant()
 	//:m_pInfo(nullptr)
@@ -37,19 +42,23 @@ void CMerchant::Release()
 
 void CMerchant::Set_Merchant_Inven()
 {
-    extern CItem redPotion;
+
+
     Get_Info().Get_Inven()->ClearInven();
-    Get_Info().Get_Inven()->AddItem(redPotion);
+    Get_Info().Get_Inven()->AddItem(new CRedPotion("»¡°£ ¹°¾à", 50)/*g_RedPotion*/);
+	Get_Info().Get_Inven()->AddItem(new CSmall_RedPotion("ÀÛÀº »¡°£ ¹°¾à", 20)/*g_Small_RedPotion*/);
+
     //Get_Info().Get_Inven()->SetMerchantInven();
 }
 
 void CMerchant::Set_Dungeon_Merchant_Inven()
 {
-	extern CItem redPotion;
-	extern CItem swordOfLegend;
+
 	Get_Info().Get_Inven()->ClearInven();
-	Get_Info().Get_Inven()->AddItem(swordOfLegend);
-	Get_Info().Get_Inven()->AddItem(redPotion);
+	Get_Info().Get_Inven()->AddItem(new CSword_Of_Legend("Àü¼³ÀÇ °Ë", 499)/*g_Sword_Of_Legend*/);
+	Get_Info().Get_Inven()->AddItem(new CRedPotion("»¡°£ ¹°¾à", 50));
+	Get_Info().Get_Inven()->AddItem(new CSmall_RedPotion("ÀÛÀº »¡°£ ¹°¾à", 20));
+
 	//Get_Info().Get_Inven()->SetMerchantInven();
 }
 

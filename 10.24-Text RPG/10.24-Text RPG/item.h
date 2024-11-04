@@ -28,7 +28,7 @@ public:
 public:
 	void Set_Value(int _iValue);
 public:
-	void Use(CInfo* _pUser, CInfo* _pTarget);
+	virtual void Use(CInfo* _pUser, CInfo* _pTarget);
 
 	//[[nodiscard]]
 	int Equip(CEntity* _pUser);

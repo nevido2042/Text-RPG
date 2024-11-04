@@ -221,11 +221,11 @@ void CDungeon::Start_Battle()
 
 				cout << "ÀüÅõ Á¾·á" << endl;
 
-				CItem item;
-				strcpy_s(item.Get_Name(), NAME_LEN, "Test Item");
-				item.Set_Value(50);
-				cout << "¾ÆÀÌÅÛ È¹µæ:" << item.Get_Name() << endl;
-				Get_Player().Get_Info().Get_Inven()->AddItem(item);
+				CItem* pItem = new CItem;
+				strcpy_s((*pItem).Get_Name(), NAME_LEN, "Test Item");
+				(*pItem).Set_Value(50);
+				cout << "¾ÆÀÌÅÛ È¹µæ:" <<(*pItem).Get_Name() << endl;
+				Get_Player().Get_Info().Get_Inven()->AddItem(pItem);
 
 				system("pause");
 				return;
@@ -433,11 +433,11 @@ void CDungeon::Find_Magic_Box(int _iValue)
 				cout << "º¸¹°À» È¹µæ Çß´Ù." << endl;
 				Set_Color(GRAY);
 
-				CItem item;
-				strcpy_s(item.Get_Name(), NAME_LEN, "º¸¹°");
-				item.Set_Value(500);
+				CItem* pItem = new CItem;
+				strcpy_s((*pItem).Get_Name(), NAME_LEN, "º¸¹°");
+				(*pItem).Set_Value(500);
 
-				Get_Player().Get_Info().Get_Inven()->AddItem(item);
+				Get_Player().Get_Info().Get_Inven()->AddItem(pItem);
 
 				system("pause");
 			}

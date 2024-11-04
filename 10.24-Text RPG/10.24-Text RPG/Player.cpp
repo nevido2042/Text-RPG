@@ -3,8 +3,12 @@
 #include "Dungeon.h"
 #include "Merchant.h"
 #include "Enemy.h"
+#include "item_List.h"
 
 //int CPlayer::iTryCount = 100;
+extern CRedPotion g_RedPotion;
+extern CSword_Of_Legend g_Sword_Of_Legend;
+
 
 CPlayer::CPlayer()
     :m_Head(nullptr), m_Top(nullptr), m_Bottom(nullptr),
@@ -125,10 +129,8 @@ int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
         case Cheat:
         	//치트
         	Get_Info().AddGold(999);
-        	extern CItem redPotion;
-            extern CItem swordOfLegend;
-        	Get_Info().Get_Inven()->AddItem(redPotion);
-            Get_Info().Get_Inven()->AddItem(swordOfLegend);
+            Get_Info().Get_Inven()->AddItem(new CRedPotion("빨간 물약", 50)/*g_RedPotion*/);
+            Get_Info().Get_Inven()->AddItem(new CSword_Of_Legend("전설의 검", 500)/*g_Sword_Of_Legend*/);
 
         	break;
         default:
@@ -225,9 +227,9 @@ void CPlayer::Buy_Item(CMerchant* _pMerchant, CInputManager* _pInputManager)
             break;
         }
 
-        CItem item = _pMerchant->Get_Info().Get_Inven()->Get_ItemArray()[_pInputManager->Get_Input() - 1];
+        CItem* item = _pMerchant->Get_Info().Get_Inven()->Get_ItemArray()[_pInputManager->Get_Input() - 1];
 
-        int iItemValue = _pMerchant->Get_Info().Get_Inven()->Get_ItemArray()[_pInputManager->Get_Input() - 1].Get_Value();
+        int iItemValue = _pMerchant->Get_Info().Get_Inven()->Get_ItemArray()[_pInputManager->Get_Input() - 1]->Get_Value();
         if (Get_Info().Get_Gold() >= iItemValue)
         {
             Get_Info().AddGold(-iItemValue);
@@ -263,11 +265,11 @@ void CPlayer::Sell_Item(CMerchant* _pMerchant, CInputManager* _pInputManager)
             break;
         }
 
-        CItem item = Get_Info().Get_Inven()->Get_ItemArray()[_pInputManager->Get_Input() - 1];
+        CItem* pItem = Get_Info().Get_Inven()->Get_ItemArray()[_pInputManager->Get_Input() - 1];
         if (Get_Info().Get_Inven()->RemoveItem(_pInputManager->Get_Input() - 1) == SUCCESS)
         {
-            Get_Info().AddGold(item.Get_Value());
-            _pMerchant->Get_Info().Get_Inven()->AddItem(item);
+            Get_Info().AddGold((*pItem).Get_Value());
+            _pMerchant->Get_Info().Get_Inven()->AddItem(pItem);
         }
     }
 }
@@ -355,7 +357,7 @@ int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)//entitiy
         //함수 포인터 값이 달라서 터진다.
         // 
         //불러 오기 할때 다시 담아야하나?
-        CItem* selectedItem = &Get_Info().Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
+        CItem* selectedItem = Get_Info().Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
         selectedItem->Use(&Get_Info(), _pTarget); //Info가 매개변수가 아니라 플레이어, 적이 되어야 할거 같은 느낌
 
         //Render_Battle_Info();
@@ -390,7 +392,7 @@ int CPlayer::Equip_Item(CInputManager* _InputManager, CItem** _Part)
         // 
         //불러 오기 할때 다시 담아야하나?
         int iIndex = _InputManager->Get_Input() - 1;
-        CItem* selectedItem = &Get_Info().Get_Inven()->Get_ItemArray()[iIndex];
+        CItem* selectedItem = Get_Info().Get_Inven()->Get_ItemArray()[iIndex];
 
         int iResult(0);
 

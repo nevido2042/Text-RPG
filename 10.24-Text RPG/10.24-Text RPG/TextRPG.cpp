@@ -134,8 +134,8 @@ void SelectTask(CInfo* _pPlayer)
 		case 999:
 			//ġƮ
 			_pPlayer->AddGold(999);
-			extern CItem redPotion;
-			_pPlayer->Get_Inven()->AddItem(redPotion);
+			//extern CItem redPotion;
+			//_pPlayer->Get_Inven()->AddItem(redPotion);
 			break;
 		default:
 			break;

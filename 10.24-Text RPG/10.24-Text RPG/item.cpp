@@ -61,12 +61,12 @@ void CItem::PrintItem()
 
 void CItem::Refresh()
 {
-	if (strcmp(m_szName, "說除 僭擒") == SUCCESS)
+	/*if (strcmp(m_szName, "說除 僭擒") == SUCCESS)
 	{
 		extern void RecoveryHP(CInfo * _pUser, CInfo * _pTarget);
 		m_iValue = 50;
 		m_pUse = &RecoveryHP;
-	}
+	}*/
 }
 
 void CItem::Set_Value(int _iValue)

@@ -66,6 +66,9 @@
     <ClCompile Include="Entity.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="item_List.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

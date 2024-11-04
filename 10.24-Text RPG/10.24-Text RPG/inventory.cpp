@@ -13,7 +13,7 @@ void CInven::Initialize()
 {
 	for (int i = 0; i < m_iItemCount; ++i)
 	{
-		Get_ItemArray()[i].Initialize();
+		(*Get_ItemArray()[i]).Initialize();
 	}
 }
 
@@ -25,12 +25,12 @@ void CInven::Release()
 {
 }
 
-CItem* CInven::Get_ItemArray()
+CItem** CInven::Get_ItemArray()
 {
 	return m_pItemArray;
 }
 
-void CInven::AddItem(CItem _item)
+void CInven::AddItem(CItem* _item)
 {
 	if (m_iItemCount == MAX_INVEN)
 	{
@@ -67,7 +67,7 @@ void CInven::PrintAll()
 	for (int i = 0; i < m_iItemCount; ++i)
 	{
 		cout << "[" << i + 1 << "] " ;
-		m_pItemArray[i].PrintItem();
+		(*m_pItemArray[i]).PrintItem();
 	}
 	LINE_LINE;
 
@@ -80,12 +80,12 @@ void CInven::ClearInven()
 
 void CInven::SetMerchantInven()//상인 안에서 구현해야겠다 나중에
 {
-	extern CItem redPotion;
+	//extern CItem redPotion;
 
-	ClearInven();
+	//ClearInven();
 
-	/*ITEM item;
-	item.iValue = 50;
-	strcpy_s(item.szName, "빨간 물약");*/
-	AddItem(redPotion);
+	///*ITEM item;
+	//item.iValue = 50;
+	//strcpy_s(item.szName, "빨간 물약");*/
+	//AddItem(redPotion);
 }
