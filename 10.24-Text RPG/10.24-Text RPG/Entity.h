@@ -7,7 +7,7 @@ protected:
 
 public:
 	CEntity();
-	~CEntity();
+	virtual ~CEntity();
 public:
 	CInfo& Get_Info();
 	void Set_Info(CInfo* _pInfo);

@@ -2,6 +2,7 @@
 #include "Dungeon.h"
 #include "Player.h"
 #include "Merchant.h"
+#include "item_List.h"
 
 CDungeon::CDungeon() 
 	:m_iValue(0), m_pPlayer(nullptr), m_pInputManager(nullptr), m_pEnemy(nullptr)
@@ -221,7 +222,7 @@ void CDungeon::Start_Battle()
 
 				cout << "ÀüÅõ Á¾·á" << endl;
 
-				CItem* pItem = new CItem;
+				CItem* pItem = new CRedPotion("ffef", 10);
 				strcpy_s((*pItem).Get_Name(), NAME_LEN, "Test Item");
 				(*pItem).Set_Value(50);
 				cout << "¾ÆÀÌÅÛ È¹µæ:" <<(*pItem).Get_Name() << endl;

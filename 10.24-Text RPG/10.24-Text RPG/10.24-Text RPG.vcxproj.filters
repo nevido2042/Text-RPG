@@ -69,6 +69,12 @@
     <ClCompile Include="item_List.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Equipment_Item.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Consumable_Item.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -116,5 +122,14 @@
     <ClInclude Include="Entity.h">
       <Filter>헤더 파일\Class</Filter>
     </ClInclude>
+    <ClInclude Include="Equipment_Item.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Consumable_Item.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

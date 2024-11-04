@@ -11,13 +11,14 @@ class CItem
 	//TYPE m_Type;
 	char m_szName[NAME_LEN];
 	int m_iValue; // 가치(단위: 골드)
-	void(*m_pUse)(CInfo* _pUser, CInfo* _pTarget);
-	void(*m_pEquip)(CEntity* _pUser);
+	//void(*m_pUse)(CInfo* _pUser, CInfo* _pTarget);
+	//void(*m_pEquip)(CEntity* _pUser);
 public:
 	CItem();
-	CItem(const char* _szName, int _iValue = 0,
-		void(*_pUse)(CInfo*, CInfo*) = nullptr,
-		void(*_pEquip)(CEntity*) = nullptr);
+	CItem(const char* _szName, int _iValue = 0);// ,
+		//void(*_pUse)(CInfo*, CInfo*) = nullptr,
+		//void(*_pEquip)(CEntity*) = nullptr);
+	virtual ~CItem();
 public:
 	void Initialize();
 	void Update();
@@ -27,11 +28,10 @@ public:
 	int Get_Value();
 public:
 	void Set_Value(int _iValue);
-public:
-	virtual void Use(CInfo* _pUser, CInfo* _pTarget);
+
 
 	//[[nodiscard]]
-	int Equip(CEntity* _pUser);
+	//int Equip(CEntity* _pUser);
 
 	void PrintItem();
 private:

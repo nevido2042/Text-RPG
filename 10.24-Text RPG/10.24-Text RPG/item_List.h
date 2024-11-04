@@ -19,7 +19,7 @@ class CRedPotion : public CItem
 public:
 	CRedPotion(const char* _szName, int _iValue);
 public:
-	virtual void Use(CInfo* _pUser, CInfo* _pTarget) override;
+	virtual int Use(CInfo* _pUser, CInfo* _pTarget) override;
 };
 
 class CSmall_RedPotion : public CItem
@@ -27,7 +27,7 @@ class CSmall_RedPotion : public CItem
 public:
 	CSmall_RedPotion(const char* _szName, int _iValue);
 public:
-	virtual void Use(CInfo* _pUser, CInfo* _pTarget) override;
+	virtual int Use(CInfo* _pUser, CInfo* _pTarget) override;
 };
 
 class CSword_Of_Legend : public CItem
@@ -35,6 +35,6 @@ class CSword_Of_Legend : public CItem
 public:
 	CSword_Of_Legend(const char* _szName, int _iValue);
 public:
-	virtual void Use(CInfo* _pUser, CInfo* _pTarget) override;
+	virtual int Use(CInfo* _pUser, CInfo* _pTarget) override;
 };
 
