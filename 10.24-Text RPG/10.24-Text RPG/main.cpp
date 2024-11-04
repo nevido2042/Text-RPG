@@ -21,7 +21,7 @@
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(206); //번호로 누수 위치 확인 가능
+	//_CrtSetBreakAlloc(295); //번호로 누수 위치 확인 가능
 
 	//col = 가로, lines = 세로
 	system("mode con:cols=100 lines=40");

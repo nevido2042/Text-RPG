@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "item_List.h"
 
-CRedPotion g_RedPotion("빨간 물약", 50);
-CSmall_RedPotion g_Small_RedPotion("작은 빨간 물약", 20);
-CSword_Of_Legend g_Sword_Of_Legend("전설의 검", 999);
+//CRedPotion g_RedPotion("빨간 물약", 50);
+//CSmall_RedPotion g_Small_RedPotion("작은 빨간 물약", 20);
+//CSword_Of_Legend g_Sword_Of_Legend("전설의 검", 999);
 
 CRedPotion::CRedPotion(const char* _szName, int _iValue)
 	:CItem(_szName, _iValue)

@@ -7,6 +7,7 @@ class CInven
 	int m_iItemCount;
 public:
 	CInven();
+	~CInven();
 public:
 	void Initialize();
 	void Update();

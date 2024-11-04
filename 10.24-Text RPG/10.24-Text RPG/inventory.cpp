@@ -9,6 +9,11 @@ CInven::CInven()
 	//m_iItemCount = 0;
 }
 
+CInven::~CInven()
+{
+	Release();
+}
+
 void CInven::Initialize()
 {
 	for (int i = 0; i < m_iItemCount; ++i)
@@ -23,6 +28,10 @@ void CInven::Update()
 
 void CInven::Release()
 {
+	for (int i = 0; i < m_iItemCount; ++i)
+	{
+		SAFE_DELETE(m_pItemArray[i]);
+	}
 }
 
 CItem** CInven::Get_ItemArray()
@@ -50,6 +59,8 @@ int CInven::RemoveItem(int _iNum)
 		system("pause");
 		return _ERROR;
 	}
+
+	//SAFE_DELETE(m_pItemArray[_iNum]);
 
 	--m_iItemCount;
 	for (int i = _iNum; i < m_iItemCount - _iNum; ++i)
