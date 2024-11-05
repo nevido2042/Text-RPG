@@ -35,7 +35,7 @@ public:
 	void Sell_Item(CMerchant* _pMerchant, CInputManager* _pInputManager);
 	void Try_Attack(CEnemy* _pTarget);
 	int Roll_Dice(int _iValue);
-	int Select_Item(CInputManager* _InputManager, CInfo* _pTarget);
+	int Select_Item(CInputManager* _InputManager, CEntity* _pTarget);
 	int Equip_Item(CInputManager* _InputManager, CItem** _Part);
 	void Open_Equipment(CInputManager* _InputManager);
 

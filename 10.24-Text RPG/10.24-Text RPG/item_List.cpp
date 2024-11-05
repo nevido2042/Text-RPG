@@ -5,60 +5,70 @@
 //CSmall_RedPotion g_Small_RedPotion("작은 빨간 물약", 20);
 //CSword_Of_Legend g_Sword_Of_Legend("전설의 검", 999);
 
-CRedPotion::CRedPotion(const char* _szName, int _iValue)
-	:CItem(_szName, _iValue)
+CRedPotion::CRedPotion()
 {
+	strcpy_s(m_szName, "빨간 포션");
+	m_iValue = 50;
 }
 
-void CRedPotion::Use(CInfo* _pUser, CInfo* _pTarget)
+int CRedPotion::Use(CEntity* _pUser, CEntity* _pTarget)
 {
 	//회복량
 	const int Amount(3);
 
-	_pUser->Get_CurStat()->Add_HP(Amount);
-	if (_pUser->Get_CurStat()->Get_HP() > _pUser->Get_Stat()->Get_HP())
+	_pUser->Get_Info().Get_CurStat()->Add_HP(Amount);
+	if (_pUser->Get_Info().Get_CurStat()->Get_HP() > _pUser->Get_Info().Get_Stat()->Get_HP())
 	{
 		//과치유 방지
-		_pUser->Get_CurStat()->Set_HP(_pUser->Get_Stat()->Get_HP());
+		_pUser->Get_Info().Get_CurStat()->Set_HP(_pUser->Get_Info().Get_Stat()->Get_HP());
 	}
 	Set_Color(YELLOW);
-	cout << _pUser->Get_Name() << " 은(는) " << Amount << "만큼 회복 되었다." << endl;
+	cout << _pUser->Get_Info().Get_Name() << " 은(는) " << Amount << "만큼 회복 되었다." << endl;
 	Set_Color(GRAY);
 
 	system("pause");
+
+	return SUCCESS;
 }
 
-CSmall_RedPotion::CSmall_RedPotion(const char* _szName, int _iValue)
-	:CItem(_szName, _iValue)
+CSmall_RedPotion::CSmall_RedPotion()
 {
+	strcpy_s(m_szName, "작은 빨간 포션");
+	m_iValue = 20;
 }
 
-void CSmall_RedPotion::Use(CInfo* _pUser, CInfo* _pTarget)
+int CSmall_RedPotion::Use(CEntity* _pUser, CEntity* _pTarget)
 {
 	//회복량
 	const int Amount(1);
 
-	_pUser->Get_CurStat()->Add_HP(Amount);
-	if (_pUser->Get_CurStat()->Get_HP() > _pUser->Get_Stat()->Get_HP())
+	_pUser->Get_Info().Get_CurStat()->Add_HP(Amount);
+	if (_pUser->Get_Info().Get_CurStat()->Get_HP() > _pUser->Get_Info().Get_Stat()->Get_HP())
 	{
 		//과치유 방지
-		_pUser->Get_CurStat()->Set_HP(_pUser->Get_Stat()->Get_HP());
+		_pUser->Get_Info().Get_CurStat()->Set_HP(_pUser->Get_Info().Get_Stat()->Get_HP());
 	}
 	Set_Color(YELLOW);
-	cout << _pUser->Get_Name() << " 은(는) " << Amount << "만큼 회복 되었다." << endl;
+	cout << _pUser->Get_Info().Get_Name() << " 은(는) " << Amount << "만큼 회복 되었다." << endl;
 	Set_Color(GRAY);
 
 	system("pause");
+
+	return SUCCESS;
 }
 
-CSword_Of_Legend::CSword_Of_Legend(const char* _szName, int _iValue)
-	:CItem(_szName, _iValue)
+CSword_Of_Legend::CSword_Of_Legend()
 {
+	strcpy_s(m_szName, "전설의 검");
+	m_iValue = 500;
 }
 
-void CSword_Of_Legend::Use(CInfo* _pUser, CInfo* _pTarget)
+int CSword_Of_Legend::Equip(CEntity* _pUser)
 {
-	cout << "사용 할 수 없는 아이템 입니다." << endl;
-	system("pause");
-	return;
+	const int Amount(3);
+
+	CStat* CurStat = _pUser->Get_Info().Get_CurStat();
+	CurStat->Set_AddSTR(CurStat->Get_AddSTR() + Amount);
+
+	return SUCCESS;
 }

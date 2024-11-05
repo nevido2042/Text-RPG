@@ -45,8 +45,8 @@ void CMerchant::Set_Merchant_Inven()
 
 
     Get_Info().Get_Inven()->ClearInven();
-    Get_Info().Get_Inven()->AddItem(new CRedPotion("»¡°£ ¹°¾à", 50)/*g_RedPotion*/);
-	Get_Info().Get_Inven()->AddItem(new CSmall_RedPotion("ÀÛÀº »¡°£ ¹°¾à", 20)/*g_Small_RedPotion*/);
+	Get_Info().Get_Inven()->AddItem(new CRedPotion);
+	Get_Info().Get_Inven()->AddItem(new CSmall_RedPotion);
 
     //Get_Info().Get_Inven()->SetMerchantInven();
 }
@@ -55,9 +55,9 @@ void CMerchant::Set_Dungeon_Merchant_Inven()
 {
 
 	Get_Info().Get_Inven()->ClearInven();
-	Get_Info().Get_Inven()->AddItem(new CSword_Of_Legend("Àü¼³ÀÇ °Ë", 499)/*g_Sword_Of_Legend*/);
-	Get_Info().Get_Inven()->AddItem(new CRedPotion("»¡°£ ¹°¾à", 50));
-	Get_Info().Get_Inven()->AddItem(new CSmall_RedPotion("ÀÛÀº »¡°£ ¹°¾à", 20));
+	Get_Info().Get_Inven()->AddItem(new CSword_Of_Legend);
+	Get_Info().Get_Inven()->AddItem(new CRedPotion);
+	Get_Info().Get_Inven()->AddItem(new CSmall_RedPotion);
 
 	//Get_Info().Get_Inven()->SetMerchantInven();
 }

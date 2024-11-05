@@ -129,8 +129,8 @@ int CPlayer::Select_Task(CInputManager* _pInputManager, CMerchant* _pMerchant)
         case Cheat:
         	//치트
         	Get_Info().AddGold(999);
-            Get_Info().Get_Inven()->AddItem(new CRedPotion("빨간 물약", 50)/*g_RedPotion*/);
-            Get_Info().Get_Inven()->AddItem(new CSword_Of_Legend("전설의 검", 500)/*g_Sword_Of_Legend*/);
+            Get_Info().Get_Inven()->AddItem(new CRedPotion);
+            Get_Info().Get_Inven()->AddItem(new CSword_Of_Legend);
 
         	break;
         default:
@@ -332,7 +332,7 @@ int CPlayer::Roll_Dice(int _iValue)
     return rand() % _iValue + 1;
 }
 
-int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)//entitiy로 바꿀 예정
+int CPlayer::Select_Item(CInputManager* _InputManager, CEntity* _pTarget)//entitiy로 바꿀 예정
 {
     //Render_Battle_Info();
 
@@ -358,9 +358,16 @@ int CPlayer::Select_Item(CInputManager* _InputManager, CInfo* _pTarget)//entitiy
         // 
         //불러 오기 할때 다시 담아야하나?
         CItem* selectedItem = Get_Info().Get_Inven()->Get_ItemArray()[_InputManager->Get_Input() - 1];
-        selectedItem->Use(&Get_Info(), _pTarget); //Info가 매개변수가 아니라 플레이어, 적이 되어야 할거 같은 느낌
 
-        //Render_Battle_Info();
+        if (CConsumable_Item* Consumable_Item = dynamic_cast<CConsumable_Item*>(selectedItem))
+        {
+            Consumable_Item->Use(this, _pTarget);
+        }
+        else
+        {
+            cout << "사용 할 수 없는 아이템 입니다." << endl;
+            system("pause");
+        }
 
         return SUCCESS;
     }
@@ -394,19 +401,19 @@ int CPlayer::Equip_Item(CInputManager* _InputManager, CItem** _Part)
         int iIndex = _InputManager->Get_Input() - 1;
         CItem* selectedItem = Get_Info().Get_Inven()->Get_ItemArray()[iIndex];
 
-        int iResult(0);
-
-        iResult = selectedItem->Equip(this); //Info가 매개변수가 아니라 플레이어, 적이 되어야 할거 같은 느낌
-
-        if (iResult == SUCCESS)
+        if (CEquipment_Item* Equipment_Item = dynamic_cast<CEquipment_Item*>(selectedItem))
         {
+            Equipment_Item->Equip(this);
+
             *_Part = selectedItem;
-            //Render_Battle_Info();
 
             Get_Info().Get_Inven()->RemoveItem(iIndex);
         }
-
-        return SUCCESS;
+        else
+        {
+            cout << "장착 할 수 없는 아이템 입니다." << endl;
+            system("pause");
+        }
     }
 }
 

@@ -1,8 +1,10 @@
 #pragma once
-#include "item.h"
+//#include "item.h"
 #include "Entity.h"
+#include "Consumable_Item.h"
+#include "Equipment_Item.h"
 
-void RecoveryHP(CInfo* _pUser, CInfo* _pTarget);
+//void RecoveryHP(CInfo* _pUser, CInfo* _pTarget);
 void STR_Up(CEntity* _pUser);
 
 //CItem redPotion("빨간 물약", 50, RecoveryHP);
@@ -14,27 +16,27 @@ void STR_Up(CEntity* _pUser);
 
 //CItem swordOfLegend("전설의 검", 999, nullptr, STR_Up);
 
-class CRedPotion : public CItem
+class CRedPotion : public CConsumable_Item
 {
 public:
-	CRedPotion(const char* _szName, int _iValue);
+	CRedPotion();
 public:
-	virtual int Use(CInfo* _pUser, CInfo* _pTarget) override;
+	virtual int Use(CEntity* _pUser, CEntity* _pTarget) override;
 };
 
-class CSmall_RedPotion : public CItem
+class CSmall_RedPotion : public CConsumable_Item
 {
 public:
-	CSmall_RedPotion(const char* _szName, int _iValue);
+	CSmall_RedPotion();
 public:
-	virtual int Use(CInfo* _pUser, CInfo* _pTarget) override;
+	virtual int Use(CEntity* _pUser, CEntity* _pTarget) override;
 };
 
-class CSword_Of_Legend : public CItem
+class CSword_Of_Legend : public CEquipment_Item
 {
 public:
-	CSword_Of_Legend(const char* _szName, int _iValue);
+	CSword_Of_Legend();
 public:
-	virtual int Use(CInfo* _pUser, CInfo* _pTarget) override;
+	virtual int Equip(CEntity* _pUser) override;
 };
 

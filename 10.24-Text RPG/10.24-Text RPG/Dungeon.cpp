@@ -222,7 +222,7 @@ void CDungeon::Start_Battle()
 
 				cout << "전투 종료" << endl;
 
-				CItem* pItem = new CRedPotion("ffef", 10);
+				CItem* pItem = new CRedPotion;
 				strcpy_s((*pItem).Get_Name(), NAME_LEN, "Test Item");
 				(*pItem).Set_Value(50);
 				cout << "아이템 획득:" <<(*pItem).Get_Name() << endl;
@@ -239,7 +239,7 @@ void CDungeon::Start_Battle()
 
 		case 2:
 			//아이템
-			if (Get_Player().Select_Item(&Get_InputManager(), &Get_Enemy().Get_Info()) == SUCCESS)
+			if (Get_Player().Select_Item(&Get_InputManager(), &Get_Enemy()) == SUCCESS)
 			{
 				break;
 			}

@@ -13,12 +13,6 @@ CItem::CItem()
 	//m_pUse = nullptr;
 }
 
-CItem::CItem(const char* _szName, int _iValue)
-	:m_iValue(_iValue)
-{
-	strcpy_s(m_szName, _szName);
-}
-
 CItem::~CItem()
 {
 }
