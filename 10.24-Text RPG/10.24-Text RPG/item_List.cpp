@@ -72,3 +72,15 @@ int CSword_Of_Legend::Equip(CEntity* _pUser)
 
 	return SUCCESS;
 }
+
+int CSword_Of_Legend::Unequip(CEntity* _pUser)
+{
+	const int Amount(3);
+
+	CStat* CurStat = _pUser->Get_Info().Get_CurStat();
+	CurStat->Set_AddSTR(CurStat->Get_AddSTR() - Amount);
+
+	return SUCCESS;
+
+	return 0;
+}

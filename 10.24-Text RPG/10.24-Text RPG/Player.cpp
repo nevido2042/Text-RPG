@@ -375,6 +375,21 @@ int CPlayer::Select_Item(CInputManager* _InputManager, CEntity* _pTarget)//entit
 
 int CPlayer::Equip_Item(CInputManager* _InputManager, CItem** _Part)
 {
+    if (*_Part)
+    {
+        CEquipment_Item* Equipment_Item = dynamic_cast<CEquipment_Item*>(*_Part);
+        if (Equipment_Item)
+        {
+            Equipment_Item->Unequip(this);
+        }
+
+        Get_Info().Get_Inven()->AddItem(*_Part);
+        *_Part = nullptr;
+
+        cout << "장비 해제 완료" << endl;
+        system("pause");
+        return SUCCESS;
+    }
     //Render_Battle_Info();
 
     while ((true))
@@ -408,6 +423,7 @@ int CPlayer::Equip_Item(CInputManager* _InputManager, CItem** _Part)
             *_Part = selectedItem;
 
             Get_Info().Get_Inven()->RemoveItem(iIndex);
+            return SUCCESS;
         }
         else
         {

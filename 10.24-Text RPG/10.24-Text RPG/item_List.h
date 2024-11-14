@@ -38,5 +38,6 @@ public:
 	CSword_Of_Legend();
 public:
 	virtual int Equip(CEntity* _pUser) override;
+	virtual int Unequip(CEntity* _pUser) override;
 };
 

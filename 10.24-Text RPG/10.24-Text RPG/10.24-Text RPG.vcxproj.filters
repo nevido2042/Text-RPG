@@ -16,6 +16,12 @@
     <Filter Include="헤더 파일\Class">
       <UniqueIdentifier>{53747a43-0c6a-4f0a-9a72-5da41a266bfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Class\Item">
+      <UniqueIdentifier>{c5ef56cd-11d8-434e-b83f-917d8865af82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Class\Entity">
+      <UniqueIdentifier>{1f971476-f25d-453c-abc8-b53591687b44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -83,9 +89,6 @@
     <ClInclude Include="TextRPG.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="item_List.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="misc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -93,9 +96,6 @@
       <Filter>헤더 파일\Class</Filter>
     </ClInclude>
     <ClInclude Include="inventory.h">
-      <Filter>헤더 파일\Class</Filter>
-    </ClInclude>
-    <ClInclude Include="item.h">
       <Filter>헤더 파일\Class</Filter>
     </ClInclude>
     <ClInclude Include="MainGame.h">
@@ -110,23 +110,29 @@
     <ClInclude Include="InputManager.h">
       <Filter>헤더 파일\Class</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>헤더 파일\Class</Filter>
+    <ClInclude Include="Consumable_Item.h">
+      <Filter>헤더 파일\Class\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Merchant.h">
-      <Filter>헤더 파일\Class</Filter>
+    <ClInclude Include="item.h">
+      <Filter>헤더 파일\Class\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>헤더 파일\Class</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>헤더 파일\Class</Filter>
+    <ClInclude Include="item_List.h">
+      <Filter>헤더 파일\Class\Item</Filter>
     </ClInclude>
     <ClInclude Include="Equipment_Item.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Class\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Consumable_Item.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Enemy.h">
+      <Filter>헤더 파일\Class\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>헤더 파일\Class\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Merchant.h">
+      <Filter>헤더 파일\Class\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>헤더 파일\Class\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="CRedPotion" Collapsed="true">
-    <Position X="0.5" Y="1.75" Width="1.5" />
+    <Position X="0.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>item_List.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CSmall_RedPotion" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="2.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>item_List.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CSword_Of_Legend" Collapsed="true">
-    <Position X="5" Y="1.75" Width="1.5" />
+    <Position X="5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>item_List.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -29,14 +29,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CEnemy" Collapsed="true">
-    <Position X="2.75" Y="4.75" Width="1.5" />
+    <Position X="2.75" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAACAAAABARAAAAAAAAABAAAAA=</HashCode>
       <FileName>Enemy.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CEntity" Collapsed="true">
-    <Position X="2.75" Y="3.5" Width="1.5" />
+    <Position X="2.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAAAQAAAAAAAAAhAAIAAAAAAAAAABAAAAA=</HashCode>
       <FileName>Entity.h</FileName>
@@ -64,9 +64,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CItem" Collapsed="true">
-    <Position X="2.75" Y="0.5" Width="1.5" />
+    <Position X="2.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAACABAASAAgAAAAAAAQAAEAAAgAxAQARAAAAA=</HashCode>
+      <HashCode>AAQAAAAACABAAQAAgAAAAAAAAAAAAAAABxAQARAAAAA=</HashCode>
       <FileName>item.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -78,14 +78,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CMerchant" Collapsed="true">
-    <Position X="0.5" Y="4.75" Width="1.5" />
+    <Position X="0.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAAAAAAQQAAAAAAACAAAAgAAAAAAAggBAAAAA=</HashCode>
       <FileName>Merchant.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="CPlayer" Collapsed="true">
-    <Position X="5" Y="4.75" Width="1.5" />
+    <Position X="5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AIAgAIAqAAAAAREAAAAAAAAAECAzAAAAAAAAABAAgAA=</HashCode>
       <FileName>Player.h</FileName>
@@ -96,6 +96,25 @@
     <TypeIdentifier>
       <HashCode>AgQAQYAAAAAggUKCIITAQAAABADBQgQIkAIUCBQAAAg=</HashCode>
       <FileName>stat.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CConsumable_Item" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <InheritanceLine Type="CItem">
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="-0.152" Y="0.138" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Consumable_Item.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CEquipment_Item" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Equipment_Item.h</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="__unnamed_enum_0412_1" Collapsed="true">

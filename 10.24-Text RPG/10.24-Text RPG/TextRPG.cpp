@@ -227,9 +227,9 @@ void BuyItem(CInfo* _pPlayer, CInfo* _pMerchant)
 			break;
 		}
 
-		CItem item = _pMerchant->Get_Inven()->Get_ItemArray()[iInput - 1];
+		CItem* item = _pMerchant->Get_Inven()->Get_ItemArray()[iInput - 1];
 
-		int iItemValue = _pMerchant->Get_Inven()->Get_ItemArray()[iInput - 1].Get_Value();
+		int iItemValue = item->Get_Value();
 		if (_pPlayer->Get_Gold() >= iItemValue)
 		{
 			_pPlayer->AddGold(-iItemValue);
@@ -266,10 +266,10 @@ void SellItem(CInfo* _pPlayer, CInfo* _pMerchant)
 			break;
 		}
 
-		CItem item = _pPlayer->Get_Inven()->Get_ItemArray()[iInput - 1];
+		CItem* item = _pPlayer->Get_Inven()->Get_ItemArray()[iInput - 1];
 		if (_pPlayer->Get_Inven()->RemoveItem(iInput - 1) == SUCCESS)
 		{
-			_pPlayer->AddGold(item.Get_Value());
+			_pPlayer->AddGold(item->Get_Value());
 			_pMerchant->Get_Inven()->AddItem(item);
 		}
 	}
@@ -507,9 +507,9 @@ void FindMagicBox(CInfo* _pPlayer, int _iValue)
 				cout << "보물을 획득 했다." << endl;
 				Set_Color(GRAY);
 
-				CItem item;
-				strcpy_s(item.Get_Name(), NAME_LEN, "보물");
-				item.Set_Value(500);
+				CItem* item = new CItem;
+				strcpy_s(item->Get_Name(), NAME_LEN, "보물");
+				item->Set_Value(500);
 				
 				_pPlayer->Get_Inven()->AddItem(item);
 
@@ -626,10 +626,10 @@ void StartBattle(CInfo* _pPlayer, CInfo* _pMonster)
 
 				cout << "전투 종료" << endl;
 
-				CItem item;
-				strcpy_s(item.Get_Name(), NAME_LEN, "Test Item");
-				item.Set_Value(50);
-				cout << "아이템 획득:" << item.Get_Name() << endl;
+				CItem* item = new CItem;
+				strcpy_s(item->Get_Name(), NAME_LEN, "Test Item");
+				item->Set_Value(50);
+				cout << "아이템 획득:" << item->Get_Name() << endl;
 				_pPlayer->Get_Inven()->AddItem(item);
 
 				system("pause");
@@ -799,8 +799,8 @@ int SelectItem(CInfo* _pPlayer, CInfo* _pMonster)
 		//함수 포인터 값이 달라서 터진다.
 		// 
 		//불러 오기 할때 다시 담아야하나?
-		CItem selectedItem = _pPlayer->Get_Inven()->Get_ItemArray()[iInput - 1];
-		selectedItem.Use(_pPlayer, _pMonster);
+		CItem* selectedItem = _pPlayer->Get_Inven()->Get_ItemArray()[iInput - 1];
+		//selectedItem->Use(_pPlayer, _pMonster);
 
 		RenderBattleInfo(_pPlayer, _pMonster);
 		//system("pause");
